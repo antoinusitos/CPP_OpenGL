@@ -276,6 +276,7 @@ int main()
 	// free the memory
 	glDeleteVertexArrays(1, &myVAO);
 	glDeleteBuffers(1, &myVBO);
+	glDeleteBuffers(1, &myVBOrect);
 	glDeleteBuffers(1, &myEBO);
 
 	// glfw: terminate, clearing all previously allocated GLFW resources.
