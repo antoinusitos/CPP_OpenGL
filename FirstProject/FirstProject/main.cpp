@@ -28,6 +28,15 @@ const char* FRAGMENT_SHADER =
 "	fragColor = vec4(1.0, 0.5, 0.2, 1.0);\n"
 "}\n\0";
 
+
+const char* FRAGMENT_SHADER_SECOND =
+"#version 330 core\n"
+"out vec4 fragColor;\n"
+"void main()\n"
+"{\n"
+"	fragColor = vec4(1.0, 0.84, 0.0, 1.0);\n"
+"}\n\0";
+
 int main()
 {
 	// glfw: initialize and configure
@@ -107,6 +116,24 @@ int main()
 
 	// create a shader object and assign an ID
 	// -----------
+	unsigned int myFragmentShaderSecond = glCreateShader(GL_FRAGMENT_SHADER);
+
+	// attach the shader code to the shader object and compile it
+	// -----------
+	glShaderSource(myFragmentShaderSecond, 1, &FRAGMENT_SHADER_SECOND, NULL);
+	glCompileShader(myFragmentShaderSecond);
+
+	// Check the compilation of the fragment shader
+	// -----------
+	glGetShaderiv(myFragmentShaderSecond, GL_COMPILE_STATUS, &success);
+	if (!success)
+	{
+		glGetShaderInfoLog(myFragmentShaderSecond, 512, NULL, infoLog);
+		std::cout << "ERROR::SHADER::FRAGMENTSECOND::COMPILATION_FAILED\n" << infoLog << std::endl;
+	}
+
+	// create a shader object and assign an ID
+	// -----------
 	unsigned int myShaderProgram = glCreateProgram();
 
 	// Attach the shaders to the program and link it
@@ -124,10 +151,30 @@ int main()
 		std::cout << "ERROR::SHADER::PROGRAM::COMPILATION_FAILED\n" << infoLog << std::endl;
 	}
 
+	// create a shader object and assign an ID
+	// -----------
+	unsigned int myShaderProgramSecond = glCreateProgram();
+
+	// Attach the shaders to the program and link it
+	// -----------
+	glAttachShader(myShaderProgramSecond, myVertexShader);
+	glAttachShader(myShaderProgramSecond, myFragmentShaderSecond);
+	glLinkProgram(myShaderProgramSecond);
+
+	// Check the compilation of the shader program
+	// -----------
+	glGetProgramiv(myShaderProgramSecond, GL_LINK_STATUS, &success);
+	if (!success)
+	{
+		glGetProgramInfoLog(myShaderProgramSecond, 512, NULL, infoLog);
+		std::cout << "ERROR::SHADER::PROGRAM::COMPILATION_FAILED\n" << infoLog << std::endl;
+	}
+
 	// Delete the shaders objects as we no longer need them
 	// -----------
 	glDeleteShader(myVertexShader);
 	glDeleteShader(myFragmentShader);
+	glDeleteShader(myFragmentShaderSecond);
 
 #pragma endregion shader
 
@@ -311,6 +358,10 @@ int main()
 		// draw the triangles using the VAO
 		// -----------
 		glDrawArrays(GL_TRIANGLES, 0, 6);
+
+		// Tell OpenGL to use the program
+		// -----------
+		glUseProgram(myShaderProgramSecond);
 
 		// Tell OpenGL to use the vertex array object
 		// -----------
