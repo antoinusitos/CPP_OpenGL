@@ -15,20 +15,21 @@ const unsigned int SCR_HEIGHT = 600;
 const char* VERTEX_SHADER =
 "#version 330 core\n"
 "layout (location = 0) in vec3 aPos;\n"
-"out vec4 vertexColor;\n"
+"layout (location = 1) in vec3 aColor;\n"
+"out vec3 ourColor;\n"
 "void main()\n"
 "{\n"
-"	gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
-"	vertexColor = vec4(0.5, 0.0, 0.0, 1.0);\n"
+"	gl_Position = vec4(aPos, 1.0);\n"
+"	ourColor = aColor;\n"
 "}\0";
 
 const char* FRAGMENT_SHADER =
 "#version 330 core\n"
 "out vec4 fragColor;\n"
-"uniform vec4 ourColor;\n"
+"in vec3 ourColor;\n"
 "void main()\n"
 "{\n"
-"	fragColor = ourColor;\n"
+"	fragColor = vec4(ourColor, 1.0);\n"
 "}\n\0";
 
 int main()
@@ -66,9 +67,6 @@ int main()
 
 #pragma region Shader
 
-	// ----------------------
-	// shader part
-	// ----------------------
 	int nrAttributes; 
 	glGetIntegerv(GL_MAX_VERTEX_ATTRIBS, &nrAttributes); 
 	std::cout << "Maximum nr of vertex attributes supported: " << nrAttributes << std::endl;
@@ -139,16 +137,15 @@ int main()
 
 #pragma region vertex
 
-	// ----------------------
-	// vertex part
-	// ----------------------
+#pragma region triangle
 
 	// create a triangle
 	// -----------
 	float myVertices[] = {
-		-0.5f, -0.5f, 0.0f, // left
-		0.5f, -0.5f, 0.0f,  // right
-		0.0f, 0.5f, 0.0f	// top
+		// positions			//colors
+		-0.5f, -0.5f, 0.0f,		1.0f, 0.0f, 0.0f,	// left
+		0.5f, -0.5f, 0.0f,		0.0f, 1.0f, 0.0f,	// right
+		0.0f, 0.5f, 0.0f,		0.0f, 0.0f, 1.0f	// top
 	};
 
 	// create a vertex array object (VAO) to store the vertex objects (as attribute pointers)
@@ -175,8 +172,12 @@ int main()
 
 	// Tell OpenGL how to interpret the vertex data per vertex attribute
 	// -----------
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+	// position
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(0);
+	// color
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
+	glEnableVertexAttribArray(1);
 
 	// unbind the buffer
 	// -----------
@@ -185,6 +186,10 @@ int main()
 	// unbind the vertex array
 	// -----------
 	glBindVertexArray(0);
+
+#pragma endregion
+
+#pragma region rectangle
 
 	// create a rectangle
 	// -----------
@@ -247,6 +252,8 @@ int main()
 	// unbind the vertex array
 	// -----------
 	glBindVertexArray(0);
+
+#pragma endregion
 
 #pragma endregion
 
