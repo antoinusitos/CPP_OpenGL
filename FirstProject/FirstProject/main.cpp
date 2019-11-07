@@ -144,8 +144,10 @@ int main()
 	float myVertices[] = {
 		-1.0f, -0.5f, 0.0f,		// left
 		-0.1f, -0.5f, 0.0f,		// right
-		-0.55f, 0.5f, 0.0f,		// top
+		-0.55f, 0.5f, 0.0f		// top
+	};
 
+	float myVerticesSecond[] = {
 		0.1f, -0.5f, 0.0f,		// left
 		1, -0.5f, 0.0f,			// right
 		0.55f, 0.5f, 0.0f		// top
@@ -156,10 +158,20 @@ int main()
 	unsigned int myVAO;
 	glGenVertexArrays(1, &myVAO);
 
+	// create a vertex array object (VAO) to store the vertex objects (as attribute pointers)
+	// -----------
+	unsigned int myVAOSecond;
+	glGenVertexArrays(1, &myVAOSecond);
+
 	// create a vertex buffer object (VBO) to store the triangle's vertices and assign an ID
 	// -----------
 	unsigned int myVBO;
 	glGenBuffers(1, &myVBO);
+
+	// create a vertex buffer object (VBO) to store the triangle's vertices and assign an ID
+	// -----------
+	unsigned int myVBOSecond;
+	glGenBuffers(1, &myVBOSecond);
 
 	// Tell OpenGL to use the vertex array object
 	// -----------
@@ -172,6 +184,23 @@ int main()
 	// copy the data of the vertices as an array of the size of the triangle into the buffer to draw them
 	// -----------
 	glBufferData(GL_ARRAY_BUFFER, sizeof(myVertices), myVertices, GL_STATIC_DRAW);
+
+	// Tell OpenGL how to interpret the vertex data per vertex attribute
+	// -----------
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+	glEnableVertexAttribArray(0);
+
+	// Tell OpenGL to use the vertex array object
+	// -----------
+	glBindVertexArray(myVAOSecond);
+
+	// assign the type of buffer to the ID
+	// -----------
+	glBindBuffer(GL_ARRAY_BUFFER, myVBOSecond);
+
+	// copy the data of the vertices as an array of the size of the triangle into the buffer to draw them
+	// -----------
+	glBufferData(GL_ARRAY_BUFFER, sizeof(myVerticesSecond), myVerticesSecond, GL_STATIC_DRAW);
 
 	// Tell OpenGL how to interpret the vertex data per vertex attribute
 	// -----------
@@ -285,6 +314,14 @@ int main()
 
 		// Tell OpenGL to use the vertex array object
 		// -----------
+		glBindVertexArray(myVAOSecond);
+
+		// draw the triangles using the VAO
+		// -----------
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+
+		// Tell OpenGL to use the vertex array object
+		// -----------
 		//glBindVertexArray(myVAOrect);
 
 		// draw the rectangle using the VAO
@@ -303,7 +340,9 @@ int main()
 
 	// free the memory
 	glDeleteVertexArrays(1, &myVAO);
+	glDeleteVertexArrays(1, &myVAOSecond);
 	glDeleteBuffers(1, &myVBO);
+	glDeleteBuffers(1, &myVBOSecond);
 	glDeleteBuffers(1, &myEBO);
 
 	// glfw: terminate, clearing all previously allocated GLFW resources.
