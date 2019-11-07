@@ -15,17 +15,20 @@ const unsigned int SCR_HEIGHT = 600;
 const char* VERTEX_SHADER =
 "#version 330 core\n"
 "layout (location = 0) in vec3 aPos;\n"
+"out vec4 vertexColor;\n"
 "void main()\n"
 "{\n"
 "	gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
+"	vertexColor = vec4(0.5, 0.0, 0.0, 1.0);\n"
 "}\0";
 
 const char* FRAGMENT_SHADER =
 "#version 330 core\n"
 "out vec4 fragColor;\n"
+"uniform vec4 ourColor;\n"
 "void main()\n"
 "{\n"
-"	fragColor = vec4(1.0, 0.5, 0.2, 1.0);\n"
+"	fragColor = ourColor;\n"
 "}\n\0";
 
 int main()
@@ -61,10 +64,14 @@ int main()
 		return -1;
 	}
 
+#pragma region Shader
 
 	// ----------------------
 	// shader part
 	// ----------------------
+	int nrAttributes; 
+	glGetIntegerv(GL_MAX_VERTEX_ATTRIBS, &nrAttributes); 
+	std::cout << "Maximum nr of vertex attributes supported: " << nrAttributes << std::endl;
 
 	// create a shader object and assign an ID
 	// -----------
@@ -128,6 +135,10 @@ int main()
 	glDeleteShader(myVertexShader);
 	glDeleteShader(myFragmentShader);
 
+#pragma endregion
+
+#pragma region vertex
+
 	// ----------------------
 	// vertex part
 	// ----------------------
@@ -189,6 +200,11 @@ int main()
 		1, 2, 3		//second triangle
 	};
 
+	// create a vertex array object (VAO) to store the vertex objects (as attribute pointers)
+	// -----------
+	unsigned int myVAOrect;
+	glGenVertexArrays(1, &myVAOrect);
+
 	// create a vertex buffer object (VBO) to store the triangle's vertices and assign an ID
 	// -----------
 	unsigned int myVBOrect;
@@ -201,7 +217,7 @@ int main()
 
 	// Tell OpenGL to use the vertex array object
 	// -----------
-	glBindVertexArray(myVAO);
+	glBindVertexArray(myVAOrect);
 
 	// assign the type of buffer to the ID
 	// -----------
@@ -232,6 +248,8 @@ int main()
 	// -----------
 	glBindVertexArray(0);
 
+#pragma endregion
+
 	// uncomment to show the wireframe
 	// -----------
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
@@ -251,17 +269,28 @@ int main()
 		// -----------
 		glUseProgram(myShaderProgram);
 		
+		// Tell the shader to change the uniform variable
+		// -----------
+		float myTimeValue = glfwGetTime();
+		float myGreenValue = (sin(myTimeValue) / 2.0f) + 0.5f;
+		int myVertexColorLocation = glGetUniformLocation(myShaderProgram, "ourColor");
+		glUniform4f(myVertexColorLocation, 0.0f, myGreenValue, 0.0f, 1.0f);
+
 		// Tell OpenGL to use the vertex array object
 		// -----------
 		glBindVertexArray(myVAO);
 
 		// draw the triangles using the VAO
 		// -----------
-		//glDrawArrays(GL_TRIANGLES, 0, 3);
+		glDrawArrays(GL_TRIANGLES, 0, 3);
+
+		// Tell OpenGL to use the vertex array object
+		// -----------
+		//glBindVertexArray(myVAOrect);
 
 		// draw the rectangle using the VAO
 		// -----------
-		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+		//glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
 		// unbind the vertex array
 		// -----------
