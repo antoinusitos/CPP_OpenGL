@@ -61,6 +61,7 @@ int main()
 		return -1;
 	}
 
+#pragma region shader
 
 	// ----------------------
 	// shader part
@@ -128,6 +129,12 @@ int main()
 	glDeleteShader(myVertexShader);
 	glDeleteShader(myFragmentShader);
 
+#pragma endregion shader
+
+#pragma region vertex
+
+#pragma region triangle
+
 	// ----------------------
 	// vertex part
 	// ----------------------
@@ -135,9 +142,13 @@ int main()
 	// create a triangle
 	// -----------
 	float myVertices[] = {
-		-0.5f, -0.5f, 0.0f, // left
-		0.5f, -0.5f, 0.0f,  // right
-		0.0f, 0.5f, 0.0f	// top
+		-1.0f, -0.5f, 0.0f,		// left
+		-0.1f, -0.5f, 0.0f,		// right
+		-0.55f, 0.5f, 0.0f,		// top
+
+		0.1f, -0.5f, 0.0f,		// left
+		1, -0.5f, 0.0f,			// right
+		0.55f, 0.5f, 0.0f		// top
 	};
 
 	// create a vertex array object (VAO) to store the vertex objects (as attribute pointers)
@@ -175,6 +186,10 @@ int main()
 	// -----------
 	glBindVertexArray(0);
 
+#pragma endregion triangle
+
+#pragma region rectangle
+
 	// create a rectangle
 	// -----------
 	float myRectangleVertices[] = {
@@ -189,6 +204,11 @@ int main()
 		1, 2, 3		//second triangle
 	};
 
+	// create a vertex array object (VAO) to store the vertex objects (as attribute pointers)
+	// -----------
+	unsigned int myVAOrect;
+	glGenVertexArrays(1, &myVAOrect);
+
 	// create a vertex buffer object (VBO) to store the triangle's vertices and assign an ID
 	// -----------
 	unsigned int myVBOrect;
@@ -201,7 +221,7 @@ int main()
 
 	// Tell OpenGL to use the vertex array object
 	// -----------
-	glBindVertexArray(myVAO);
+	glBindVertexArray(myVAOrect);
 
 	// assign the type of buffer to the ID
 	// -----------
@@ -232,6 +252,10 @@ int main()
 	// -----------
 	glBindVertexArray(0);
 
+#pragma endregion rectangle
+
+#pragma endregion vertex
+
 	// uncomment to show the wireframe
 	// -----------
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
@@ -257,11 +281,15 @@ int main()
 
 		// draw the triangles using the VAO
 		// -----------
-		//glDrawArrays(GL_TRIANGLES, 0, 3);
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+
+		// Tell OpenGL to use the vertex array object
+		// -----------
+		//glBindVertexArray(myVAOrect);
 
 		// draw the rectangle using the VAO
 		// -----------
-		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+		//glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
 		// unbind the vertex array
 		// -----------
