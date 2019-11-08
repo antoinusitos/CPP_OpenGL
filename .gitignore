@@ -1,3 +1,8 @@
 FirstProject/FirstProject.VC.VC.opendb
 FirstProject/FirstProject.VC.db
-FirstProject/Debug
+FirstProject/Debug/*
+*.ilk
+*.pdb
+*.exe
+*.obj
+*.log
