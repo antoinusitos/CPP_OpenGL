@@ -15,6 +15,8 @@ void processInput(GLFWwindow* aWindow);
 const unsigned int SCR_WIDTH = 800;
 const unsigned int SCR_HEIGHT = 600;
 
+float MIX_VALUE = 0.2f;
+
 int main()
 {
 	// glfw: initialize and configure
@@ -71,10 +73,10 @@ int main()
 
 	// set the texture wrapping/filtering options (on the currently bound texture object) 
 	// -----------
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
 	// load the image
 	// -----------
@@ -113,8 +115,8 @@ int main()
 	// -----------
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
 	// load the image
 	// -----------
@@ -196,10 +198,10 @@ int main()
 	// -----------
 	float myRectangleVertices[] = {
 		// positions			// colors				// texture coords
-		0.5f, 0.5f, 0.0f, 		1.0f, 0.0f, 0.0f,		0.55f, 0.55f,	// top right 
-		0.5f, -0.5f, 0.0f, 		0.0f, 1.0f, 0.0f,		0.55f, 0.45f,	// bottom right 
-		-0.5f, -0.5f, 0.0f, 	0.0f, 0.0f, 1.0f,		0.45f, 0.45f, // bottom left 
-		-0.5f, 0.5f, 0.0f, 		1.0f, 1.0f, 0.0f,		0.45f, 0.55f	// top left 
+		0.5f, 0.5f, 0.0f, 		1.0f, 0.0f, 0.0f,		1.0f, 1.0f,	// top right 
+		0.5f, -0.5f, 0.0f, 		0.0f, 1.0f, 0.0f,		1.0f, 0.0f,	// bottom right 
+		-0.5f, -0.5f, 0.0f, 	0.0f, 0.0f, 1.0f,		0.0f, 0.0f, // bottom left 
+		-0.5f, 0.5f, 0.0f, 		1.0f, 1.0f, 0.0f,		0.0f, 1.0f	// top left 
 	};
 
 	unsigned int myIndices[] = {
@@ -264,8 +266,6 @@ int main()
 
 #pragma endregion
 
-#pragma endregion
-
 	// uncomment to show the wireframe
 	// -----------
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
@@ -278,6 +278,8 @@ int main()
 	// -----------
 	glUniform1i(glGetUniformLocation(myShader.myID, "texture1"), 0);
 	myShader.SetInt("texture2", 1);
+
+#pragma region Render
 
 	// render loop
 	// -----------
@@ -319,6 +321,8 @@ int main()
 		// -----------
 		glBindTexture(GL_TEXTURE_2D, myTexture2);
 
+		myShader.SetFloat("mixAmount", MIX_VALUE);
+
 		// Tell OpenGL to use the program
 		// -----------
 		myShader.Use();
@@ -342,6 +346,8 @@ int main()
 		glfwSwapBuffers(myWindow);
 		glfwPollEvents();
 	}
+
+#pragma endregion
 
 	// free the memory
 	glDeleteVertexArrays(1, &myVAO);
@@ -371,5 +377,19 @@ void processInput(GLFWwindow* aWindow)
 	if (glfwGetKey(aWindow, GLFW_KEY_ESCAPE) == GLFW_PRESS)
 	{
 		glfwSetWindowShouldClose(aWindow, true);
+	}
+	else if(glfwGetKey(aWindow, GLFW_KEY_UP) == GLFW_PRESS)
+	{
+		MIX_VALUE += 0.001f; // change this value accordingly (might be too slow or too fast based on system hardware)
+		if (MIX_VALUE >= 1.0f)
+			MIX_VALUE = 1.0f;
+
+	}
+	else if (glfwGetKey(aWindow, GLFW_KEY_DOWN) == GLFW_PRESS)
+	{
+		MIX_VALUE -= 0.001f; // change this value accordingly (might be too slow or too fast based on system hardware)
+		if (MIX_VALUE <= 0.0f)
+			MIX_VALUE = 0.0f;
+
 	}
 }
