@@ -8,6 +8,11 @@
 #include "Shader.h"
 #include "stb_image.h"
 
+#include <glm/glm.hpp> 
+#include <glm/gtc/matrix_transform.hpp> 
+#include <glm/gtc/type_ptr.hpp>
+
+
 void framebuffer_size_callback(GLFWwindow* aWindow, int aWidth, int aHeight);
 void processInput(GLFWwindow* aWindow);
 
@@ -17,6 +22,8 @@ const unsigned int SCR_HEIGHT = 600;
 
 int main()
 {
+#pragma region Init
+
 	// glfw: initialize and configure
 	// ------------------------------
 	glfwInit();
@@ -47,6 +54,8 @@ int main()
 		std::cout << "Failed to initialize GLAD" << std::endl;
 		return -1;
 	}
+
+#pragma endregion
 
 #pragma region Shader
 
@@ -195,11 +204,11 @@ int main()
 	// create a rectangle
 	// -----------
 	float myRectangleVertices[] = {
-		// positions			// colors				// texture coords
-		0.5f, 0.5f, 0.0f, 		1.0f, 0.0f, 0.0f,		1.0f, 1.0f,	// top right 
-		0.5f, -0.5f, 0.0f, 		0.0f, 1.0f, 0.0f,		1.0f, 0.0f,	// bottom right 
-		-0.5f, -0.5f, 0.0f, 	0.0f, 0.0f, 1.0f,		0.0f, 0.0f, // bottom left 
-		-0.5f, 0.5f, 0.0f, 		1.0f, 1.0f, 0.0f,		0.0f, 1.0f	// top left 
+		// positions			// texture coords
+		0.5f, 0.5f, 0.0f, 		1.0f, 1.0f,	// top right 
+		0.5f, -0.5f, 0.0f, 		1.0f, 0.0f,	// bottom right 
+		-0.5f, -0.5f, 0.0f,		0.0f, 0.0f, // bottom left 
+		-0.5f, 0.5f, 0.0f, 		0.0f, 1.0f	// top left 
 	};
 
 	unsigned int myIndices[] = {
@@ -245,14 +254,11 @@ int main()
 	// Tell OpenGL how to interpret the vertex data per vertex attribute
 	// -----------
 	// position
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(0);
-	// color
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
-	glEnableVertexAttribArray(1);
 	// texture coordinates
-	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
-	glEnableVertexAttribArray(2);
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
+	glEnableVertexAttribArray(1);
 
 	// unbind the buffer
 	// -----------
@@ -261,8 +267,6 @@ int main()
 	// unbind the vertex array
 	// -----------
 	glBindVertexArray(0);
-
-#pragma endregion
 
 #pragma endregion
 
@@ -276,8 +280,10 @@ int main()
 
 	// affect images on channel
 	// -----------
-	glUniform1i(glGetUniformLocation(myShader.myID, "texture1"), 0);
+	myShader.SetInt("texture1", 0);
 	myShader.SetInt("texture2", 1);
+
+#pragma region Rendering
 
 	// render loop
 	// -----------
@@ -287,10 +293,12 @@ int main()
 		// -----------
 		processInput(myWindow);
 
+		// clear the window
+		// -----------
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
-#pragma region triangle
+#pragma region triangle Rendering
 
 		// Tell OpenGL to use the vertex array object of the triangle
 		// -----------
@@ -302,7 +310,7 @@ int main()
 
 #pragma endregion
 
-#pragma region rectangle
+#pragma region rectangle rendering
 		// activate the texture unit first before binding texture
 		// -----------
 		glActiveTexture(GL_TEXTURE0);
@@ -319,9 +327,18 @@ int main()
 		// -----------
 		glBindTexture(GL_TEXTURE_2D, myTexture2);
 
+		// create transformation
+		// -----------
+		glm::mat4 trans = glm::mat4(1.0f);
+		trans = glm::translate(trans, glm::vec3(0.5f, -0.5f, 0.0f));
+		trans = glm::rotate(trans, (float)glfwGetTime(), glm::vec3(0.0f, 0.0f, 1.0f));
+
 		// Tell OpenGL to use the program
 		// -----------
 		myShader.Use();
+
+		unsigned int transformLoc = glGetUniformLocation(myShader.myID, "aTransform"); 
+		glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(trans));
 
 		// Tell OpenGL to use the vertex array object of the rectangle
 		// -----------
@@ -333,15 +350,13 @@ int main()
 
 #pragma endregion
 
-		// unbind the vertex array
-		// -----------
-		//glBindVertexArray(0);
-
 		// check and call events and swap the buffers
 		// -----------
 		glfwSwapBuffers(myWindow);
 		glfwPollEvents();
 	}
+
+#pragma endregion
 
 	// free the memory
 	glDeleteVertexArrays(1, &myVAO);

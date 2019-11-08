@@ -2,7 +2,7 @@
 
 // include glad to get all the required OpenGL headers
 #include <glad/glad.h>
-//#include <glm/glm.hpp>
+#include <glm/glm.hpp>
 
 #include <string>
 #include <fstream>
@@ -75,13 +75,7 @@ public:
 		glShaderSource(vertex, 1, &vertexShaderCode, NULL);
 		glCompileShader(vertex);
 
-		// print compile errors if any 
-		// -----------
-		glGetShaderiv(vertex, GL_COMPILE_STATUS, &success); 
-		if(!success) 
-		{ 
-			glGetShaderInfoLog(vertex, 512, NULL, infoLog); std::cout << "ERROR::SHADER::VERTEX::COMPILATION_FAILED\n" << infoLog << std:: endl; 
-		};
+		checkCompileErrors(vertex, "VERTEX");
 
 		// fragment shader
 		// -----------
@@ -89,13 +83,7 @@ public:
 		glShaderSource(fragment, 1, &fragmentShaderCode, NULL);
 		glCompileShader(fragment);
 
-		// print compile errors if any 
-		// -----------
-		glGetShaderiv(fragment, GL_COMPILE_STATUS, &success);
-		if (!success)
-		{
-			glGetShaderInfoLog(fragment, 512, NULL, infoLog); std::cout << "ERROR::SHADER::FRAGMENT::COMPILATION_FAILED\n" << infoLog << std::endl;
-		};
+		checkCompileErrors(fragment, "FRAGMENT");
 
 		// shader program
 		// -----------
@@ -104,14 +92,7 @@ public:
 		glAttachShader(myID, fragment);
 		glLinkProgram(myID);
 
-		// check link error
-		// -----------
-		glGetProgramiv(myID, GL_LINK_STATUS, &success);
-		if (!success)
-		{
-			glGetProgramInfoLog(myID, 512, NULL, infoLog);
-			std::cout << "ERROR::SHADER::PROGRAM::COMPILATION_FAILED\n" << infoLog << std::endl;
-		}
+		checkCompileErrors(myID, "PROGRAM");
 
 		// Delete the shaders objects as we no longer need them
 		// -----------
@@ -142,46 +123,73 @@ public:
 		glUniform1f(glGetUniformLocation(myID, aName.c_str()), aValue);
 	}
 	// ------------------------------------------------------------------------
-	/*void setVec2(const std::string &aName, const glm::vec2 &aValue) const
+	void setVec2(const std::string &aName, const glm::vec2 &aValue) const
 	{
 		glUniform2fv(glGetUniformLocation(myID, aName.c_str()), 1, &aValue[0]);
-	}*/
+	}
 	void setVec2(const std::string &aName, float x, float y) const
 	{
 		glUniform2f(glGetUniformLocation(myID, aName.c_str()), x, y);
 	}
 	// ------------------------------------------------------------------------
-	/*void setVec3(const std::string &aName, const glm::vec3 &aValue) const
+	void setVec3(const std::string &aName, const glm::vec3 &aValue) const
 	{
 		glUniform3fv(glGetUniformLocation(myID, aName.c_str()), 1, &aValue[0]);
-	}*/
+	}
 	void setVec3(const std::string &aName, float x, float y, float z) const
 	{
 		glUniform3f(glGetUniformLocation(myID, aName.c_str()), x, y, z);
 	}
 	// ------------------------------------------------------------------------
-	/*void setVec4(const std::string &aName, const glm::vec4 &aValue) const
+	void setVec4(const std::string &aName, const glm::vec4 &aValue) const
 	{
 		glUniform4fv(glGetUniformLocation(myID, aName.c_str()), 1, &aValue[0]);
-	}*/
+	}
 	void setVec4(const std::string &aName, float x, float y, float z, float w)
 	{
 		glUniform4f(glGetUniformLocation(myID, aName.c_str()), x, y, z, w);
 	}
 	// ------------------------------------------------------------------------
-	/*void setMat2(const std::string &aName, const glm::mat2 &aMat) const
+	void setMat2(const std::string &aName, const glm::mat2 &aMat) const
 	{
 		glUniformMatrix2fv(glGetUniformLocation(myID, aName.c_str()), 1, GL_FALSE, &aMat[0][0]);
-	}*/
+	}
 	// ------------------------------------------------------------------------
-	/*void setMat3(const std::string &aName, const glm::mat3 &aMat) const
+	void setMat3(const std::string &aName, const glm::mat3 &aMat) const
 	{
 		glUniformMatrix3fv(glGetUniformLocation(myID, aName.c_str()), 1, GL_FALSE, &aMat[0][0]);
-	}*/
+	}
 	// ------------------------------------------------------------------------
-	/*void setMat4(const std::string &aName, const glm::mat4 &aMat) const
+	void setMat4(const std::string &aName, const glm::mat4 &aMat) const
 	{
 		glUniformMatrix4fv(glGetUniformLocation(myID, aName.c_str()), 1, GL_FALSE, &aMat[0][0]);
-	}*/
+	}
+
+private:
+	// utility function for checking shader compilation/linking errors.
+	// ------------------------------------------------------------------------
+	void checkCompileErrors(GLuint shader, std::string type)
+	{
+		GLint success;
+		GLchar infoLog[1024];
+		if (type != "PROGRAM")
+		{
+			glGetShaderiv(shader, GL_COMPILE_STATUS, &success);
+			if (!success)
+			{
+				glGetShaderInfoLog(shader, 1024, NULL, infoLog);
+				std::cout << "ERROR::SHADER_COMPILATION_ERROR of type: " << type << "\n" << infoLog << "\n -- --------------------------------------------------- -- " << std::endl;
+			}
+		}
+		else
+		{
+			glGetProgramiv(shader, GL_LINK_STATUS, &success);
+			if (!success)
+			{
+				glGetProgramInfoLog(shader, 1024, NULL, infoLog);
+				std::cout << "ERROR::PROGRAM_LINKING_ERROR of type: " << type << "\n" << infoLog << "\n -- --------------------------------------------------- -- " << std::endl;
+			}
+		}
+	}
 };
 
