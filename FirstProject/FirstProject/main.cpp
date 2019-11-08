@@ -283,6 +283,17 @@ int main()
 	myShader.SetInt("texture1", 0);
 	myShader.SetInt("texture2", 1);
 
+	glm::mat4 model; 
+	model = glm::rotate(model, glm::radians(-55.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+
+	glm::mat4 view; 
+	// note that we’re translating the scene in the reverse direction of where we want to move 
+	view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
+
+	glm::mat4 projection; 
+	projection = glm::perspective(glm::radians(45.0f), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
+
+
 #pragma region Rendering
 
 	// render loop
@@ -327,18 +338,18 @@ int main()
 		// -----------
 		glBindTexture(GL_TEXTURE_2D, myTexture2);
 
-		// create transformation
-		// -----------
-		glm::mat4 trans = glm::mat4(1.0f);
-		trans = glm::translate(trans, glm::vec3(0.5f, -0.5f, 0.0f));
-		trans = glm::rotate(trans, (float)glfwGetTime(), glm::vec3(0.0f, 0.0f, 1.0f));
-
 		// Tell OpenGL to use the program
 		// -----------
 		myShader.Use();
 
-		unsigned int transformLoc = glGetUniformLocation(myShader.myID, "aTransform"); 
-		glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(trans));
+		int modelLoc = glGetUniformLocation(myShader.myID, "model"); 
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+
+		int viewLoc = glGetUniformLocation(myShader.myID, "view");
+		glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(view));
+
+		int projectionLoc = glGetUniformLocation(myShader.myID, "projection");
+		glUniformMatrix4fv(projectionLoc, 1, GL_FALSE, glm::value_ptr(projection));
 
 		// Tell OpenGL to use the vertex array object of the rectangle
 		// -----------
