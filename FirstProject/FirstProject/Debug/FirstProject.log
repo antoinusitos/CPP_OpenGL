@@ -1,3 +1,4 @@
 ﻿  main.cpp
+d:\dev\opengl_c++\firstproject\firstproject\main.cpp(201): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
   FirstProject.vcxproj -> D:\Dev\OpenGL_C++\FirstProject\Debug\FirstProject.exe
   FirstProject.vcxproj -> D:\Dev\OpenGL_C++\FirstProject\Debug\FirstProject.pdb (Partial PDB)

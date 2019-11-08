@@ -198,11 +198,8 @@ int main()
 		
 		// Tell the shader to change the uniform variable
 		// -----------
-		//float myTimeValue = glfwGetTime();
-		//float myGreenValue = (sin(myTimeValue) / 2.0f) + 0.5f;
-		//myShader.SetFloat("ourColor", 1.0f);
-		//int myVertexColorLocation = glGetUniformLocation(myShaderProgram, "ourColor");
-		//glUniform4f(myVertexColorLocation, 0.0f, myGreenValue, 0.0f, 1.0f);
+		float myTimeValue = glfwGetTime();
+		myShader.SetFloat("myOffset", (sin(myTimeValue) / 2.0f) + 0.5f);
 
 		// Tell OpenGL to use the vertex array object
 		// -----------
