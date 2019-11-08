@@ -6,3 +6,4 @@ FirstProject/Debug/*
 *.exe
 *.obj
 *.log
+*.suo

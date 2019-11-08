@@ -6,6 +6,7 @@
 #include <iostream>
 
 #include "Shader.h"
+#include "stb_image.h"
 
 void framebuffer_size_callback(GLFWwindow* aWindow, int aWidth, int aHeight);
 void processInput(GLFWwindow* aWindow);
@@ -55,6 +56,49 @@ int main()
 
 	Shader myShader("simple.vert", "simple.frag");
 
+#pragma endregion
+
+#pragma region Texture
+
+	// create the texture
+	// -----------
+	unsigned int myTexture;
+	glGenTextures(1, &myTexture);
+
+	// bind the texture to an opengl object
+	// -----------
+	glBindTexture(GL_TEXTURE_2D, myTexture);
+
+	// set the texture wrapping/filtering options (on the currently bound texture object) 
+	// -----------
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+	// load the image
+	// -----------
+	int myWidth;
+	int myHeight;
+	int myNbChannel;
+	unsigned char* myData = stbi_load("Images/container.jpg", &myWidth, &myHeight, &myNbChannel, 0);
+
+	if (myData)
+	{
+		// generate the texture and generate the mipmap
+		// -----------
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, myWidth, myHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, myData);
+		glGenerateMipmap(GL_TEXTURE_2D);
+	}
+	else
+	{
+		std::cout << "Failed to load texture" << std::endl;
+	}
+
+	// free the image memory
+	// -----------
+	stbi_image_free(myData);
+	
 #pragma endregion
 
 #pragma region triangle
@@ -114,10 +158,11 @@ int main()
 	// create a rectangle
 	// -----------
 	float myRectangleVertices[] = {
-		0.5f, 0.5f, 0.0f, 	// top right 
-		0.5f, -0.5f, 0.0f,	// bottom right 
-		-0.5f, -0.5f, 0.0f, // bottom left 
-		-0.5f, 0.5f, 0.0f	// top left 
+		// positions			// colors				// texture coords
+		0.5f, 0.5f, 0.0f, 		1.0f, 0.0f, 0.0f,		1.0f, 1.0f,	// top right 
+		0.5f, -0.5f, 0.0f, 		0.0f, 1.0f, 0.0f,		1.0f, 0.0f,	// bottom right 
+		-0.5f, -0.5f, 0.0f, 	0.0f, 0.0f, 1.0f,		0.0f, 0.0f, // bottom left 
+		-0.5f, 0.5f, 0.0f, 		1.0f, 1.0f, 0.0f,		0.0f, 1.0f	// top left 
 	};
 
 	unsigned int myIndices[] = {
@@ -162,8 +207,15 @@ int main()
 
 	// Tell OpenGL how to interpret the vertex data per vertex attribute
 	// -----------
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+	// position
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(0);
+	// color
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
+	glEnableVertexAttribArray(1);
+	// texture coordinates
+	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
+	glEnableVertexAttribArray(2);
 
 	// unbind the buffer
 	// -----------
@@ -195,30 +247,33 @@ int main()
 		// Tell OpenGL to use the program
 		// -----------
 		myShader.Use();
-		
-		// Tell the shader to change the uniform variable
-		// -----------
-		//float myTimeValue = glfwGetTime();
-		//float myGreenValue = (sin(myTimeValue) / 2.0f) + 0.5f;
-		//myShader.SetFloat("ourColor", 1.0f);
-		//int myVertexColorLocation = glGetUniformLocation(myShaderProgram, "ourColor");
-		//glUniform4f(myVertexColorLocation, 0.0f, myGreenValue, 0.0f, 1.0f);
 
-		// Tell OpenGL to use the vertex array object
+#pragma region triangle
+
+		// Tell OpenGL to use the vertex array object of the triangle
 		// -----------
-		glBindVertexArray(myVAO);
+		//glBindVertexArray(myVAO);
 
 		// draw the triangles using the VAO
 		// -----------
-		glDrawArrays(GL_TRIANGLES, 0, 3);
+		//glDrawArrays(GL_TRIANGLES, 0, 3);
 
-		// Tell OpenGL to use the vertex array object
+#pragma endregion
+
+#pragma region rectangle
+		// Tell OpenGL to use the texture we loaded
 		// -----------
-		//glBindVertexArray(myVAOrect);
+		glBindTexture(GL_TEXTURE_2D, myTexture);
+
+		// Tell OpenGL to use the vertex array object of the rectangle
+		// -----------
+		glBindVertexArray(myVAOrect);
 
 		// draw the rectangle using the VAO
 		// -----------
-		//glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+
+#pragma endregion
 
 		// unbind the vertex array
 		// -----------
