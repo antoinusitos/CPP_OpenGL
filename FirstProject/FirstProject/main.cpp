@@ -198,8 +198,8 @@ int main()
 		
 		// Tell the shader to change the uniform variable
 		// -----------
-		float myTimeValue = glfwGetTime();
-		myShader.SetFloat("myOffset", (sin(myTimeValue) / 2.0f) + 0.5f);
+		//float myTimeValue = glfwGetTime();
+		//myShader.SetFloat("myOffset", (sin(myTimeValue) / 2.0f) + 0.5f);
 
 		// Tell OpenGL to use the vertex array object
 		// -----------
