@@ -82,12 +82,49 @@ int main()
 	int myHeight;
 	int myNbChannel;
 	unsigned char* myData = stbi_load("Images/container.jpg", &myWidth, &myHeight, &myNbChannel, 0);
+	stbi_set_flip_vertically_on_load(true);
 
 	if (myData)
 	{
 		// generate the texture and generate the mipmap
 		// -----------
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, myWidth, myHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, myData);
+		glGenerateMipmap(GL_TEXTURE_2D);
+	}
+	else
+	{
+		std::cout << "Failed to load texture" << std::endl;
+	}
+
+	// free the image memory
+	// -----------
+	stbi_image_free(myData);
+
+	// create the texture
+	// -----------
+	unsigned int myTexture2;
+	glGenTextures(1, &myTexture2);
+
+	// bind the texture to an opengl object
+	// -----------
+	glBindTexture(GL_TEXTURE_2D, myTexture2);
+
+	// set the texture wrapping/filtering options (on the currently bound texture object) 
+	// -----------
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+	// load the image
+	// -----------
+	myData = stbi_load("Images/awesomeface.png", &myWidth, &myHeight, &myNbChannel, 0);
+
+	if (myData)
+	{
+		// generate the texture and generate the mipmap
+		// -----------
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, myWidth, myHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, myData);
 		glGenerateMipmap(GL_TEXTURE_2D);
 	}
 	else
@@ -233,6 +270,15 @@ int main()
 	// -----------
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
+	// Tell OpenGL to use the program
+	// -----------
+	myShader.Use();
+
+	// affect images on channel
+	// -----------
+	glUniform1i(glGetUniformLocation(myShader.myID, "texture1"), 0);
+	myShader.SetInt("texture2", 1);
+
 	// render loop
 	// -----------
 	while (!glfwWindowShouldClose(myWindow))
@@ -243,10 +289,6 @@ int main()
 
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
-
-		// Tell OpenGL to use the program
-		// -----------
-		myShader.Use();
 
 #pragma region triangle
 
@@ -261,9 +303,25 @@ int main()
 #pragma endregion
 
 #pragma region rectangle
+		// activate the texture unit first before binding texture
+		// -----------
+		glActiveTexture(GL_TEXTURE0);
+
 		// Tell OpenGL to use the texture we loaded
 		// -----------
 		glBindTexture(GL_TEXTURE_2D, myTexture);
+
+		// activate the texture unit first before binding texture
+		// -----------
+		glActiveTexture(GL_TEXTURE1);
+
+		// Tell OpenGL to use the texture we loaded
+		// -----------
+		glBindTexture(GL_TEXTURE_2D, myTexture2);
+
+		// Tell OpenGL to use the program
+		// -----------
+		myShader.Use();
 
 		// Tell OpenGL to use the vertex array object of the rectangle
 		// -----------
