@@ -15,6 +15,7 @@
 
 void framebuffer_size_callback(GLFWwindow* aWindow, int aWidth, int aHeight);
 void processInput(GLFWwindow* aWindow);
+void Mouse_Callback(GLFWwindow* aWindow, double aXPos, double aYPos);
 
 // settings
 const unsigned int SCR_WIDTH = 800;
@@ -26,10 +27,22 @@ glm::vec3 myCameraPos = glm::vec3(0.0f, 0.0f, 3.0f);
 glm::vec3 myCameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
 glm::vec3 myCameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
 
+float myYaw = 0;
+float myPitch = 0;
+float myRoll = 0;
+
 // timing
 // -----------
 float myDeltaTime = 0.0f; // Time between current frame and last frame
 float myLastFrame = 0.0f; // Time of last frame
+
+// mouse position
+// -----------
+float myLastMousePosX = 400;
+float myLastMousePosY = 300;
+
+bool myFirstMouse = false;
+bool myInvertedY = false;
 
 int main()
 {
@@ -69,6 +82,14 @@ int main()
 	// configure global opengl state
 	// -----------------------------
 	glEnable(GL_DEPTH_TEST);
+
+	// hide and capture the cursor
+	// -----------------------------
+	glfwSetInputMode(myWindow, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+
+	// Tell opengl to call back when the mouse move
+	// -----------------------------
+	glfwSetCursorPosCallback(myWindow, Mouse_Callback);
 
 #pragma endregion
 
@@ -280,15 +301,6 @@ int main()
 
 #pragma endregion
 
-	// defining a camera
-	// -----------
-	/*glm::vec3 myCameraPos = glm::vec3(0.0f, 0.0f, 3.0f);
-	glm::vec3 myCameraTarget = glm::vec3(0.0f, 0.0f, 0.0f);
-	glm::vec3 myCameraDirection = glm::normalize(myCameraPos - myCameraTarget);
-	glm::vec3 myUp = glm::vec3(0.0f, 1.0f, 0.0f);
-	glm::vec3 myCameraRight = glm::normalize(glm::cross(myUp, myCameraDirection));
-	glm::vec3 myCameraUp = glm::normalize(glm::cross(myCameraDirection, myCameraRight));*/
-
 	// pass projection matrix to shader (as projection matrix rarely changes there's no need to do this per frame)
 	// -----------
 	glm::mat4 myProjection = glm::mat4(1.0f);
@@ -339,10 +351,6 @@ int main()
 
 		// create transformations
 		// -----------
-		float myRadius = 10.0f;
-		float myCamX = sin(glfwGetTime()) * myRadius;
-		float myCamZ = cos(glfwGetTime()) * myRadius;
-
 		glm::mat4 myView = glm::mat4(1.0f);
 		myView = glm::lookAt(
 			myCameraPos,					//position
@@ -424,4 +432,44 @@ void processInput(GLFWwindow* aWindow)
 	{
 		myCameraPos += glm::normalize(glm::cross(myCameraFront, myCameraUp)) * myCameraSpeed;
 	}
+
+	if (glfwGetKey(aWindow, GLFW_KEY_Y) == GLFW_PRESS)
+	{
+		myInvertedY = !myInvertedY;
+	}
+
+}
+
+void Mouse_Callback(GLFWwindow* aWindow, double aXPos, double aYPos)
+{
+	if (myFirstMouse)
+	{
+		myFirstMouse = false;
+		myLastMousePosX = aXPos;
+		myLastMousePosY = aYPos;
+	}
+
+	float xOffset = aXPos - myLastMousePosX;
+	float yOffset = aYPos - myLastMousePosY;
+
+	myLastMousePosX = aXPos;
+	myLastMousePosY = aYPos;
+
+	float sensitivity = 0.05f;
+	xOffset *= sensitivity;
+	yOffset *= sensitivity;
+
+	myYaw += xOffset;
+	myPitch += yOffset * (myInvertedY ? 1.0f : -1.0f);
+
+	if (myPitch > 89.0f)
+		myPitch = 89.0f;
+	if (myPitch < -89.0f)
+		myPitch = -89.0f;
+
+	glm::vec3 front;
+	front.x = cos(glm::radians(myPitch)) * cos(glm::radians(myYaw));
+	front.y = sin(glm::radians(myPitch));
+	front.z = cos(glm::radians(myPitch)) * sin(glm::radians(myYaw));
+	myCameraFront = glm::normalize(front);
 }
