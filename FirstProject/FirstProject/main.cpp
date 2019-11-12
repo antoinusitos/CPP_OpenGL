@@ -20,6 +20,17 @@ void processInput(GLFWwindow* aWindow);
 const unsigned int SCR_WIDTH = 800;
 const unsigned int SCR_HEIGHT = 600;
 
+// camera
+// -----------
+glm::vec3 myCameraPos = glm::vec3(0.0f, 0.0f, 3.0f);
+glm::vec3 myCameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
+glm::vec3 myCameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
+
+// timing
+// -----------
+float myDeltaTime = 0.0f; // Time between current frame and last frame
+float myLastFrame = 0.0f; // Time of last frame
+
 int main()
 {
 #pragma region Init
@@ -278,6 +289,8 @@ int main()
 	glm::vec3 myCameraRight = glm::normalize(glm::cross(myUp, myCameraDirection));
 	glm::vec3 myCameraUp = glm::normalize(glm::cross(myCameraDirection, myCameraRight));*/
 
+	// pass projection matrix to shader (as projection matrix rarely changes there's no need to do this per frame)
+	// -----------
 	glm::mat4 myProjection = glm::mat4(1.0f);
 	myProjection = glm::perspective(glm::radians(45.0f), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
 	myShader.setMat4("projection", myProjection);
@@ -288,6 +301,12 @@ int main()
 	// -----------
 	while (!glfwWindowShouldClose(myWindow))
 	{
+		// per-frame time logic
+		// -----------
+		float myCurrentFrame = glfwGetTime();
+		myDeltaTime = myCurrentFrame - myLastFrame;
+		myLastFrame = myCurrentFrame;
+
 		// input
 		// -----------
 		processInput(myWindow);
@@ -326,12 +345,10 @@ int main()
 
 		glm::mat4 myView = glm::mat4(1.0f);
 		myView = glm::lookAt(
-			glm::vec3(myCamX, 0.0f, myCamZ),	//position
-			glm::vec3(0.0f, 0.0f, 0.0f),		//target
-			glm::vec3(0.0f, 1.0f, 0.0f));		//up
+			myCameraPos,					//position
+			myCameraPos + myCameraFront,	//target
+			myCameraUp);					//up
 		myShader.setMat4("view", myView);
-
-
 
 		// Render Boxes
 		// -----------
@@ -387,5 +404,24 @@ void processInput(GLFWwindow* aWindow)
 	if (glfwGetKey(aWindow, GLFW_KEY_ESCAPE) == GLFW_PRESS)
 	{
 		glfwSetWindowShouldClose(aWindow, true);
+	}
+
+	float myCameraSpeed = 2.5f * myDeltaTime;
+	if (glfwGetKey(aWindow, GLFW_KEY_W) == GLFW_PRESS)
+	{
+		myCameraPos += myCameraSpeed * myCameraFront;
+	}
+	if (glfwGetKey(aWindow, GLFW_KEY_S) == GLFW_PRESS)
+	{
+		myCameraPos -= myCameraSpeed * myCameraFront;
+	}
+
+	if (glfwGetKey(aWindow, GLFW_KEY_A) == GLFW_PRESS)
+	{
+		myCameraPos -= glm::normalize(glm::cross(myCameraFront, myCameraUp)) * myCameraSpeed;
+	}
+	if (glfwGetKey(aWindow, GLFW_KEY_D) == GLFW_PRESS)
+	{
+		myCameraPos += glm::normalize(glm::cross(myCameraFront, myCameraUp)) * myCameraSpeed;
 	}
 }
