@@ -55,15 +55,17 @@ int main()
 		return -1;
 	}
 
+	// configure global opengl state
+	// -----------------------------
 	glEnable(GL_DEPTH_TEST);
 
 #pragma endregion
 
 #pragma region Shader
 
-	int nrAttributes; 
-	glGetIntegerv(GL_MAX_VERTEX_ATTRIBS, &nrAttributes); 
-	std::cout << "Maximum nr of vertex attributes supported: " << nrAttributes << std::endl;
+	//int nrAttributes; 
+	//glGetIntegerv(GL_MAX_VERTEX_ATTRIBS, &nrAttributes); 
+	//std::cout << "Maximum nr of vertex attributes supported: " << nrAttributes << std::endl;
 
 	Shader myShader("simple.vert", "simple.frag");
 
@@ -211,11 +213,6 @@ int main()
 		-0.5f,  0.5f, -0.5f,  0.0f, 1.0f
 	};
 
-	unsigned int myIndices[] = {
-		0, 1, 3,	//first triangle
-		1, 2, 3		//second triangle
-	};
-
 	// create a vertex array object (VAO) to store the vertex objects (as attribute pointers)
 	// -----------
 	unsigned int myVAOrect;
@@ -225,11 +222,6 @@ int main()
 	// -----------
 	unsigned int myVBOrect;
 	glGenBuffers(1, &myVBOrect);
-
-	// create a element buffer object (EBO) to store the vertex and some indices to draw
-	// -----------
-	unsigned int myEBO;
-	glGenBuffers(1, &myEBO);
 
 	// Tell OpenGL to use the vertex array object
 	// -----------
@@ -242,14 +234,6 @@ int main()
 	// copy the data of the vertices as an array of the size of the triangle into the buffer to draw them
 	// -----------
 	glBufferData(GL_ARRAY_BUFFER, sizeof(myRectangleVertices), myRectangleVertices, GL_STATIC_DRAW);
-
-	// assign the type of buffer to the ID
-	// -----------
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, myEBO);
-
-	// copy the indices of the vertices as an array of the size of the number of indices into the buffer to draw them
-	// -----------
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(myIndices), myIndices, GL_STATIC_DRAW);
 
 	// Tell OpenGL how to interpret the vertex data per vertex attribute
 	// -----------
@@ -268,8 +252,8 @@ int main()
 	// -----------
 	glBindVertexArray(0);
 
-#pragma endregion
-
+	// world space positions of our cubes
+	// -----------
 	glm::vec3 myCubePositions[] = {
 		glm::vec3(0.0f,  0.0f,  0.0f),
 		glm::vec3(2.0f,  5.0f, -15.0f),
@@ -283,6 +267,20 @@ int main()
 		glm::vec3(-1.3f,  1.0f, -1.5f)
 	};
 
+#pragma endregion
+
+	// defining a camera
+	// -----------
+	/*glm::vec3 myCameraPos = glm::vec3(0.0f, 0.0f, 3.0f);
+	glm::vec3 myCameraTarget = glm::vec3(0.0f, 0.0f, 0.0f);
+	glm::vec3 myCameraDirection = glm::normalize(myCameraPos - myCameraTarget);
+	glm::vec3 myUp = glm::vec3(0.0f, 1.0f, 0.0f);
+	glm::vec3 myCameraRight = glm::normalize(glm::cross(myUp, myCameraDirection));
+	glm::vec3 myCameraUp = glm::normalize(glm::cross(myCameraDirection, myCameraRight));*/
+
+	glm::mat4 myProjection = glm::mat4(1.0f);
+	myProjection = glm::perspective(glm::radians(45.0f), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
+	myShader.setMat4("projection", myProjection);
 
 #pragma region Rendering
 
@@ -322,17 +320,20 @@ int main()
 
 		// create transformations
 		// -----------
-		glm::mat4 view = glm::mat4(1.0f);
-		// note that we are translating the scene in the reverse direction of where we want to move 
-		view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
+		float myRadius = 10.0f;
+		float myCamX = sin(glfwGetTime()) * myRadius;
+		float myCamZ = cos(glfwGetTime()) * myRadius;
 
-		glm::mat4 projection = glm::mat4(1.0f);
-		projection = glm::perspective(glm::radians(45.0f), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
+		glm::mat4 myView = glm::mat4(1.0f);
+		myView = glm::lookAt(
+			glm::vec3(myCamX, 0.0f, myCamZ),	//position
+			glm::vec3(0.0f, 0.0f, 0.0f),		//target
+			glm::vec3(0.0f, 1.0f, 0.0f));		//up
+		myShader.setMat4("view", myView);
 
-		myShader.setMat4("view", view);
-		myShader.setMat4("projection", projection);
 
-		// Tell OpenGL to use the vertex array object of the rectangle
+
+		// Render Boxes
 		// -----------
 		glBindVertexArray(myVAOrect);
 
@@ -362,7 +363,7 @@ int main()
 	// free the memory
 	glDeleteVertexArrays(1, &myVAOrect);
 	glDeleteBuffers(1, &myVBOrect);
-	glDeleteBuffers(1, &myEBO);
+	//glDeleteBuffers(1, &myEBO);
 
 	// glfw: terminate, clearing all previously allocated GLFW resources.
 	// ------------------------------------------------------------------
