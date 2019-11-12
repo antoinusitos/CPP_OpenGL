@@ -16,6 +16,7 @@
 void framebuffer_size_callback(GLFWwindow* aWindow, int aWidth, int aHeight);
 void processInput(GLFWwindow* aWindow);
 void Mouse_Callback(GLFWwindow* aWindow, double aXPos, double aYPos);
+void Scroll_Callback(GLFWwindow* window, double xoffset, double yoffset);
 
 // settings
 const unsigned int SCR_WIDTH = 800;
@@ -31,6 +32,8 @@ float myYaw = 0;
 float myPitch = 0;
 float myRoll = 0;
 
+float myFov = 45.0f;
+
 // timing
 // -----------
 float myDeltaTime = 0.0f; // Time between current frame and last frame
@@ -38,8 +41,8 @@ float myLastFrame = 0.0f; // Time of last frame
 
 // mouse position
 // -----------
-float myLastMousePosX = 400;
-float myLastMousePosY = 300;
+float myLastMousePosX = 400.0f;
+float myLastMousePosY = 300.0f;
 
 bool myFirstMouse = false;
 bool myInvertedY = false;
@@ -90,6 +93,10 @@ int main()
 	// Tell opengl to call back when the mouse move
 	// -----------------------------
 	glfwSetCursorPosCallback(myWindow, Mouse_Callback);
+
+	// Tell opengl to call back when the mouse wheel move
+	// -----------------------------
+	glfwSetScrollCallback(myWindow, Scroll_Callback);
 
 #pragma endregion
 
@@ -301,12 +308,6 @@ int main()
 
 #pragma endregion
 
-	// pass projection matrix to shader (as projection matrix rarely changes there's no need to do this per frame)
-	// -----------
-	glm::mat4 myProjection = glm::mat4(1.0f);
-	myProjection = glm::perspective(glm::radians(45.0f), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
-	myShader.setMat4("projection", myProjection);
-
 #pragma region Rendering
 
 	// render loop
@@ -348,6 +349,12 @@ int main()
 		// Tell OpenGL to use the program
 		// -----------
 		myShader.Use();
+
+		// pass projection matrix to shader (as projection matrix rarely changes there's no need to do this per frame)
+		// -----------
+		glm::mat4 myProjection = glm::mat4(1.0f);
+		myProjection = glm::perspective(glm::radians(myFov), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
+		myShader.setMat4("projection", myProjection);
 
 		// create transformations
 		// -----------
@@ -472,4 +479,14 @@ void Mouse_Callback(GLFWwindow* aWindow, double aXPos, double aYPos)
 	front.y = sin(glm::radians(myPitch));
 	front.z = cos(glm::radians(myPitch)) * sin(glm::radians(myYaw));
 	myCameraFront = glm::normalize(front);
+}
+
+void Scroll_Callback(GLFWwindow* window, double xoffset, double yoffset)
+{
+	if (myFov >= 1.0f && myFov <= 45.0f)
+		myFov -= yoffset;
+	if (myFov <= 1.0f)
+		myFov = 1.0f;
+	if (myFov >= 45.0f)
+		myFov = 45.0f;
 }

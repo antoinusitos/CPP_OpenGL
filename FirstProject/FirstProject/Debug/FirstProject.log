@@ -1,12 +1,13 @@
 ﻿  main.cpp
 d:\dev\opengl_c++\firstproject\firstproject\shader.h(70): warning C4101: 'infoLog': unreferenced local variable
 d:\dev\opengl_c++\firstproject\firstproject\shader.h(69): warning C4101: 'success': unreferenced local variable
-d:\dev\opengl_c++\firstproject\firstproject\main.cpp(318): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-d:\dev\opengl_c++\firstproject\firstproject\main.cpp(449): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-d:\dev\opengl_c++\firstproject\firstproject\main.cpp(450): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-d:\dev\opengl_c++\firstproject\firstproject\main.cpp(453): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-d:\dev\opengl_c++\firstproject\firstproject\main.cpp(454): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+d:\dev\opengl_c++\firstproject\firstproject\main.cpp(319): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+d:\dev\opengl_c++\firstproject\firstproject\main.cpp(455): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
 d:\dev\opengl_c++\firstproject\firstproject\main.cpp(456): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-d:\dev\opengl_c++\firstproject\firstproject\main.cpp(457): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+d:\dev\opengl_c++\firstproject\firstproject\main.cpp(459): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+d:\dev\opengl_c++\firstproject\firstproject\main.cpp(460): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+d:\dev\opengl_c++\firstproject\firstproject\main.cpp(462): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+d:\dev\opengl_c++\firstproject\firstproject\main.cpp(463): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+d:\dev\opengl_c++\firstproject\firstproject\main.cpp(490): warning C4244: '-=': conversion from 'double' to 'float', possible loss of data
   FirstProject.vcxproj -> D:\Dev\OpenGL_C++\FirstProject\Debug\FirstProject.exe
   FirstProject.vcxproj -> D:\Dev\OpenGL_C++\FirstProject\Debug\FirstProject.pdb (Partial PDB)
