@@ -55,6 +55,8 @@ int main()
 		return -1;
 	}
 
+	glEnable(GL_DEPTH_TEST);
+
 #pragma endregion
 
 #pragma region Shader
@@ -147,68 +149,53 @@ int main()
 	
 #pragma endregion
 
-#pragma region triangle
-
-	// create a triangle
-	// -----------
-	float myVertices[] = {
-		// positions			//colors
-		-0.5f, -0.5f, 0.0f,		1.0f, 0.0f, 0.0f,	// left
-		0.5f, -0.5f, 0.0f,		0.0f, 1.0f, 0.0f,	// right
-		0.0f, 0.5f, 0.0f,		0.0f, 0.0f, 1.0f	// top
-	};
-
-	// create a vertex array object (VAO) to store the vertex objects (as attribute pointers)
-	// -----------
-	unsigned int myVAO;
-	glGenVertexArrays(1, &myVAO);
-
-	// create a vertex buffer object (VBO) to store the triangle's vertices and assign an ID
-	// -----------
-	unsigned int myVBO;
-	glGenBuffers(1, &myVBO);
-
-	// Tell OpenGL to use the vertex array object
-	// -----------
-	glBindVertexArray(myVAO);
-
-	// assign the type of buffer to the ID
-	// -----------
-	glBindBuffer(GL_ARRAY_BUFFER, myVBO);
-
-	// copy the data of the vertices as an array of the size of the triangle into the buffer to draw them
-	// -----------
-	glBufferData(GL_ARRAY_BUFFER, sizeof(myVertices), myVertices, GL_STATIC_DRAW);
-
-	// Tell OpenGL how to interpret the vertex data per vertex attribute
-	// -----------
-	// position
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
-	glEnableVertexAttribArray(0);
-	// color
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
-	glEnableVertexAttribArray(1);
-
-	// unbind the buffer
-	// -----------
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-	// unbind the vertex array
-	// -----------
-	glBindVertexArray(0);
-
-#pragma endregion
-
 #pragma region rectangle
 
 	// create a rectangle
 	// -----------
 	float myRectangleVertices[] = {
 		// positions			// texture coords
-		0.5f, 0.5f, 0.0f, 		1.0f, 1.0f,	// top right 
-		0.5f, -0.5f, 0.0f, 		1.0f, 0.0f,	// bottom right 
-		-0.5f, -0.5f, 0.0f,		0.0f, 0.0f, // bottom left 
-		-0.5f, 0.5f, 0.0f, 		0.0f, 1.0f	// top left 
+		-0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
+		0.5f, -0.5f, -0.5f,  1.0f, 0.0f,
+		0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+		0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+		-0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
+		-0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
+
+		-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+		0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
+		0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
+		0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
+		-0.5f,  0.5f,  0.5f,  0.0f, 1.0f,
+		-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+
+		-0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+		-0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+		-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+		-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+		-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+		-0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+
+		0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+		0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+		0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+		0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+		0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+		0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+
+		-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+		0.5f, -0.5f, -0.5f,  1.0f, 1.0f,
+		0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
+		0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
+		-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+		-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+
+		-0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
+		0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+		0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+		0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+		-0.5f,  0.5f,  0.5f,  0.0f, 0.0f,
+		-0.5f,  0.5f, -0.5f,  0.0f, 1.0f
 	};
 
 	unsigned int myIndices[] = {
@@ -297,19 +284,7 @@ int main()
 		// clear the window
 		// -----------
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-		glClear(GL_COLOR_BUFFER_BIT);
-
-#pragma region triangle Rendering
-
-		// Tell OpenGL to use the vertex array object of the triangle
-		// -----------
-		//glBindVertexArray(myVAO);
-
-		// draw the triangles using the VAO
-		// -----------
-		//glDrawArrays(GL_TRIANGLES, 0, 3);
-
-#pragma endregion
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 #pragma region rectangle rendering
 		// activate the texture unit first before binding texture
@@ -335,7 +310,8 @@ int main()
 		// create transformations
 		// -----------
 		glm::mat4 model = glm::mat4(1.0f);
-		model = glm::rotate(model, glm::radians(-55.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+		//model = glm::rotate(model, glm::radians(-55.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+		model = glm::rotate(model, (float)glfwGetTime() * glm::radians(50.0f), glm::vec3(0.5f, 1.0f, 0.0f));
 
 		glm::mat4 view = glm::mat4(1.0f);
 		// note that we are translating the scene in the reverse direction of where we want to move 
@@ -354,8 +330,8 @@ int main()
 
 		// draw the rectangle using the VAO
 		// -----------
-		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-
+		//glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+		glDrawArrays(GL_TRIANGLES, 0, 36);
 #pragma endregion
 
 		// check and call events and swap the buffers
@@ -367,8 +343,7 @@ int main()
 #pragma endregion
 
 	// free the memory
-	glDeleteVertexArrays(1, &myVAO);
-	glDeleteBuffers(1, &myVBO);
+	glDeleteVertexArrays(1, &myVAOrect);
 	glDeleteBuffers(1, &myVBOrect);
 	glDeleteBuffers(1, &myEBO);
 
