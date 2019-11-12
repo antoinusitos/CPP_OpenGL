@@ -283,16 +283,6 @@ int main()
 	myShader.SetInt("texture1", 0);
 	myShader.SetInt("texture2", 1);
 
-	glm::mat4 model; 
-	model = glm::rotate(model, glm::radians(-55.0f), glm::vec3(1.0f, 0.0f, 0.0f));
-
-	glm::mat4 view; 
-	// note that we’re translating the scene in the reverse direction of where we want to move 
-	view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
-
-	glm::mat4 projection; 
-	projection = glm::perspective(glm::radians(45.0f), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
-
 
 #pragma region Rendering
 
@@ -342,14 +332,21 @@ int main()
 		// -----------
 		myShader.Use();
 
-		int modelLoc = glGetUniformLocation(myShader.myID, "model"); 
-		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		// create transformations
+		// -----------
+		glm::mat4 model = glm::mat4(1.0f);
+		model = glm::rotate(model, glm::radians(-55.0f), glm::vec3(1.0f, 0.0f, 0.0f));
 
-		int viewLoc = glGetUniformLocation(myShader.myID, "view");
-		glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(view));
+		glm::mat4 view = glm::mat4(1.0f);
+		// note that we are translating the scene in the reverse direction of where we want to move 
+		view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
 
-		int projectionLoc = glGetUniformLocation(myShader.myID, "projection");
-		glUniformMatrix4fv(projectionLoc, 1, GL_FALSE, glm::value_ptr(projection));
+		glm::mat4 projection = glm::mat4(1.0f);
+		projection = glm::perspective(glm::radians(45.0f), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
+
+		myShader.setMat4("model", model);
+		myShader.setMat4("view", view);
+		myShader.setMat4("projection", projection);
 
 		// Tell OpenGL to use the vertex array object of the rectangle
 		// -----------
