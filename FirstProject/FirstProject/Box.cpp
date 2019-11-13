@@ -57,6 +57,7 @@ void Box::Init()
 
 void Box::Render(Shader aShader)
 {
+	myModel = glm::mat4(1.0f);
 	myModel = glm::translate(myModel, myPosition);
 	aShader.setMat4("model", myModel);
 	glBindVertexArray(myVAOrect);

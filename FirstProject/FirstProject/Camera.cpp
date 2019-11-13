@@ -1,4 +1,6 @@
 #include "Camera.h"
+#include "Shader.h"
+#include <GLFW/glfw3.h>
 
 Camera::Camera(glm::vec3 aPosition, glm::vec3 anUp, float aYaw, float aPitch) : myFront(glm::vec3(0.0f, 0.0f, -1.0f)), myMovementSpeed(SPEED), mySensitivity(SENSITIVITY), myFov(ZOOM)
 {
@@ -90,4 +92,22 @@ void Camera::UpdateCameraVectors()
 	// Also re-calculate the Right and Up vector
 	myRight = glm::normalize(glm::cross(myFront, myWorldUp));  // Normalize the vectors, because their length gets closer to 0 the more you look up or down which results in slower movement.
 	myUp = glm::normalize(glm::cross(myRight, myFront));
+}
+
+void Camera::Render(Shader aShader, GLFWwindow* aWindow)
+{
+	int width, height;
+	glfwGetWindowSize(aWindow, &width, &height);
+
+	// pass projection matrix to shader (as projection matrix rarely changes there's no need to do this per frame)
+	// -----------
+	glm::mat4 myProjection = glm::mat4(1.0f);
+	myProjection = glm::perspective(glm::radians(myFov), (float)width / (float)height, 0.1f, 100.0f);
+	aShader.setMat4("projection", myProjection);
+
+	// create transformations
+	// -----------
+	glm::mat4 myView = glm::mat4(1.0f);
+	myView = GetViewMatrix();
+	aShader.setMat4("view", myView);
 }

@@ -259,19 +259,9 @@ int main()
 		// Tell OpenGL to use the program
 		// -----------
 		myShader.Use();
-
-		// pass projection matrix to shader (as projection matrix rarely changes there's no need to do this per frame)
-		// -----------
-		glm::mat4 myProjection = glm::mat4(1.0f);
-		myProjection = glm::perspective(glm::radians(myMainCamera->myFov), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
-		myShader.setMat4("projection", myProjection);
-
-		// create transformations
-		// -----------
-		glm::mat4 myView = glm::mat4(1.0f);
-		myView = myMainCamera->GetViewMatrix();
-		myShader.setMat4("view", myView);
 		
+		myMainCamera->Render(myShader, myWindow);
+
 		// Render Boxes
 		// -----------
 		for (int i = 0; i < 10; i++)
