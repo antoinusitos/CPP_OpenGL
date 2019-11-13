@@ -52,5 +52,17 @@
     <None Include="simple.frag">
       <Filter>Source Files</Filter>
     </None>
+    <None Include="Color.vert">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="Color.frag">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="Light.frag">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="Light.vert">
+      <Filter>Source Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

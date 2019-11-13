@@ -129,6 +129,10 @@
     <ClInclude Include="stb_image.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Color.frag" />
+    <None Include="Color.vert" />
+    <None Include="Light.frag" />
+    <None Include="Light.vert" />
     <None Include="simple.frag" />
     <None Include="simple.vert" />
   </ItemGroup>

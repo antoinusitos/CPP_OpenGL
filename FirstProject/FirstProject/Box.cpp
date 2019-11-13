@@ -55,10 +55,16 @@ void Box::Init()
 	glBindVertexArray(0);
 }
 
+void Box::Scale(glm::vec3 aScale)
+{
+	myScale = aScale;
+}
+
 void Box::Render(Shader aShader)
 {
 	myModel = glm::mat4(1.0f);
 	myModel = glm::translate(myModel, myPosition);
+	myModel = glm::scale(myModel, myScale);
 	aShader.setMat4("model", myModel);
 	glBindVertexArray(myVAOrect);
 	glDrawArrays(GL_TRIANGLES, 0, 36);

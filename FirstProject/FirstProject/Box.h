@@ -60,12 +60,15 @@ public:
 	unsigned int myVBOrect;
 
 	glm::vec3 myPosition = glm::vec3(0.0f, 0.0f, 0.0f);
+	glm::vec3 myScale = glm::vec3(1.0f, 1.0f, 1.0f);
 
 	glm::mat4 myModel = glm::mat4(1.0f);
 
 public:
 	Box(glm::vec3 aPosition = glm::vec3(0.0f, 0.0f, 0.0f));
 	Box(float aX, float aY, float aZ);
+
+	void Scale(glm::vec3 aScale);
 
 	void Render(Shader aShader);
 	void FreeCube();

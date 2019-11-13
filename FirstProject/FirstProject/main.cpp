@@ -103,6 +103,8 @@ int main()
 	//std::cout << "Maximum nr of vertex attributes supported: " << nrAttributes << std::endl;
 
 	Shader myShader("simple.vert", "simple.frag");
+	Shader myLightShader("Light.vert", "Light.frag");
+	Shader myColorShader("Color.vert", "Color.frag");
 
 #pragma endregion
 
@@ -216,6 +218,9 @@ int main()
 		Box(-1.3f,  1.0f, -1.5f)
 	};
 
+	Box myLight = Box(1.2f, 1.0f, 2.0f);
+	myLight.Scale(glm::vec3(0.2f));
+
 #pragma endregion
 
 #pragma region Rendering
@@ -236,7 +241,8 @@ int main()
 
 		// clear the window
 		// -----------
-		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+		//glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+		glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 #pragma region rectangle rendering
@@ -258,16 +264,23 @@ int main()
 
 		// Tell OpenGL to use the program
 		// -----------
-		myShader.Use();
+		myLightShader.Use();
+		myLightShader.setVec3("objectColor", 1.0f, 0.5f, 0.31f);
+		myLightShader.setVec3("lightColor", 1.0f, 1.0f, 1.0f);
 		
-		myMainCamera->Render(myShader, myWindow);
+		myMainCamera->Render(myLightShader, myWindow);
 
 		// Render Boxes
 		// -----------
 		for (int i = 0; i < 10; i++)
 		{
-			myBoxes[i].Render(myShader);
+			myBoxes[i].Render(myLightShader);
 		}
+
+		myColorShader.Use();
+		myLight.Render(myColorShader);
+
+		myMainCamera->Render(myColorShader, myWindow);
 		
 #pragma endregion
 
