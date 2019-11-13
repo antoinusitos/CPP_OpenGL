@@ -8,6 +8,7 @@
 #include "Shader.h"
 #include "stb_image.h"
 #include "Camera.h"
+#include "Box.h"
 
 #include <glm/glm.hpp> 
 #include <glm/gtc/matrix_transform.hpp> 
@@ -25,8 +26,11 @@ const unsigned int SCR_HEIGHT = 600;
 
 // camera
 // -----------
-Camera myCamera(glm::vec3(0.0f, 0.0f, 3.0f));
+Camera* myCamera = new Camera(glm::vec3(0.0f, 0.0f, 3.0f));
 
+Camera* myMainCamera = myCamera;
+
+bool cam1 = true;
 // timing
 // -----------
 float myDeltaTime = 0.0f; // Time between current frame and last frame
@@ -197,105 +201,19 @@ int main()
 
 #pragma region rectangle
 
-	// create a rectangle
-	// -----------
-	float myRectangleVertices[] = {
-		// positions			// texture coords
-		-0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
-		0.5f, -0.5f, -0.5f,  1.0f, 0.0f,
-		0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-		0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-		-0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
-		-0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
-
-		-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-		0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-		0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
-		0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
-		-0.5f,  0.5f,  0.5f,  0.0f, 1.0f,
-		-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-
-		-0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-		-0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-		-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-		-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-		-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-		-0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-
-		0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-		0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-		0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-		0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-		0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-		0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-
-		-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-		0.5f, -0.5f, -0.5f,  1.0f, 1.0f,
-		0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-		0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-		-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-		-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-
-		-0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
-		0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-		0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-		0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-		-0.5f,  0.5f,  0.5f,  0.0f, 0.0f,
-		-0.5f,  0.5f, -0.5f,  0.0f, 1.0f
-	};
-
-	// create a vertex array object (VAO) to store the vertex objects (as attribute pointers)
-	// -----------
-	unsigned int myVAOrect;
-	glGenVertexArrays(1, &myVAOrect);
-
-	// create a vertex buffer object (VBO) to store the triangle's vertices and assign an ID
-	// -----------
-	unsigned int myVBOrect;
-	glGenBuffers(1, &myVBOrect);
-
-	// Tell OpenGL to use the vertex array object
-	// -----------
-	glBindVertexArray(myVAOrect);
-
-	// assign the type of buffer to the ID
-	// -----------
-	glBindBuffer(GL_ARRAY_BUFFER, myVBOrect);
-
-	// copy the data of the vertices as an array of the size of the triangle into the buffer to draw them
-	// -----------
-	glBufferData(GL_ARRAY_BUFFER, sizeof(myRectangleVertices), myRectangleVertices, GL_STATIC_DRAW);
-
-	// Tell OpenGL how to interpret the vertex data per vertex attribute
-	// -----------
-	// position
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
-	glEnableVertexAttribArray(0);
-	// texture coordinates
-	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
-	glEnableVertexAttribArray(1);
-
-	// unbind the buffer
-	// -----------
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-	// unbind the vertex array
-	// -----------
-	glBindVertexArray(0);
-
 	// world space positions of our cubes
 	// -----------
-	glm::vec3 myCubePositions[] = {
-		glm::vec3(0.0f,  0.0f,  0.0f),
-		glm::vec3(2.0f,  5.0f, -15.0f),
-		glm::vec3(-1.5f, -2.2f, -2.5f),
-		glm::vec3(-3.8f, -2.0f, -12.3f),
-		glm::vec3(2.4f, -0.4f, -3.5f),
-		glm::vec3(-1.7f,  3.0f, -7.5f),
-		glm::vec3(1.3f, -2.0f, -2.5f),
-		glm::vec3(1.5f,  2.0f, -2.5f),
-		glm::vec3(1.5f,  0.2f, -1.5f),
-		glm::vec3(-1.3f,  1.0f, -1.5f)
+	Box myBoxes[] = {
+		Box(0.0f,  0.0f,  0.0f),
+		Box(2.0f,  5.0f, -15.0f),
+		Box(-1.5f, -2.2f, -2.5f),
+		Box(-3.8f, -2.0f, -12.3f),
+		Box(2.4f, -0.4f, -3.5f),
+		Box(-1.7f,  3.0f, -7.5f),
+		Box(1.3f, -2.0f, -2.5f),
+		Box(1.5f,  2.0f, -2.5f),
+		Box(1.5f,  0.2f, -1.5f),
+		Box(-1.3f,  1.0f, -1.5f)
 	};
 
 #pragma endregion
@@ -345,30 +263,20 @@ int main()
 		// pass projection matrix to shader (as projection matrix rarely changes there's no need to do this per frame)
 		// -----------
 		glm::mat4 myProjection = glm::mat4(1.0f);
-		myProjection = glm::perspective(glm::radians(myCamera.myFov), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
+		myProjection = glm::perspective(glm::radians(myMainCamera->myFov), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
 		myShader.setMat4("projection", myProjection);
 
 		// create transformations
 		// -----------
 		glm::mat4 myView = glm::mat4(1.0f);
-		myView = myCamera.GetViewMatrix();
+		myView = myMainCamera->GetViewMatrix();
 		myShader.setMat4("view", myView);
-
+		
 		// Render Boxes
 		// -----------
-		glBindVertexArray(myVAOrect);
-
 		for (int i = 0; i < 10; i++)
 		{
-			glm::mat4 model = glm::mat4(1.0f);
-			model = glm::translate(model, myCubePositions[i]);
-			float angle = 20.0f * i;
-			model = glm::rotate(model, glm::radians(angle), glm::vec3(1.0f, 0.3f, 0.5f));
-			myShader.setMat4("model", model);
-
-			// draw the rectangle
-			// -----------
-			glDrawArrays(GL_TRIANGLES, 0, 36);
+			myBoxes[i].Render(myShader);
 		}
 		
 #pragma endregion
@@ -380,11 +288,6 @@ int main()
 	}
 
 #pragma endregion
-
-	// free the memory
-	glDeleteVertexArrays(1, &myVAOrect);
-	glDeleteBuffers(1, &myVBOrect);
-	//glDeleteBuffers(1, &myEBO);
 
 	// glfw: terminate, clearing all previously allocated GLFW resources.
 	// ------------------------------------------------------------------
@@ -413,27 +316,26 @@ void processInput(GLFWwindow* aWindow)
 	float myCameraSpeed = 2.5f * myDeltaTime;
 	if (glfwGetKey(aWindow, GLFW_KEY_W) == GLFW_PRESS)
 	{
-		myCamera.ProcessKeyboard(FORWARD, myDeltaTime);
+		myMainCamera->ProcessKeyboard(FORWARD, myDeltaTime);
 	}
 	if (glfwGetKey(aWindow, GLFW_KEY_S) == GLFW_PRESS)
 	{
-		myCamera.ProcessKeyboard(BACKWARD, myDeltaTime);
+		myMainCamera->ProcessKeyboard(BACKWARD, myDeltaTime);
 	}
 
 	if (glfwGetKey(aWindow, GLFW_KEY_A) == GLFW_PRESS)
 	{
-		myCamera.ProcessKeyboard(LEFT, myDeltaTime);
+		myMainCamera->ProcessKeyboard(LEFT, myDeltaTime);
 	}
 	if (glfwGetKey(aWindow, GLFW_KEY_D) == GLFW_PRESS)
 	{
-		myCamera.ProcessKeyboard(RIGHT, myDeltaTime);
+		myMainCamera->ProcessKeyboard(RIGHT, myDeltaTime);
 	}
 
 	if (glfwGetKey(aWindow, GLFW_KEY_Y) == GLFW_PRESS)
 	{
-		myCamera.InvertY();
+		myMainCamera->InvertY();
 	}
-
 }
 
 void Mouse_Callback(GLFWwindow* aWindow, double aXPos, double aYPos)
@@ -451,10 +353,10 @@ void Mouse_Callback(GLFWwindow* aWindow, double aXPos, double aYPos)
 	myLastMousePosX = aXPos;
 	myLastMousePosY = aYPos;
 
-	myCamera.ProcessMouseMovement(xOffset, yOffset);
+	myMainCamera->ProcessMouseMovement(xOffset, yOffset);
 }
 
 void Scroll_Callback(GLFWwindow* aWindow, double aXOffset, double aYOffset)
 {
-	myCamera.ProcessMouseScroll(aYOffset);
+	myMainCamera->ProcessMouseScroll(aYOffset);
 }
