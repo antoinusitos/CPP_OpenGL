@@ -75,7 +75,7 @@ public:
 		glShaderSource(vertex, 1, &vertexShaderCode, NULL);
 		glCompileShader(vertex);
 
-		checkCompileErrors(vertex, "VERTEX");
+		CheckCompileErrors(vertex, "VERTEX");
 
 		// fragment shader
 		// -----------
@@ -83,7 +83,7 @@ public:
 		glShaderSource(fragment, 1, &fragmentShaderCode, NULL);
 		glCompileShader(fragment);
 
-		checkCompileErrors(fragment, "FRAGMENT");
+		CheckCompileErrors(fragment, "FRAGMENT");
 
 		// shader program
 		// -----------
@@ -92,7 +92,7 @@ public:
 		glAttachShader(myID, fragment);
 		glLinkProgram(myID);
 
-		checkCompileErrors(myID, "PROGRAM");
+		CheckCompileErrors(myID, "PROGRAM");
 
 		// Delete the shaders objects as we no longer need them
 		// -----------
@@ -123,44 +123,44 @@ public:
 		glUniform1f(glGetUniformLocation(myID, aName.c_str()), aValue);
 	}
 	// ------------------------------------------------------------------------
-	void setVec2(const std::string &aName, const glm::vec2 &aValue) const
+	void SetVec2(const std::string &aName, const glm::vec2 &aValue) const
 	{
 		glUniform2fv(glGetUniformLocation(myID, aName.c_str()), 1, &aValue[0]);
 	}
-	void setVec2(const std::string &aName, float x, float y) const
+	void SetVec2(const std::string &aName, float x, float y) const
 	{
 		glUniform2f(glGetUniformLocation(myID, aName.c_str()), x, y);
 	}
 	// ------------------------------------------------------------------------
-	void setVec3(const std::string &aName, const glm::vec3 &aValue) const
+	void SetVec3(const std::string &aName, const glm::vec3 &aValue) const
 	{
 		glUniform3fv(glGetUniformLocation(myID, aName.c_str()), 1, &aValue[0]);
 	}
-	void setVec3(const std::string &aName, float x, float y, float z) const
+	void SetVec3(const std::string &aName, float x, float y, float z) const
 	{
 		glUniform3f(glGetUniformLocation(myID, aName.c_str()), x, y, z);
 	}
 	// ------------------------------------------------------------------------
-	void setVec4(const std::string &aName, const glm::vec4 &aValue) const
+	void SetVec4(const std::string &aName, const glm::vec4 &aValue) const
 	{
 		glUniform4fv(glGetUniformLocation(myID, aName.c_str()), 1, &aValue[0]);
 	}
-	void setVec4(const std::string &aName, float x, float y, float z, float w)
+	void SetVec4(const std::string &aName, float x, float y, float z, float w)
 	{
 		glUniform4f(glGetUniformLocation(myID, aName.c_str()), x, y, z, w);
 	}
 	// ------------------------------------------------------------------------
-	void setMat2(const std::string &aName, const glm::mat2 &aMat) const
+	void SetMat2(const std::string &aName, const glm::mat2 &aMat) const
 	{
 		glUniformMatrix2fv(glGetUniformLocation(myID, aName.c_str()), 1, GL_FALSE, &aMat[0][0]);
 	}
 	// ------------------------------------------------------------------------
-	void setMat3(const std::string &aName, const glm::mat3 &aMat) const
+	void SetMat3(const std::string &aName, const glm::mat3 &aMat) const
 	{
 		glUniformMatrix3fv(glGetUniformLocation(myID, aName.c_str()), 1, GL_FALSE, &aMat[0][0]);
 	}
 	// ------------------------------------------------------------------------
-	void setMat4(const std::string &aName, const glm::mat4 &aMat) const
+	void SetMat4(const std::string &aName, const glm::mat4 &aMat) const
 	{
 		glUniformMatrix4fv(glGetUniformLocation(myID, aName.c_str()), 1, GL_FALSE, &aMat[0][0]);
 	}
@@ -168,7 +168,7 @@ public:
 private:
 	// utility function for checking shader compilation/linking errors.
 	// ------------------------------------------------------------------------
-	void checkCompileErrors(GLuint shader, std::string type)
+	void CheckCompileErrors(GLuint shader, std::string type)
 	{
 		GLint success;
 		GLchar infoLog[1024];

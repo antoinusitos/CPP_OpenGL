@@ -58,6 +58,11 @@ void Box::Init()
 	// unbind the vertex array
 	// -----------
 	glBindVertexArray(0);
+
+	myMaterial.ambient = glm::vec3(1.0f, 0.5f, 0.31f);
+	myMaterial.diffuse = glm::vec3(1.0f, 0.5f, 0.31f);
+	myMaterial.specular = glm::vec3(0.5f, 0.5f, 0.5f);
+	myMaterial.shininess = 32.0f;
 }
 
 void Box::Scale(glm::vec3 aScale)
@@ -65,12 +70,22 @@ void Box::Scale(glm::vec3 aScale)
 	myScale = aScale;
 }
 
+void Box::Update(float aDeltaTime)
+{
+
+}
+
 void Box::Render(Shader aShader)
 {
+	aShader.SetVec3("material.ambient", myMaterial.ambient);
+	aShader.SetVec3("material.diffuse", myMaterial.diffuse);
+	aShader.SetVec3("material.specular", myMaterial.specular);
+	aShader.SetFloat("material.shininess", myMaterial.shininess);
+
 	myModel = glm::mat4(1.0f);
 	myModel = glm::translate(myModel, myPosition);
 	myModel = glm::scale(myModel, myScale);
-	aShader.setMat4("model", myModel);
+	aShader.SetMat4("model", myModel);
 	glBindVertexArray(myVAOrect);
 	glDrawArrays(GL_TRIANGLES, 0, 36);
 	glBindVertexArray(0);

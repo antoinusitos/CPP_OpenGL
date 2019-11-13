@@ -103,11 +103,11 @@ void Camera::Render(Shader aShader, GLFWwindow* aWindow)
 	// -----------
 	glm::mat4 myProjection = glm::mat4(1.0f);
 	myProjection = glm::perspective(glm::radians(myFov), (float)width / (float)height, 0.1f, 100.0f);
-	aShader.setMat4("projection", myProjection);
+	aShader.SetMat4("projection", myProjection);
 
 	// create transformations
 	// -----------
 	glm::mat4 myView = glm::mat4(1.0f);
 	myView = GetViewMatrix();
-	aShader.setMat4("view", myView);
+	aShader.SetMat4("view", myView);
 }

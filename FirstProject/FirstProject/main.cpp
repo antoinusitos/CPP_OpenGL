@@ -265,12 +265,30 @@ int main()
 		// Tell OpenGL to use the program
 		// -----------
 		myLightShader.Use();
-		myLightShader.setVec3("objectColor", 1.0f, 0.5f, 0.31f);
-		myLightShader.setVec3("lightColor", 1.0f, 1.0f, 1.0f);
-		myLightShader.setVec3("lightPos", myLight.myPosition);
-		myLightShader.setVec3("viewPos", myMainCamera->myPosition);
+		myLightShader.SetVec3("objectColor", 1.0f, 0.5f, 0.31f);
+		myLightShader.SetVec3("lightColor", 1.0f, 1.0f, 1.0f);
+		myLightShader.SetVec3("lightPos", myLight.myPosition);
+		myLightShader.SetVec3("viewPos", myMainCamera->myPosition);
 		
-		myMainCamera->Render(myLightShader, myWindow);
+		// Normal rendering
+		// -----------
+		//myLightShader.SetVec3("light.ambient", 0.2f, 0.2f, 0.2f);
+		//myLightShader.SetVec3("light.diffuse", 0.5f, 0.5f, 0.5f); // darken the light a bit to fit the scene
+		//myLightShader.SetVec3("light.specular", 1.0f, 1.0f, 1.0f);
+
+		// Different rendering
+		// -----------
+		glm::vec3 lightColor;
+		lightColor.x = sin(glfwGetTime() * 2.0f);
+		lightColor.y = sin(glfwGetTime() * 0.7f);
+		lightColor.z = sin(glfwGetTime() * 1.3f);
+
+		glm::vec3 diffuseColor = lightColor   * glm::vec3(0.5f); // decrease the influence
+		glm::vec3 ambientColor = diffuseColor * glm::vec3(0.2f); // low influence
+
+		myLightShader.SetVec3("light.ambient", ambientColor);
+		myLightShader.SetVec3("light.diffuse", diffuseColor);
+		myLightShader.SetVec3("light.specular", 1.0f, 1.0f, 1.0f);
 
 		// Render Boxes
 		// -----------
@@ -278,6 +296,8 @@ int main()
 		{
 			myBoxes[i].Render(myLightShader);
 		}
+
+		myMainCamera->Render(myLightShader, myWindow);
 
 		myColorShader.Use();
 		myLight.Render(myColorShader);

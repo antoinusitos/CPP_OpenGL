@@ -13,6 +13,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Source Files\Shape">
+      <UniqueIdentifier>{44c611cc-7473-4089-ae16-5812439e362e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Shaders">
+      <UniqueIdentifier>{ed2203c7-fba0-4ce0-a640-f4539e433502}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\glad\src\glad.c">
@@ -28,7 +34,7 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Box.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Shape</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -42,27 +48,27 @@
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="Box.h">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Shape</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="simple.vert">
-      <Filter>Source Files</Filter>
-    </None>
-    <None Include="simple.frag">
-      <Filter>Source Files</Filter>
+    <None Include="Color.frag">
+      <Filter>Source Files\Shaders</Filter>
     </None>
     <None Include="Color.vert">
-      <Filter>Source Files</Filter>
-    </None>
-    <None Include="Color.frag">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Shaders</Filter>
     </None>
     <None Include="Light.frag">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Shaders</Filter>
     </None>
     <None Include="Light.vert">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Shaders</Filter>
+    </None>
+    <None Include="simple.frag">
+      <Filter>Source Files\Shaders</Filter>
+    </None>
+    <None Include="simple.vert">
+      <Filter>Source Files\Shaders</Filter>
     </None>
   </ItemGroup>
 </Project>

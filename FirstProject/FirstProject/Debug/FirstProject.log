@@ -2,12 +2,19 @@
 d:\dev\opengl_c++\firstproject\firstproject\shader.h(70): warning C4101: 'infoLog': unreferenced local variable
 d:\dev\opengl_c++\firstproject\firstproject\shader.h(69): warning C4101: 'success': unreferenced local variable
 d:\dev\opengl_c++\firstproject\firstproject\main.cpp(234): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-d:\dev\opengl_c++\firstproject\firstproject\main.cpp(351): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-d:\dev\opengl_c++\firstproject\firstproject\main.cpp(352): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-d:\dev\opengl_c++\firstproject\firstproject\main.cpp(355): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-d:\dev\opengl_c++\firstproject\firstproject\main.cpp(356): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-d:\dev\opengl_c++\firstproject\firstproject\main.cpp(358): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-d:\dev\opengl_c++\firstproject\firstproject\main.cpp(359): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-d:\dev\opengl_c++\firstproject\firstproject\main.cpp(366): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+d:\dev\opengl_c++\firstproject\firstproject\main.cpp(282): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+d:\dev\opengl_c++\firstproject\firstproject\main.cpp(283): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+d:\dev\opengl_c++\firstproject\firstproject\main.cpp(284): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+d:\dev\opengl_c++\firstproject\firstproject\main.cpp(371): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+d:\dev\opengl_c++\firstproject\firstproject\main.cpp(372): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+d:\dev\opengl_c++\firstproject\firstproject\main.cpp(375): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+d:\dev\opengl_c++\firstproject\firstproject\main.cpp(376): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+d:\dev\opengl_c++\firstproject\firstproject\main.cpp(378): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+d:\dev\opengl_c++\firstproject\firstproject\main.cpp(379): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+d:\dev\opengl_c++\firstproject\firstproject\main.cpp(386): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+  Box.cpp
+d:\dev\opengl_c++\firstproject\firstproject\shader.h(70): warning C4101: 'infoLog': unreferenced local variable
+d:\dev\opengl_c++\firstproject\firstproject\shader.h(69): warning C4101: 'success': unreferenced local variable
+  Generating Code...
   FirstProject.vcxproj -> D:\Dev\OpenGL_C++\FirstProject\Debug\FirstProject.exe
   FirstProject.vcxproj -> D:\Dev\OpenGL_C++\FirstProject\Debug\FirstProject.pdb (Partial PDB)

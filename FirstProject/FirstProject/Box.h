@@ -7,6 +7,13 @@
 
 class Shader;
 
+struct Material {
+	glm::vec3 ambient;
+	glm::vec3 diffuse;
+	glm::vec3 specular;
+	float shininess;
+};
+
 class Box
 {
 public:
@@ -100,6 +107,7 @@ public:
 		-0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f
 	};
 		
+	Material myMaterial;
 
 	unsigned int myVAOrect;
 	unsigned int myVBOrect;
@@ -116,6 +124,7 @@ public:
 	void Scale(glm::vec3 aScale);
 
 	void Render(Shader aShader);
+	void Update(float aDeltaTime);
 	void FreeCube();
 
 private:
