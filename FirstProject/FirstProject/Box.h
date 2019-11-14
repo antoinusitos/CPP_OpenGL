@@ -8,7 +8,6 @@
 class Shader;
 
 struct Material {
-	glm::vec3 specular;
 	float shininess;
 };
 
@@ -87,4 +86,5 @@ private:
 
 private:
 	unsigned int myTexture;
+	unsigned int myTextureSpecular;
 };

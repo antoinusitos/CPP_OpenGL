@@ -60,10 +60,10 @@ void Box::Init()
 	// -----------
 	glBindVertexArray(0);
 
-	myMaterial.specular = glm::vec3(0.5f, 0.5f, 0.5f);
 	myMaterial.shininess = 64.0f;
 
 	myTexture = loadTexture("Images/container2.png");
+	myTextureSpecular = loadTexture("Images/container2_specular.png");
 }
 
 void Box::Scale(glm::vec3 aScale)
@@ -79,7 +79,7 @@ void Box::Update(float aDeltaTime)
 void Box::Render(Shader aShader)
 {
 	aShader.SetInt("material.diffuse", 0);
-	aShader.SetVec3("material.specular", myMaterial.specular);
+	aShader.SetInt("material.specular", 1);
 	aShader.SetFloat("material.shininess", myMaterial.shininess);
 
 	myModel = glm::mat4(1.0f);
@@ -94,6 +94,14 @@ void Box::Render(Shader aShader)
 	// Tell OpenGL to use the texture we loaded
 	// -----------
 	glBindTexture(GL_TEXTURE_2D, myTexture);
+
+	// activate the texture unit first before binding texture
+	// -----------
+	glActiveTexture(GL_TEXTURE1);
+
+	// Tell OpenGL to use the texture we loaded
+	// -----------
+	glBindTexture(GL_TEXTURE_2D, myTextureSpecular);
 
 	glBindVertexArray(myVAOrect);
 	glDrawArrays(GL_TRIANGLES, 0, 36);
