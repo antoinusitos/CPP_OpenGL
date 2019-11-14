@@ -72,6 +72,11 @@ void Box::Scale(glm::vec3 aScale)
 	myScale = aScale;
 }
 
+void Box::Rotate(float anAngle)
+{
+	myAngle = glm::radians(anAngle);
+}
+
 void Box::Update(float aDeltaTime)
 {
 
@@ -86,6 +91,7 @@ void Box::Render(Shader aShader)
 
 	myModel = glm::mat4(1.0f);
 	myModel = glm::translate(myModel, myPosition);
+	myModel = glm::rotate(myModel, myAngle, myRotation);
 	myModel = glm::scale(myModel, myScale);
 	aShader.SetMat4("model", myModel);
 

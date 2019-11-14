@@ -205,10 +205,27 @@ int main()
 
 	// world space positions of our cubes
 	// -----------
-	Box myBox = Box(0.0f,  0.0f,  0.0f);
+	Box cubes[] = {
+		Box(0.0f,  0.0f,  0.0f),
+		Box(2.0f,  5.0f, -15.0f),
+		Box(-1.5f, -2.2f, -2.5f),
+		Box(-3.8f, -2.0f, -12.3f),
+		Box(2.4f, -0.4f, -3.5f),
+		Box(-1.7f,  3.0f, -7.5f),
+		Box(1.3f, -2.0f, -2.5f),
+		Box(1.5f,  2.0f, -2.5f),
+		Box(1.5f,  0.2f, -1.5f),
+		Box(-1.3f,  1.0f, -1.5f)
+	};
 
 	Box myLight = Box(1.2f, 1.0f, 2.0f);
 	myLight.Scale(glm::vec3(0.2f));
+
+	for (unsigned int i = 0; i < 10; i++)
+	{
+		cubes[i].Rotate(20.0f * i);
+	}
+
 
 #pragma endregion
 
@@ -238,7 +255,8 @@ int main()
 		// Tell OpenGL to use the program
 		// -----------
 		myLightShader.Use();
-		myLightShader.SetVec3("lightPos", myLight.myPosition);
+		//myLightShader.SetVec3("lightPos", myLight.myPosition);
+		myLightShader.SetVec3("light.direction", -0.2f, -1.0f, -0.3f);
 		myLightShader.SetVec3("viewPos", myMainCamera->myPosition);
 
 		// Normal rendering
@@ -249,7 +267,10 @@ int main()
 
 		// Render Box
 		// -----------
-		myBox.Render(myLightShader);
+		for (unsigned int i = 0; i < 10; i++)
+		{
+			cubes[i].Render(myLightShader);
+		}
 
 		myMainCamera->Render(myLightShader, myWindow);
 

@@ -65,7 +65,10 @@ public:
 	unsigned int myVBOrect;
 
 	glm::vec3 myPosition = glm::vec3(0.0f, 0.0f, 0.0f);
+	glm::vec3 myRotation = glm::vec3(1.0f, 0.3f, 0.5f);
 	glm::vec3 myScale = glm::vec3(1.0f, 1.0f, 1.0f);
+
+	float myAngle = 0;
 
 	glm::mat4 myModel = glm::mat4(1.0f);
 
@@ -74,6 +77,7 @@ public:
 	Box(float aX, float aY, float aZ);
 
 	void Scale(glm::vec3 aScale);
+	void Rotate(float anAngle);
 
 	void Render(Shader aShader);
 	void Update(float aDeltaTime);
