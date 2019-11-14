@@ -87,4 +87,5 @@ private:
 private:
 	unsigned int myTexture;
 	unsigned int myTextureSpecular;
+	unsigned int myTextureEmissive;
 };

@@ -64,6 +64,7 @@ void Box::Init()
 
 	myTexture = loadTexture("Images/container2.png");
 	myTextureSpecular = loadTexture("Images/container2_specular.png");
+	myTextureEmissive = loadTexture("Images/matrix.jpg");
 }
 
 void Box::Scale(glm::vec3 aScale)
@@ -80,6 +81,7 @@ void Box::Render(Shader aShader)
 {
 	aShader.SetInt("material.diffuse", 0);
 	aShader.SetInt("material.specular", 1);
+	aShader.SetInt("material.emissive", 2);
 	aShader.SetFloat("material.shininess", myMaterial.shininess);
 
 	myModel = glm::mat4(1.0f);
@@ -102,6 +104,14 @@ void Box::Render(Shader aShader)
 	// Tell OpenGL to use the texture we loaded
 	// -----------
 	glBindTexture(GL_TEXTURE_2D, myTextureSpecular);
+
+	// activate the texture unit first before binding texture
+	// -----------
+	glActiveTexture(GL_TEXTURE2);
+
+	// Tell OpenGL to use the texture we loaded
+	// -----------
+	glBindTexture(GL_TEXTURE_2D, myTextureEmissive);
 
 	glBindVertexArray(myVAOrect);
 	glDrawArrays(GL_TRIANGLES, 0, 36);
