@@ -103,7 +103,7 @@ int main()
 	//std::cout << "Maximum nr of vertex attributes supported: " << nrAttributes << std::endl;
 
 	Shader myShader("simple.vert", "simple.frag");
-	Shader myLightShader("Light.vert", "Light.frag");
+	Shader myLightShader("Lights.vert", "Lights.frag");
 	Shader myColorShader("Color.vert", "Color.frag");
 
 #pragma endregion
@@ -218,14 +218,25 @@ int main()
 		Box(-1.3f,  1.0f, -1.5f)
 	};
 
-	Box myLight = Box(1.2f, 1.0f, 2.0f);
-	myLight.Scale(glm::vec3(0.2f));
+	//Box myLight = Box(1.2f, 1.0f, 2.0f);
+	//myLight.Scale(glm::vec3(0.2f));
 
 	for (unsigned int i = 0; i < 10; i++)
 	{
 		cubes[i].Rotate(20.0f * i);
 	}
 
+	Box myPointLightPositions[] = {
+		Box(0.7f,  0.2f,  2.0f),
+		Box(2.3f, -3.3f, -4.0f),
+		Box(-4.0f,  2.0f, -12.0f),
+		Box(0.0f,  0.0f, -3.0f)
+	};
+
+	for (unsigned int i = 0; i < 4; i++)
+	{
+		myPointLightPositions[i].Scale(glm::vec3(0.2f));
+	}
 
 #pragma endregion
 
@@ -255,22 +266,53 @@ int main()
 		// Tell OpenGL to use the program
 		// -----------
 		myLightShader.Use();
-		myLightShader.SetVec3("light.position", myMainCamera->myPosition);
-		myLightShader.SetVec3("light.direction", myMainCamera->myFront);
-		myLightShader.SetFloat("light.cutOff", glm::cos(glm::radians(12.5f)));
-		myLightShader.SetFloat("light.outerCutOff", glm::cos(glm::radians(17.5f)));
-		myLightShader.SetVec3("viewPos", myMainCamera->myPosition);
-
-		// Normal rendering
-		// -----------
-		myLightShader.SetVec3("light.ambient", 0.2f, 0.2f, 0.2f);
-		myLightShader.SetVec3("light.diffuse", 0.5f, 0.5f, 0.5f); // darken the light a bit to fit the scene
-		myLightShader.SetVec3("light.specular", 1.0f, 1.0f, 1.0f);
+		myLightShader.SetVec3("myViewPos", myMainCamera->myPosition);
+		// directional light
+		myLightShader.SetVec3("myDirectionalLight.myDirection", -0.2f, -1.0f, -0.3f);
+		myLightShader.SetVec3("myDirectionalLight.myAmbient", 0.05f, 0.05f, 0.05f);
+		myLightShader.SetVec3("myDirectionalLight.myDiffuse", 0.4f, 0.4f, 0.4f);
+		myLightShader.SetVec3("myDirectionalLight.mySpecular", 0.5f, 0.5f, 0.5f);
+		// point light 1
+		myLightShader.SetVec3("myPointLights[0].myPosition", myPointLightPositions[0].myPosition);
+		myLightShader.SetVec3("myPointLights[0].myAmbient", 0.05f, 0.05f, 0.05f);
+		myLightShader.SetVec3("myPointLights[0].myDiffuse", 0.8f, 0.8f, 0.8f);
+		myLightShader.SetVec3("myPointLights[0].mySpecular", 1.0f, 1.0f, 1.0f);
+		myLightShader.SetFloat("myPointLights[0].myConstant", 1.0f);
+		myLightShader.SetFloat("myPointLights[0].myLinear", 0.09);
+		myLightShader.SetFloat("myPointLights[0].myQuadratic", 0.032);
+		// point light 2
+		myLightShader.SetVec3("myPointLights[0].myPosition", myPointLightPositions[1].myPosition);
+		myLightShader.SetVec3("myPointLights[0].myAmbient", 0.05f, 0.05f, 0.05f);
+		myLightShader.SetVec3("myPointLights[0].myDiffuse", 0.8f, 0.8f, 0.8f);
+		myLightShader.SetVec3("myPointLights[0].mySpecular", 1.0f, 1.0f, 1.0f);
+		myLightShader.SetFloat("myPointLights[0].myConstant", 1.0f);
+		myLightShader.SetFloat("myPointLights[0].myLinear", 0.09);
+		myLightShader.SetFloat("myPointLights[0].myQuadratic", 0.032);
+		// point light 3
+		myLightShader.SetVec3("myPointLights[0].myPosition", myPointLightPositions[2].myPosition);
+		myLightShader.SetVec3("myPointLights[0].myAmbient", 0.05f, 0.05f, 0.05f);
+		myLightShader.SetVec3("myPointLights[0].myDiffuse", 0.8f, 0.8f, 0.8f);
+		myLightShader.SetVec3("myPointLights[0].mySpecular", 1.0f, 1.0f, 1.0f);
+		myLightShader.SetFloat("myPointLights[0].myConstant", 1.0f);
+		myLightShader.SetFloat("myPointLights[0].myLinear", 0.09);
+		myLightShader.SetFloat("myPointLights[0].myQuadratic", 0.032);
+		// point light 4
+		myLightShader.SetVec3("myPointLights[0].myPosition", myPointLightPositions[3].myPosition);
+		myLightShader.SetVec3("myPointLights[0].myAmbient", 0.05f, 0.05f, 0.05f);
+		myLightShader.SetVec3("myPointLights[0].myDiffuse", 0.8f, 0.8f, 0.8f);
+		myLightShader.SetVec3("myPointLights[0].mySpecular", 1.0f, 1.0f, 1.0f);
+		myLightShader.SetFloat("myPointLights[0].myConstant", 1.0f);
+		myLightShader.SetFloat("myPointLights[0].myLinear", 0.09);
+		myLightShader.SetFloat("myPointLights[0].myQuadratic", 0.032);
 
 		// settings for the point and spot light
-		myLightShader.SetFloat("light.constant", 1.0f);
-		myLightShader.SetFloat("light.linear", 0.09f);
-		myLightShader.SetFloat("light.quadratic", 0.032f);
+		//myLightShader.SetFloat("light.constant", 1.0f);
+		//myLightShader.SetFloat("light.linear", 0.09f);
+		//myLightShader.SetFloat("light.quadratic", 0.032f);
+
+		
+		// view/projection transformations
+		myMainCamera->Render(myLightShader, myWindow);
 
 		// Render Box
 		// -----------
@@ -279,13 +321,14 @@ int main()
 			cubes[i].Render(myLightShader);
 		}
 
-		myMainCamera->Render(myLightShader, myWindow);
-
 		myColorShader.Use();
-		myLight.Render(myColorShader);
-
 		myMainCamera->Render(myColorShader, myWindow);
-		
+
+		for (unsigned int i = 0; i < 10; i++)
+		{
+			myPointLightPositions[i].Render(myColorShader);
+		}
+
 #pragma endregion
 
 		// check and call events and swap the buffers

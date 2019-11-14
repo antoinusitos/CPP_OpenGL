@@ -70,5 +70,11 @@
     <None Include="simple.vert">
       <Filter>Source Files\Shaders</Filter>
     </None>
+    <None Include="Lights.frag">
+      <Filter>Source Files\Shaders</Filter>
+    </None>
+    <None Include="Lights.vert">
+      <Filter>Source Files\Shaders</Filter>
+    </None>
   </ItemGroup>
 </Project>

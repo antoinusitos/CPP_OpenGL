@@ -84,16 +84,16 @@ void Box::Update(float aDeltaTime)
 
 void Box::Render(Shader aShader)
 {
-	aShader.SetInt("material.diffuse", 0);
-	aShader.SetInt("material.specular", 1);
-	aShader.SetInt("material.emissive", 2);
-	aShader.SetFloat("material.shininess", myMaterial.shininess);
+	aShader.SetInt("myMaterial.myDiffuse", 0);
+	aShader.SetInt("myMaterial.mySpecular", 1);
+	aShader.SetInt("myMaterial.myEmissive", 2);
+	aShader.SetFloat("myMaterial.myShininess", myMaterial.shininess);
 
 	myModel = glm::mat4(1.0f);
 	myModel = glm::translate(myModel, myPosition);
 	myModel = glm::rotate(myModel, myAngle, myRotation);
 	myModel = glm::scale(myModel, myScale);
-	aShader.SetMat4("model", myModel);
+	aShader.SetMat4("myModel", myModel);
 
 	// activate the texture unit first before binding texture
 	// -----------

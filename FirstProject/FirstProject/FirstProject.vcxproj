@@ -133,6 +133,8 @@
     <None Include="Color.vert" />
     <None Include="Light.frag" />
     <None Include="Light.vert" />
+    <None Include="Lights.frag" />
+    <None Include="Lights.vert" />
     <None Include="simple.frag" />
     <None Include="simple.vert" />
   </ItemGroup>
