@@ -64,7 +64,7 @@ void Box::Init()
 
 	myTexture = loadTexture("Images/container2.png");
 	myTextureSpecular = loadTexture("Images/container2_specular.png");
-	myTextureEmissive = loadTexture("Images/matrix.jpg");
+	//myTextureEmissive = loadTexture("Images/matrix.jpg");
 }
 
 void Box::Scale(glm::vec3 aScale)
