@@ -258,6 +258,7 @@ int main()
 		myLightShader.SetVec3("light.position", myMainCamera->myPosition);
 		myLightShader.SetVec3("light.direction", myMainCamera->myFront);
 		myLightShader.SetFloat("light.cutOff", glm::cos(glm::radians(12.5f)));
+		myLightShader.SetFloat("light.outerCutOff", glm::cos(glm::radians(17.5f)));
 		myLightShader.SetVec3("viewPos", myMainCamera->myPosition);
 
 		// Normal rendering
