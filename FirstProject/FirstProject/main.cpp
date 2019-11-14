@@ -255,8 +255,7 @@ int main()
 		// Tell OpenGL to use the program
 		// -----------
 		myLightShader.Use();
-		//myLightShader.SetVec3("lightPos", myLight.myPosition);
-		myLightShader.SetVec3("light.direction", -0.2f, -1.0f, -0.3f);
+		myLightShader.SetVec3("light.position", myLight.myPosition);
 		myLightShader.SetVec3("viewPos", myMainCamera->myPosition);
 
 		// Normal rendering
@@ -264,6 +263,11 @@ int main()
 		myLightShader.SetVec3("light.ambient", 0.2f, 0.2f, 0.2f);
 		myLightShader.SetVec3("light.diffuse", 0.5f, 0.5f, 0.5f); // darken the light a bit to fit the scene
 		myLightShader.SetVec3("light.specular", 1.0f, 1.0f, 1.0f);
+
+		// settings for the point light
+		myLightShader.SetFloat("light.constant", 1.0f);
+		myLightShader.SetFloat("light.linear", 0.09f);
+		myLightShader.SetFloat("light.quadratic", 0.032f);
 
 		// Render Box
 		// -----------
