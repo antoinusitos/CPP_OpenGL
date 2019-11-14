@@ -1,5 +1,6 @@
 #include "Box.h"
 #include "Shader.h"
+#include "stb_image.h"
 
 Box::Box(glm::vec3 aPosition)
 {
@@ -40,16 +41,16 @@ void Box::Init()
 	// Tell OpenGL how to interpret the vertex data per vertex attribute
 	// -----------
 	// position
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(0);
 
-	// texture coordinates
-	//glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
-	//glEnableVertexAttribArray(1);
-
 	// normal
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
 	glEnableVertexAttribArray(1);
+
+	// texture coordinates
+	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
+	glEnableVertexAttribArray(2);
 
 	// unbind the buffer
 	// -----------
@@ -59,10 +60,10 @@ void Box::Init()
 	// -----------
 	glBindVertexArray(0);
 
-	myMaterial.ambient = glm::vec3(1.0f, 0.5f, 0.31f);
-	myMaterial.diffuse = glm::vec3(1.0f, 0.5f, 0.31f);
 	myMaterial.specular = glm::vec3(0.5f, 0.5f, 0.5f);
-	myMaterial.shininess = 32.0f;
+	myMaterial.shininess = 64.0f;
+
+	myTexture = loadTexture("Images/container2.png");
 }
 
 void Box::Scale(glm::vec3 aScale)
@@ -77,8 +78,7 @@ void Box::Update(float aDeltaTime)
 
 void Box::Render(Shader aShader)
 {
-	aShader.SetVec3("material.ambient", myMaterial.ambient);
-	aShader.SetVec3("material.diffuse", myMaterial.diffuse);
+	aShader.SetInt("material.diffuse", 0);
 	aShader.SetVec3("material.specular", myMaterial.specular);
 	aShader.SetFloat("material.shininess", myMaterial.shininess);
 
@@ -86,6 +86,15 @@ void Box::Render(Shader aShader)
 	myModel = glm::translate(myModel, myPosition);
 	myModel = glm::scale(myModel, myScale);
 	aShader.SetMat4("model", myModel);
+
+	// activate the texture unit first before binding texture
+	// -----------
+	glActiveTexture(GL_TEXTURE0);
+
+	// Tell OpenGL to use the texture we loaded
+	// -----------
+	glBindTexture(GL_TEXTURE_2D, myTexture);
+
 	glBindVertexArray(myVAOrect);
 	glDrawArrays(GL_TRIANGLES, 0, 36);
 	glBindVertexArray(0);
@@ -97,4 +106,41 @@ void Box::FreeCube()
 	// ---------------
 	glDeleteVertexArrays(1, &myVAOrect);
 	glDeleteBuffers(1, &myVBOrect);
+}
+
+unsigned int Box::loadTexture(char const * path)
+{
+	unsigned int textureID;
+	glGenTextures(1, &textureID);
+
+	int width, height, nrComponents;
+	unsigned char *data = stbi_load(path, &width, &height, &nrComponents, 0);
+	if (data)
+	{
+		GLenum format;
+		if (nrComponents == 1)
+			format = GL_RED;
+		else if (nrComponents == 3)
+			format = GL_RGB;
+		else if (nrComponents == 4)
+			format = GL_RGBA;
+
+		glBindTexture(GL_TEXTURE_2D, textureID);
+		glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
+		glGenerateMipmap(GL_TEXTURE_2D);
+
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+		stbi_image_free(data);
+	}
+	else
+	{
+		std::cout << "Texture failed to load at path: " << path << std::endl;
+		stbi_image_free(data);
+	}
+
+	return textureID;
 }

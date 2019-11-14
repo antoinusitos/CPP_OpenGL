@@ -205,18 +205,7 @@ int main()
 
 	// world space positions of our cubes
 	// -----------
-	Box myBoxes[] = {
-		Box(0.0f,  0.0f,  0.0f),
-		Box(2.0f,  5.0f, -15.0f),
-		Box(-1.5f, -2.2f, -2.5f),
-		Box(-3.8f, -2.0f, -12.3f),
-		Box(2.4f, -0.4f, -3.5f),
-		Box(-1.7f,  3.0f, -7.5f),
-		Box(1.3f, -2.0f, -2.5f),
-		Box(1.5f,  2.0f, -2.5f),
-		Box(1.5f,  0.2f, -1.5f),
-		Box(-1.3f,  1.0f, -1.5f)
-	};
+	Box myBox = Box(0.0f,  0.0f,  0.0f);
 
 	Box myLight = Box(1.2f, 1.0f, 2.0f);
 	myLight.Scale(glm::vec3(0.2f));
@@ -246,56 +235,21 @@ int main()
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 #pragma region rectangle rendering
-		// activate the texture unit first before binding texture
-		// -----------
-		glActiveTexture(GL_TEXTURE0);
-
-		// Tell OpenGL to use the texture we loaded
-		// -----------
-		glBindTexture(GL_TEXTURE_2D, myTexture);
-
-		// activate the texture unit first before binding texture
-		// -----------
-		glActiveTexture(GL_TEXTURE1);
-
-		// Tell OpenGL to use the texture we loaded
-		// -----------
-		glBindTexture(GL_TEXTURE_2D, myTexture2);
-
 		// Tell OpenGL to use the program
 		// -----------
 		myLightShader.Use();
-		myLightShader.SetVec3("objectColor", 1.0f, 0.5f, 0.31f);
-		myLightShader.SetVec3("lightColor", 1.0f, 1.0f, 1.0f);
 		myLightShader.SetVec3("lightPos", myLight.myPosition);
 		myLightShader.SetVec3("viewPos", myMainCamera->myPosition);
-		
+
 		// Normal rendering
 		// -----------
-		//myLightShader.SetVec3("light.ambient", 0.2f, 0.2f, 0.2f);
-		//myLightShader.SetVec3("light.diffuse", 0.5f, 0.5f, 0.5f); // darken the light a bit to fit the scene
-		//myLightShader.SetVec3("light.specular", 1.0f, 1.0f, 1.0f);
-
-		// Different rendering
-		// -----------
-		glm::vec3 lightColor;
-		lightColor.x = sin(glfwGetTime() * 2.0f);
-		lightColor.y = sin(glfwGetTime() * 0.7f);
-		lightColor.z = sin(glfwGetTime() * 1.3f);
-
-		glm::vec3 diffuseColor = lightColor   * glm::vec3(0.5f); // decrease the influence
-		glm::vec3 ambientColor = diffuseColor * glm::vec3(0.2f); // low influence
-
-		myLightShader.SetVec3("light.ambient", ambientColor);
-		myLightShader.SetVec3("light.diffuse", diffuseColor);
+		myLightShader.SetVec3("light.ambient", 0.2f, 0.2f, 0.2f);
+		myLightShader.SetVec3("light.diffuse", 0.5f, 0.5f, 0.5f); // darken the light a bit to fit the scene
 		myLightShader.SetVec3("light.specular", 1.0f, 1.0f, 1.0f);
 
-		// Render Boxes
+		// Render Box
 		// -----------
-		for (int i = 0; i < 10; i++)
-		{
-			myBoxes[i].Render(myLightShader);
-		}
+		myBox.Render(myLightShader);
 
 		myMainCamera->Render(myLightShader, myWindow);
 
