@@ -60,7 +60,7 @@ void Box::Init()
 	// -----------
 	glBindVertexArray(0);
 
-	myMaterial.shininess = 64.0f;
+	myMaterial.myShininess = 32.0f;
 
 	myTexture = loadTexture("Images/container2.png");
 	myTextureSpecular = loadTexture("Images/container2_specular.png");
@@ -87,7 +87,7 @@ void Box::Render(Shader aShader)
 	aShader.SetInt("myMaterial.myDiffuse", 0);
 	aShader.SetInt("myMaterial.mySpecular", 1);
 	aShader.SetInt("myMaterial.myEmissive", 2);
-	aShader.SetFloat("myMaterial.myShininess", myMaterial.shininess);
+	aShader.SetFloat("myMaterial.myShininess", myMaterial.myShininess);
 
 	myModel = glm::mat4(1.0f);
 	myModel = glm::translate(myModel, myPosition);

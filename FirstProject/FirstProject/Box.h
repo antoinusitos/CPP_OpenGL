@@ -8,7 +8,7 @@
 class Shader;
 
 struct Material {
-	float shininess;
+	float myShininess;
 };
 
 class Box

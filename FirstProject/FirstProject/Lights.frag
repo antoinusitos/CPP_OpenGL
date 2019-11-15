@@ -62,6 +62,12 @@ void main()
 	// --------
     //result += CalcSpotLight(spotLight, norm, FragPos, viewDir);    
     
+	// Emissive
+	// ---------
+	vec3 emissive = vec3(texture(myMaterial.myEmissive, myTexCoords));
+
+	result += emissive;
+
     myFragColor = vec4(result, 1.0);
 }
 
@@ -93,14 +99,13 @@ vec3 CalcPointLight(PointLight aLight, vec3 aNormal, vec3 aFragPos, vec3 aViewDi
     vec3 reflectDir = reflect(-lightDir, aNormal);
     float spec = pow(max(dot(aViewDir, reflectDir), 0.0), myMaterial.myShininess);
     // attenuation
-    float distance    = length(aLight.myPosition - myFragPos);
-    float attenuation = 1.0 / (aLight.myConstant + aLight.myLinear * distance + 
-  			     aLight.myQuadratic * (distance * distance));    
+    float distance    = length(aLight.myPosition - aFragPos);
+    float attenuation = 1.0 / (aLight.myConstant + aLight.myLinear * distance + aLight.myQuadratic * (distance * distance));    
     // combine results
     vec3 ambient  = aLight.myAmbient  * vec3(texture(myMaterial.myDiffuse, myTexCoords));
     vec3 diffuse  = aLight.myDiffuse  * diff * vec3(texture(myMaterial.myDiffuse, myTexCoords));
     vec3 specular = aLight.mySpecular * spec * vec3(texture(myMaterial.mySpecular, myTexCoords));
-    ambient  *= attenuation;
+    ambient *= attenuation;
     diffuse  *= attenuation;
     specular *= attenuation;
     return (ambient + diffuse + specular);
