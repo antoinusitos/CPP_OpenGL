@@ -36,6 +36,9 @@
     <ClCompile Include="Box.cpp">
       <Filter>Source Files\Shape</Filter>
     </ClCompile>
+    <ClCompile Include="Mesh.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Shader.h">
@@ -51,6 +54,9 @@
       <Filter>Source Files\Shape</Filter>
     </ClInclude>
     <ClInclude Include="FileWatcher.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Mesh.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
