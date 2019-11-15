@@ -15,8 +15,20 @@ public:
 	// the program ID
 	unsigned int myID;
 
+	Shader() {
+
+	}
+
 	// constructor reads and build shaders
 	Shader(const GLchar* aVertexPath, const GLchar* aFragmentPath)
+	{
+		myVertexPath = aVertexPath;
+		myFragmentPath = aFragmentPath;
+
+		UpdateShader();
+	}
+
+	void UpdateShader()
 	{
 		// 1. retreive the vertex/fragment source code from filePath
 		// -----------
@@ -34,8 +46,8 @@ public:
 		{
 			// open files
 			// -----------
-			vertexShaderFile.open(aVertexPath);
-			fragmentShaderFile.open(aFragmentPath);
+			vertexShaderFile.open(myVertexPath);
+			fragmentShaderFile.open(myFragmentPath);
 			std::stringstream vertexShaderStream;
 			std::stringstream fragmentShaderStream;
 
@@ -98,7 +110,6 @@ public:
 		// -----------
 		glDeleteShader(vertex);
 		glDeleteShader(fragment);
-
 	}
 	// use/activate the shader
 	// ------------------------------------------------------------------------
@@ -165,7 +176,22 @@ public:
 		glUniformMatrix4fv(glGetUniformLocation(myID, aName.c_str()), 1, GL_FALSE, &aMat[0][0]);
 	}
 
+	std::string GetVertexPath()
+	{
+		std::string temp = myVertexPath;
+		return temp;
+	}
+
+	std::string GetFragmentPath()
+	{
+		std::string temp = myFragmentPath;
+		return temp;
+	}
+
 private:
+	const GLchar* myVertexPath;
+	const GLchar* myFragmentPath;
+
 	// utility function for checking shader compilation/linking errors.
 	// ------------------------------------------------------------------------
 	void CheckCompileErrors(GLuint shader, std::string type)

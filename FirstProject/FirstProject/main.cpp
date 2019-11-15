@@ -14,6 +14,8 @@
 #include <glm/gtc/matrix_transform.hpp> 
 #include <glm/gtc/type_ptr.hpp>
 
+#include "FileWatcher.h"
+
 void framebuffer_size_callback(GLFWwindow* aWindow, int aWidth, int aHeight);
 void processInput(GLFWwindow* aWindow);
 void Mouse_Callback(GLFWwindow* aWindow, double aXPos, double aYPos);
@@ -92,7 +94,12 @@ int main()
 	// Tell opengl to call back when the mouse wheel move
 	// -----------------------------
 	glfwSetScrollCallback(myWindow, Scroll_Callback);
+#pragma endregion
 
+#pragma region fileWatcher
+
+	// Create a FileWatcher instance that will check the current folder for changes every 5 seconds
+	FileWatcher fw{ "./", std::chrono::milliseconds(1000) };
 #pragma endregion
 
 #pragma region Shader
@@ -104,6 +111,10 @@ int main()
 	Shader myShader("simple.vert", "simple.frag");
 	Shader myLightShader("Lights.vert", "Lights.frag");
 	Shader myColorShader("Color.vert", "Color.frag");
+
+	fw.myShaders.push_back(myShader);
+	fw.myShaders.push_back(myLightShader);
+	fw.myShaders.push_back(myColorShader);
 
 #pragma endregion
 
@@ -250,6 +261,18 @@ int main()
 		float myCurrentFrame = glfwGetTime();
 		myDeltaTime = myCurrentFrame - myLastFrame;
 		myLastFrame = myCurrentFrame;
+
+		// Checking file modification
+		// -----------
+		fw.myDeltaTime = myDeltaTime;
+		fw.Update([](std::string path_to_watch, FileStatus status) -> void
+		{
+			// Process only regular files, all other file types are ignored
+			if (!std::experimental::filesystem::is_regular_file(std::experimental::filesystem::path(path_to_watch)) && status != FileStatus::erased)
+			{
+				return;
+			}
+		});
 
 		// input
 		// -----------
