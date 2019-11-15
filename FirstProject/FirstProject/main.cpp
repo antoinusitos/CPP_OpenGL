@@ -285,11 +285,17 @@ int main()
 		}
 
 		// settings for the point and spot light
-		//myLightShader.SetFloat("light.constant", 1.0f);
-		//myLightShader.SetFloat("light.linear", 0.09f);
-		//myLightShader.SetFloat("light.quadratic", 0.032f);
+		myLightShader.SetVec3("mySpotLight.myPosition", myMainCamera->myPosition);
+		myLightShader.SetVec3("mySpotLight.myDirection", myMainCamera->myFront);
+		myLightShader.SetVec3("mySpotLight.myAmbient", 0.0f, 0.0f, 0.0f);
+		myLightShader.SetVec3("mySpotLight.myDiffuse", 1.0f, 1.0f, 1.0f);
+		myLightShader.SetVec3("mySpotLight.mySpecular", 1.0f, 1.0f, 1.0f);
+		myLightShader.SetFloat("mySpotLight.myConstant", 1.0f);
+		myLightShader.SetFloat("mySpotLight.myLinear", 0.09f);
+		myLightShader.SetFloat("mySpotLight.myQuadratic", 0.032f);
+		myLightShader.SetFloat("mySpotLight.myCutOff", glm::cos(glm::radians(12.5f)));
+		myLightShader.SetFloat("mySpotLight.myOuterCutOff", glm::cos(glm::radians(17.5f)));
 
-		
 		// view/projection transformations
 		myMainCamera->Render(myLightShader, myWindow);
 
