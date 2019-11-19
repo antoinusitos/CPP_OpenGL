@@ -49,6 +49,4 @@ private:
 	// functions
 	// ---------
 	void SetupMesh();
-
-	unsigned int loadTexture(char const * path);
 };

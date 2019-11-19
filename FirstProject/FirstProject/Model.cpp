@@ -85,17 +85,19 @@ Mesh Model::ProcessMesh(aiMesh* aMesh, const aiScene* aScene)
 			vertex.myTexCoords = vec;
 		}
 		else
+		{
 			vertex.myTexCoords = glm::vec2(0.0f, 0.0f);
-		/*// tangent
-		vector.x = mesh->mTangents[i].x;
-		vector.y = mesh->mTangents[i].y;
-		vector.z = mesh->mTangents[i].z;
-		vertex.Tangent = vector;
-		// bitangent
-		vector.x = mesh->mBitangents[i].x;
-		vector.y = mesh->mBitangents[i].y;
-		vector.z = mesh->mBitangents[i].z;
-		vertex.Bitangent = vector;*/
+		}
+		// tangent
+		//vector.x = mesh->mTangents[i].x;
+		//vector.y = mesh->mTangents[i].y;
+		//vector.z = mesh->mTangents[i].z;
+		//vertex.Tangent = vector;
+		//// bitangent
+		//vector.x = mesh->mBitangents[i].x;
+		//vector.y = mesh->mBitangents[i].y;
+		//vector.z = mesh->mBitangents[i].z;
+		//vertex.Bitangent = vector;
 		vertices.push_back(vertex);
 	}
 	// now wak through each of the mesh's faces (a face is a mesh its triangle) and retrieve the corresponding vertex indices.

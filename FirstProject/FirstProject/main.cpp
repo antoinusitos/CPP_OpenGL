@@ -1,4 +1,3 @@
-//START NEXT TIME WITH PAGE 33
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
@@ -30,7 +29,6 @@ const unsigned int SCR_HEIGHT = 600;
 // -----------
 Camera* myCamera = new Camera(glm::vec3(0.0f, 0.0f, 3.0f));
 
-bool cam1 = true;
 // timing
 // -----------
 float myDeltaTime = 0.0f; // Time between current frame and last frame
@@ -105,15 +103,11 @@ int main()
 
 	Shader myShaderModel("ModelLoading.vert", "ModelLoading.frag");
 
-	//fw.myShaders.push_back(myShaderModel);
+	fw.myShaders.push_back(myShaderModel);
 
 #pragma endregion
 
 	Model myModel = Model("Models/NanoSuit/nanosuit.obj");
-	//Model myModel = Model("Models/Box/Box.obj");
-
-	Box myBox = Box(0, 0, 0);
-	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
 #pragma region Rendering
 
@@ -145,8 +139,8 @@ int main()
 
 		// clear the window
 		// -----------
-		//glClearColor(0.05f, 0.05f, 0.05f, 1.0f);
-		glClearColor(0.8f, 0.8f, 0.8f, 1.0f);
+		glClearColor(0.05f, 0.05f, 0.05f, 1.0f);
+		//glClearColor(0.8f, 0.8f, 0.8f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 #pragma region rectangle rendering
@@ -154,13 +148,7 @@ int main()
 		// -----------
 		myShaderModel.Use();
 
-		//myCamera->Render(myShaderModel, myWindow);
-		glm::mat4 projection = glm::perspective(glm::radians(myCamera->myFov), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
-		glm::mat4 view = myCamera->GetViewMatrix();
-		myShaderModel.SetMat4("projection", projection);
-		myShaderModel.SetMat4("view", view);
-
-		//myBox.Render(myShaderModel);
+		myCamera->Render(myShaderModel, myWindow);
 
 		glm::mat4 model = glm::mat4(1.0f);
 		model = glm::translate(model, glm::vec3(0.0f, -1.75f, 0.0f)); // translate it down so it's at the center of the scene

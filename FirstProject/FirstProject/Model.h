@@ -33,4 +33,3 @@ private:
 	std::vector<Texture> LoadMaterialTextures(aiMaterial* aMaterial, aiTextureType aType, std::string aTypeName);
 	unsigned int TextureFromFile(const char* aPath, const std::string& aDirectory, bool aGamma = false);
 };
-

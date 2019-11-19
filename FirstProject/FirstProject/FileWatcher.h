@@ -84,7 +84,7 @@ public:
 							filePath.erase(0, pos + delimiter.length());
 						}
 
-						for (unsigned int i = 0; i < myShaders.size(); i++)
+						/*for (unsigned int i = 0; i < myShaders.size(); i++)
 						{
 							if (myShaders[i].GetFragmentPath() == filePath.c_str())
 							{
@@ -98,7 +98,7 @@ public:
 								myShaders[i].UpdateShader();
 								return;
 							}
-						}
+						}*/
 					}
 				}
 			}
