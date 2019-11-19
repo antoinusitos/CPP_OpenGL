@@ -102,12 +102,17 @@ int main()
 #pragma region Shader
 
 	Shader myShaderModel("ModelLoading.vert", "ModelLoading.frag");
+	Shader myShaderLights("Lights.vert", "Lights.frag");
 
 	fw.myShaders.push_back(myShaderModel);
+	fw.myShaders.push_back(myShaderLights);
 
 #pragma endregion
 
 	Model myModel = Model("Models/NanoSuit/nanosuit.obj");
+
+	Box myBox = Box(0,0,0);
+	glm::vec3 pointLightPositions = glm::vec3(0.7f, 0.2f, 2.0f);
 
 #pragma region Rendering
 
@@ -139,18 +144,54 @@ int main()
 
 		// clear the window
 		// -----------
-		glClearColor(0.05f, 0.05f, 0.05f, 1.0f);
-		//glClearColor(0.8f, 0.8f, 0.8f, 1.0f);
+		//glClearColor(0.05f, 0.05f, 0.05f, 1.0f);
+		glClearColor(0.8f, 0.8f, 0.8f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 #pragma region rectangle rendering
+		myShaderLights.Use();
+
+		myShaderLights.SetVec3("myViewPos", myCamera->myPosition);
+		myShaderLights.SetFloat("myMaterial.myShininess", 32.0f);
+
+		myShaderLights.SetVec3("myDirectionalLight.myDirection", -0.2f, -1.0f, -0.3f);
+		myShaderLights.SetVec3("myDirectionalLight.myAmbient", 0.05f, 0.05f, 0.05f);
+		myShaderLights.SetVec3("myDirectionalLight.myDiffuse", 0.4f, 0.4f, 0.4f);
+		myShaderLights.SetVec3("myDirectionalLight.mySpecular", 0.5f, 0.5f, 0.5f);
+
+		myShaderLights.SetVec3("myPointLights[0].myPosition", pointLightPositions);
+		myShaderLights.SetVec3("myPointLights[0].myAmbient", 0.05f, 0.05f, 0.05f);
+		myShaderLights.SetVec3("myPointLights[0].myDiffuse", 0.8f, 0.8f, 0.8f);
+		myShaderLights.SetVec3("myPointLights[0].mySpecular", 1.0f, 1.0f, 1.0f);
+		myShaderLights.SetFloat("myPointLights[0].myConstant", 1.0f);
+		myShaderLights.SetFloat("myPointLights[0].myLinear", 0.09);
+		myShaderLights.SetFloat("myPointLights[0].myQuadratic", 0.032);
+
+		myShaderLights.SetVec3("mySpotLightt.myPosition", myCamera->myPosition);
+		myShaderLights.SetVec3("mySpotLightt.myDirection", myCamera->myFront);
+		myShaderLights.SetVec3("mySpotLightt.myAmbient", 0.0f, 0.0f, 0.0f);
+		myShaderLights.SetVec3("mySpotLightt.myDiffuse", 1.0f, 1.0f, 1.0f);
+		myShaderLights.SetVec3("mySpotLightt.mySpecular", 1.0f, 1.0f, 1.0f);
+		myShaderLights.SetFloat("mySpotLight.myConstant", 1.0f);
+		myShaderLights.SetFloat("mySpotLight.myLinear", 0.09);
+		myShaderLights.SetFloat("mySpotLight.myQuadratic", 0.032);
+		myShaderLights.SetFloat("mySpotLight.myCutOff", glm::cos(glm::radians(12.5f)));
+		myShaderLights.SetFloat("mySpotLight.myOuterCutOff", glm::cos(glm::radians(15.0f)));
+
+		myCamera->Render(myShaderLights, myWindow);
+
+		glm::mat4 model = glm::mat4(1.0f);
+		myShaderLights.SetMat4("myModel", model);
+
+		myBox.Render(myShaderLights);
+
 		// Tell OpenGL to use the program
 		// -----------
 		myShaderModel.Use();
 
 		myCamera->Render(myShaderModel, myWindow);
 
-		glm::mat4 model = glm::mat4(1.0f);
+		model = glm::mat4(1.0f);
 		model = glm::translate(model, glm::vec3(0.0f, -1.75f, 0.0f)); // translate it down so it's at the center of the scene
 		model = glm::scale(model, glm::vec3(0.2f, 0.2f, 0.2f));	// it's a bit too big for our scene, so scale it down
 		myShaderModel.SetMat4("myModel", model);

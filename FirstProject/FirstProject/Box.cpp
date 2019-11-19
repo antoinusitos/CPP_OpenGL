@@ -64,7 +64,7 @@ void Box::Init()
 
 	myTexture = loadTexture("Images/container2.png");
 	myTextureSpecular = loadTexture("Images/container2_specular.png");
-	//myTextureEmissive = loadTexture("Images/matrix.jpg");
+	myTextureEmissive = loadTexture("Images/matrix.jpg");
 }
 
 void Box::Scale(glm::vec3 aScale)
@@ -93,8 +93,7 @@ void Box::Render(Shader aShader)
 	myModel = glm::translate(myModel, myPosition);
 	myModel = glm::rotate(myModel, myAngle, myRotation);
 	myModel = glm::scale(myModel, myScale);
-	//aShader.SetMat4("myModel", myModel);
-	aShader.SetMat4("model", myModel);
+	aShader.SetMat4("myModel", myModel);
 
 	// activate the texture unit first before binding texture
 	// -----------

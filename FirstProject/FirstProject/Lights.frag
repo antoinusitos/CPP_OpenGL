@@ -37,7 +37,7 @@ struct SpotLight
 	vec3					mySpecular;
 };
 
-#define NB_POINT_LIGHTS 4  
+#define NB_POINT_LIGHTS 1  
 
 struct Material 
 {
