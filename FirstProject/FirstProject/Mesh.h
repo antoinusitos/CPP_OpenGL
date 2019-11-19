@@ -20,6 +20,7 @@ struct Texture
 {
 	unsigned int myId;
 	std::string myType;
+	std::string myPath;
 };
 
 class Mesh
@@ -30,6 +31,8 @@ public:
 	std::vector<Vertex> myVertices;
 	std::vector<unsigned int> myIndices;
 	std::vector<Texture> myTextures;
+
+	unsigned int myTexture;
 
 	// functions
 	// ---------
@@ -46,4 +49,6 @@ private:
 	// functions
 	// ---------
 	void SetupMesh();
+
+	unsigned int loadTexture(char const * path);
 };

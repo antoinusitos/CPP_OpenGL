@@ -78,8 +78,6 @@ public:
 		// -----------
 		unsigned int vertex;
 		unsigned int fragment;
-		int success;
-		char infoLog[512];
 
 		// vertex shader
 		// -----------

@@ -93,7 +93,8 @@ void Box::Render(Shader aShader)
 	myModel = glm::translate(myModel, myPosition);
 	myModel = glm::rotate(myModel, myAngle, myRotation);
 	myModel = glm::scale(myModel, myScale);
-	aShader.SetMat4("myModel", myModel);
+	//aShader.SetMat4("myModel", myModel);
+	aShader.SetMat4("model", myModel);
 
 	// activate the texture unit first before binding texture
 	// -----------

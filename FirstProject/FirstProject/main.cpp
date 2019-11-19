@@ -9,6 +9,7 @@
 #include "stb_image.h"
 #include "Camera.h"
 #include "Box.h"
+#include "Model.h"
 
 #include <glm/glm.hpp> 
 #include <glm/gtc/matrix_transform.hpp> 
@@ -28,8 +29,6 @@ const unsigned int SCR_HEIGHT = 600;
 // camera
 // -----------
 Camera* myCamera = new Camera(glm::vec3(0.0f, 0.0f, 3.0f));
-
-Camera* myMainCamera = myCamera;
 
 bool cam1 = true;
 // timing
@@ -104,151 +103,17 @@ int main()
 
 #pragma region Shader
 
-	//int nrAttributes; 
-	//glGetIntegerv(GL_MAX_VERTEX_ATTRIBS, &nrAttributes); 
-	//std::cout << "Maximum nr of vertex attributes supported: " << nrAttributes << std::endl;
+	Shader myShaderModel("ModelLoading.vert", "ModelLoading.frag");
 
-	Shader myShader("simple.vert", "simple.frag");
-	Shader myLightShader("Lights.vert", "Lights.frag");
-	Shader myColorShader("Color.vert", "Color.frag");
-
-	fw.myShaders.push_back(myShader);
-	fw.myShaders.push_back(myLightShader);
-	fw.myShaders.push_back(myColorShader);
+	//fw.myShaders.push_back(myShaderModel);
 
 #pragma endregion
 
-#pragma region Texture
+	Model myModel = Model("Models/NanoSuit/nanosuit.obj");
+	//Model myModel = Model("Models/Box/Box.obj");
 
-	// create the texture
-	// -----------
-	unsigned int myTexture;
-	glGenTextures(1, &myTexture);
-
-	// bind the texture to an opengl object
-	// -----------
-	glBindTexture(GL_TEXTURE_2D, myTexture);
-
-	// set the texture wrapping/filtering options (on the currently bound texture object) 
-	// -----------
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-	// load the image
-	// -----------
-	int myWidth;
-	int myHeight;
-	int myNbChannel;
-	unsigned char* myData = stbi_load("Images/container.jpg", &myWidth, &myHeight, &myNbChannel, 0);
-	stbi_set_flip_vertically_on_load(true);
-
-	if (myData)
-	{
-		// generate the texture and generate the mipmap
-		// -----------
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, myWidth, myHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, myData);
-		glGenerateMipmap(GL_TEXTURE_2D);
-	}
-	else
-	{
-		std::cout << "Failed to load texture" << std::endl;
-	}
-
-	// free the image memory
-	// -----------
-	stbi_image_free(myData);
-
-	// create the texture
-	// -----------
-	unsigned int myTexture2;
-	glGenTextures(1, &myTexture2);
-
-	// bind the texture to an opengl object
-	// -----------
-	glBindTexture(GL_TEXTURE_2D, myTexture2);
-
-	// set the texture wrapping/filtering options (on the currently bound texture object) 
-	// -----------
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-	// load the image
-	// -----------
-	myData = stbi_load("Images/awesomeface.png", &myWidth, &myHeight, &myNbChannel, 0);
-
-	if (myData)
-	{
-		// generate the texture and generate the mipmap
-		// -----------
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, myWidth, myHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, myData);
-		glGenerateMipmap(GL_TEXTURE_2D);
-	}
-	else
-	{
-		std::cout << "Failed to load texture" << std::endl;
-	}
-
-	// free the image memory
-	// -----------
-	stbi_image_free(myData);
-
-	// Tell OpenGL to use the program
-	// -----------
-	myShader.Use();
-
-	// affect images on channel
-	// -----------
-	myShader.SetInt("texture1", 0);
-	myShader.SetInt("texture2", 1);
-
-	// uncomment to show the wireframe
-	// -----------
-	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-	
-#pragma endregion
-
-#pragma region rectangle
-
-	// world space positions of our cubes
-	// -----------
-	Box cubes[] = {
-		Box(0.0f,  0.0f,  0.0f),
-		Box(2.0f,  5.0f, -15.0f),
-		Box(-1.5f, -2.2f, -2.5f),
-		Box(-3.8f, -2.0f, -12.3f),
-		Box(2.4f, -0.4f, -3.5f),
-		Box(-1.7f,  3.0f, -7.5f),
-		Box(1.3f, -2.0f, -2.5f),
-		Box(1.5f,  2.0f, -2.5f),
-		Box(1.5f,  0.2f, -1.5f),
-		Box(-1.3f,  1.0f, -1.5f)
-	};
-
-	//Box myLight = Box(1.2f, 1.0f, 2.0f);
-	//myLight.Scale(glm::vec3(0.2f));
-
-	for (unsigned int i = 0; i < 10; i++)
-	{
-		cubes[i].Rotate(20.0f * i);
-	}
-
-	Box myPointLightPositions[] = {
-		Box(0.7f,  0.2f,  2.0f),
-		Box(2.3f, -3.3f, -4.0f),
-		Box(-4.0f,  2.0f, -12.0f),
-		Box(0.0f,  0.0f, -3.0f)
-	};
-
-	for (unsigned int i = 0; i < 4; i++)
-	{
-		myPointLightPositions[i].Scale(glm::vec3(0.2f));
-	}
-
-#pragma endregion
+	Box myBox = Box(0, 0, 0);
+	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
 #pragma region Rendering
 
@@ -280,62 +145,28 @@ int main()
 
 		// clear the window
 		// -----------
-		//glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-		glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
+		//glClearColor(0.05f, 0.05f, 0.05f, 1.0f);
+		glClearColor(0.8f, 0.8f, 0.8f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 #pragma region rectangle rendering
 		// Tell OpenGL to use the program
 		// -----------
-		myLightShader.Use();
-		myLightShader.SetVec3("myViewPos", myMainCamera->myPosition);
-		// directional light
-		myLightShader.SetVec3("myDirectionalLight.myDirection", -0.2f, -1.0f, -0.3f);
-		myLightShader.SetVec3("myDirectionalLight.myAmbient", 0.05f, 0.05f, 0.05f);
-		myLightShader.SetVec3("myDirectionalLight.myDiffuse", 0.4f, 0.4f, 0.4f);
-		myLightShader.SetVec3("myDirectionalLight.mySpecular", 0.5f, 0.5f, 0.5f);
+		myShaderModel.Use();
 
-		for (unsigned int i = 0; i < 4; i++)
-		{
-			std::string number = std::to_string(i);
-			myLightShader.SetVec3(("myPointLights[" + number + "].myPosition").c_str(), myPointLightPositions[i].myPosition);
-			myLightShader.SetVec3("myPointLights[" + number + "].myAmbient", 0.05f, 0.05f, 0.05f);
-			myLightShader.SetVec3("myPointLights[" + number + "].myDiffuse", 0.8f, 0.8f, 0.8f);
-			myLightShader.SetVec3("myPointLights[" + number + "].mySpecular", 1.0f, 1.0f, 1.0f);
-			myLightShader.SetFloat("myPointLights[" + number + "].myConstant", 1.0f);
-			myLightShader.SetFloat("myPointLights[" + number + "].myLinear", 0.09);
-			myLightShader.SetFloat("myPointLights[" + number + "].myQuadratic", 0.032);
-		}
+		//myCamera->Render(myShaderModel, myWindow);
+		glm::mat4 projection = glm::perspective(glm::radians(myCamera->myFov), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
+		glm::mat4 view = myCamera->GetViewMatrix();
+		myShaderModel.SetMat4("projection", projection);
+		myShaderModel.SetMat4("view", view);
 
-		// settings for the point and spot light
-		myLightShader.SetVec3("mySpotLight.myPosition", myMainCamera->myPosition);
-		myLightShader.SetVec3("mySpotLight.myDirection", myMainCamera->myFront);
-		myLightShader.SetVec3("mySpotLight.myAmbient", 0.0f, 0.0f, 0.0f);
-		myLightShader.SetVec3("mySpotLight.myDiffuse", 1.0f, 1.0f, 1.0f);
-		myLightShader.SetVec3("mySpotLight.mySpecular", 1.0f, 1.0f, 1.0f);
-		myLightShader.SetFloat("mySpotLight.myConstant", 1.0f);
-		myLightShader.SetFloat("mySpotLight.myLinear", 0.09f);
-		myLightShader.SetFloat("mySpotLight.myQuadratic", 0.032f);
-		myLightShader.SetFloat("mySpotLight.myCutOff", glm::cos(glm::radians(12.5f)));
-		myLightShader.SetFloat("mySpotLight.myOuterCutOff", glm::cos(glm::radians(17.5f)));
+		//myBox.Render(myShaderModel);
 
-		// view/projection transformations
-		myMainCamera->Render(myLightShader, myWindow);
-
-		// Render Box
-		// -----------
-		for (unsigned int i = 0; i < 10; i++)
-		{
-			cubes[i].Render(myLightShader);
-		}
-
-		myColorShader.Use();
-		myMainCamera->Render(myColorShader, myWindow);
-
-		for (unsigned int i = 0; i < 4; i++)
-		{
-			myPointLightPositions[i].Render(myColorShader);
-		}
+		glm::mat4 model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(0.0f, -1.75f, 0.0f)); // translate it down so it's at the center of the scene
+		model = glm::scale(model, glm::vec3(0.2f, 0.2f, 0.2f));	// it's a bit too big for our scene, so scale it down
+		myShaderModel.SetMat4("model", model);
+		myModel.Draw(myShaderModel);
 
 #pragma endregion
 
@@ -374,25 +205,25 @@ void processInput(GLFWwindow* aWindow)
 	float myCameraSpeed = 2.5f * myDeltaTime;
 	if (glfwGetKey(aWindow, GLFW_KEY_W) == GLFW_PRESS)
 	{
-		myMainCamera->ProcessKeyboard(FORWARD, myDeltaTime);
+		myCamera->ProcessKeyboard(FORWARD, myDeltaTime);
 	}
 	if (glfwGetKey(aWindow, GLFW_KEY_S) == GLFW_PRESS)
 	{
-		myMainCamera->ProcessKeyboard(BACKWARD, myDeltaTime);
+		myCamera->ProcessKeyboard(BACKWARD, myDeltaTime);
 	}
 
 	if (glfwGetKey(aWindow, GLFW_KEY_A) == GLFW_PRESS)
 	{
-		myMainCamera->ProcessKeyboard(LEFT, myDeltaTime);
+		myCamera->ProcessKeyboard(LEFT, myDeltaTime);
 	}
 	if (glfwGetKey(aWindow, GLFW_KEY_D) == GLFW_PRESS)
 	{
-		myMainCamera->ProcessKeyboard(RIGHT, myDeltaTime);
+		myCamera->ProcessKeyboard(RIGHT, myDeltaTime);
 	}
 
 	if (glfwGetKey(aWindow, GLFW_KEY_Y) == GLFW_PRESS)
 	{
-		myMainCamera->InvertY();
+		myCamera->InvertY();
 	}
 }
 
@@ -411,10 +242,10 @@ void Mouse_Callback(GLFWwindow* aWindow, double aXPos, double aYPos)
 	myLastMousePosX = aXPos;
 	myLastMousePosY = aYPos;
 
-	myMainCamera->ProcessMouseMovement(xOffset, yOffset);
+	myCamera->ProcessMouseMovement(xOffset, yOffset);
 }
 
 void Scroll_Callback(GLFWwindow* aWindow, double aXOffset, double aYOffset)
 {
-	myMainCamera->ProcessMouseScroll(aYOffset);
+	myCamera->ProcessMouseScroll(aYOffset);
 }

@@ -39,6 +39,9 @@
     <ClCompile Include="Mesh.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Model.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Shader.h">
@@ -58,6 +61,9 @@
     </ClInclude>
     <ClInclude Include="Mesh.h">
       <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Model.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -83,6 +89,12 @@
       <Filter>Source Files\Shaders</Filter>
     </None>
     <None Include="Lights.vert">
+      <Filter>Source Files\Shaders</Filter>
+    </None>
+    <None Include="ModelLoading.frag">
+      <Filter>Source Files\Shaders</Filter>
+    </None>
+    <None Include="ModelLoading.vert">
       <Filter>Source Files\Shaders</Filter>
     </None>
   </ItemGroup>
