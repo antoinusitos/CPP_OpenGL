@@ -13,18 +13,30 @@ struct aiMesh;
 struct aiMaterial;
 enum aiTextureType;
 
+struct Transform
+{
+	glm::vec3 myPosition;
+	glm::vec3 myRotation;
+	glm::vec3 myScale;
+}
+
 class Model
 {
 public:
 	Model(char* aPath, bool aGamma = false);
 
 	void Draw(Shader aShader);
+	
+	void SetPosition(glm::vec3 aPosition);
+	void SetRotation(glm::vec3 aRotation);
+	void SetScale(glm::vec3 aScale);
 
 private:
 	std::vector<Texture> myTexturesLoaded;
 	std::vector<Mesh> myMeshes;
 	std::string myDirectory;
 	bool myGammaCorrection;
+	Transform myTransform;
 
 private:
 	void LoadModel(std::string aPath);
