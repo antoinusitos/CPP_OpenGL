@@ -44,9 +44,13 @@ void Mesh::Draw(Shader aShader)
 	unsigned int specularNb = 1;
 	unsigned int normalNb = 1;
 	unsigned int heightNb = 1;
+	aShader.SetInt("myMaterial.myDiffuse", 0);
+	aShader.SetInt("myMaterial.mySpecular", 1);
+	aShader.SetInt("myMaterial.myEmissive", 2);
+	aShader.SetFloat("myMaterial.myShininess", 64);
 	for (unsigned int i = 0; i < myTextures.size(); i++)
 	{
-		glActiveTexture(GL_TEXTURE0 + i); // activate proper texture unit before binding
+		/*glActiveTexture(GL_TEXTURE0 + i); // activate proper texture unit before binding
 										  // retrieve texture number (the N in diffuse_textureN)
 		std::string number;
 		std::string name = myTextures[i].myType;
@@ -60,7 +64,40 @@ void Mesh::Draw(Shader aShader)
 			number = std::to_string(heightNb++); // transfer unsigned int to stream
 
 		aShader.SetFloat((name + number).c_str(), i);
-		glBindTexture(GL_TEXTURE_2D, myTextures[i].myId);
+		
+		glBindTexture(GL_TEXTURE_2D, myTextures[i].myId);*/
+
+		std::string name = myTextures[i].myType;
+		if (name == "texture_diffuse")
+		{
+			// activate the texture unit first before binding texture
+			// -----------
+			glActiveTexture(GL_TEXTURE0);
+
+			// Tell OpenGL to use the texture we loaded
+			// -----------
+			glBindTexture(GL_TEXTURE_2D, myTextures[i].myId);
+		}
+		else if (name == "texture_specular")
+		{
+			// activate the texture unit first before binding texture
+			// -----------
+			glActiveTexture(GL_TEXTURE1);
+
+			// Tell OpenGL to use the texture we loaded
+			// -----------
+			glBindTexture(GL_TEXTURE_2D, myTextures[i].myId);
+		}
+		else if (name == "texture_normal")
+		{
+			// activate the texture unit first before binding texture
+			// -----------
+			glActiveTexture(GL_TEXTURE2);
+
+			// Tell OpenGL to use the texture we loaded
+			// -----------
+			glBindTexture(GL_TEXTURE_2D, myTextures[i].myId);
+		}
 	}
 
 	// draw mesh
