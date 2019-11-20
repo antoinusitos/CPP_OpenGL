@@ -1,7 +1,13 @@
 #version 330 core
-layout (location = 0) in vec3 aPos;
+layout (location = 0) in vec4 vertex;
+
+out vec2 TexCoords;
+
+uniform mat4 myModel;
+uniform mat4 myProjection;
 
 void main()
 {
-    gl_Position = vec4(aPos, 1.0);
+	TexCoords = vertex.zw;
+    gl_Position = myProjection * myModel * vec4(vertex.xy, 0.0f, 1.0);
 } 

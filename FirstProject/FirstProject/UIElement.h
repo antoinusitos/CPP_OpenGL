@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Data.h"
+#include <glad/glad.h>
 
 typedef void(*callback_function)(void);
 
@@ -17,24 +18,25 @@ public:
 	void Enter();
 	void Exit();
 
+	void MouseClick();
+
 	void BindHoverFunction(callback_function aFunction);
 	void BindEnterFunction(callback_function aFunction);
 	void BindExitFunction(callback_function aFunction);
+	void BindMouseClickFunction(callback_function aFunction);
 
 	virtual void Update(const float aDeltaTime);
-	virtual void Draw(Shader aShader);
+	virtual void Render(Shader* aShader);
 
 	void SetUIManager(UIManager* aManager);
 
-	void SetSize(const float aWidth, const float aHeight);
-
-	void SetPosition(glm::vec3 aPosition);
+	void SetPosition(glm::vec2 aPosition);
 	void SetRotation(glm::vec3 aRotation);
-	void SetScale(glm::vec3 aScale);
+	void SetScale(glm::vec2 aScale);
 
-	const glm::vec3 GetPosition();
+	const glm::vec2 GetPosition();
 	const glm::vec3 GetRotation();
-	const glm::vec3 GetScale();
+	const glm::vec2 GetScale();
 
 	void CreateUI();
 
@@ -43,30 +45,12 @@ protected:
 	callback_function myHoverFunction = nullptr;
 	callback_function myEnterFunction = nullptr;
 	callback_function myExitFunction = nullptr;
+	callback_function myMouseClickFunction = nullptr;
 	UIManager* myUIManager;
 
-	Transform myTransform;
-	float myHeight = 0;
-	float myWidth = 0;
-
-	float myVertices[18] = {
-		// first triangle
-		0.5f,  0.5f, 0.0f,  // top right
-		0.5f, -0.5f, 0.0f,  // bottom right
-		-0.5f,  0.5f, 0.0f,  // top left 
-		// second triangle
-		 0.5f, -0.5f, 0.0f,  // bottom right
-		 -0.5f, -0.5f, 0.0f,  // bottom left
-		 -0.5f,  0.5f, 0.0f   // top left
-	};
-
-	unsigned int myIndices[6] = {  // note that we start from 0!
-		0, 1, 3,   // first triangle
-		1, 2, 3    // second triangle
-	};
+	UITransform myTransform;
+	float myAngle = 0;
 
 	unsigned int myVAO;
-	unsigned int myVBO;
-	unsigned int myEBO;
 };
 

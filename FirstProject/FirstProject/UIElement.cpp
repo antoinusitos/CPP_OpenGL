@@ -1,8 +1,8 @@
 #include "UIElement.h"
 #include <assert.h>
 
-#include <glad/glad.h>
 #include <glm/glm.hpp> 
+#include <glm/gtc/matrix_transform.hpp>
 
 #include "UIManager.h"
 #include "Shader.h"
@@ -11,13 +11,14 @@
 
 UIElement::UIElement()
 {
-	myTransform.myPosition = glm::vec3(0.0f);
+	myTransform.myPosition = glm::vec2(400.0f, 300.0f);
 	myTransform.myRotation = glm::vec3(0.0f, 1.0f, 0.0f);
-	myTransform.myScale = glm::vec3(1.0f);
+	myTransform.myScale = glm::vec2(100.0f, 100.0f);
 }
 
 UIElement::~UIElement()
 {
+	glDeleteVertexArrays(1, &myVAO);
 }
 
 void UIElement::Hover()
@@ -26,6 +27,7 @@ void UIElement::Hover()
 	{
 		myHoverFunction();
 	}
+	std::cout << "HOVER" << std::endl;
 }
 
 void UIElement::Enter()
@@ -34,6 +36,7 @@ void UIElement::Enter()
 	{
 		myEnterFunction();
 	}
+	std::cout << "ENTER" << std::endl;
 }
 
 void UIElement::Exit()
@@ -42,6 +45,16 @@ void UIElement::Exit()
 	{
 		myExitFunction();
 	}
+	std::cout << "EXIT" << std::endl;
+}
+
+void UIElement::MouseClick()
+{
+	if (myMouseClickFunction != nullptr)
+	{
+		myMouseClickFunction();
+	}
+	std::cout << "Mouse click" << std::endl;
 }
 
 void UIElement::BindHoverFunction(callback_function aFunction)
@@ -59,40 +72,63 @@ void UIElement::BindExitFunction(callback_function aFunction)
 	myExitFunction = aFunction;
 }
 
+void UIElement::BindMouseClickFunction(callback_function aFunction)
+{
+	myMouseClickFunction = aFunction;
+}
+
 void UIElement::Update(const float aDeltaTime)
 {
 	assert("ERROR::UIELEMENT::UPDATE:: UI manager is not set.", myUIManager != nullptr);
 
 	glm::vec2 mousePos = myUIManager->GetMousePosition();
 
-	if (mousePos.x <= (myTransform.myPosition.x + (myWidth / 2.0f)) && mousePos.x >= (myTransform.myPosition.x - (myWidth / 2.0f)) &&
-		mousePos.y <= (myTransform.myPosition.y + (myHeight / 2.0f)) && mousePos.y >= (myTransform.myPosition.y - (myHeight / 2.0f)))
+	/*if (myUIManager->GetMouseStatus() && myEntered)
+	{
+		MouseClick();
+	}*/
+
+	if (mousePos.x <= (myTransform.myPosition.x + (myTransform.myScale.x / 2.0f)) && mousePos.x >= (myTransform.myPosition.x - (myTransform.myScale.x / 2.0f)) &&
+		mousePos.y <= (myTransform.myPosition.y + (myTransform.myScale.y / 2.0f)) && mousePos.y >= (myTransform.myPosition.y - (myTransform.myScale.y / 2.0f)))
 	{
 		if (myEntered)
 		{
 			Hover();
-			std::cout << "HOVER" << std::endl;
 		}
 		else
 		{
 			myEntered = true;
 			Enter();
-			std::cout << "ENTER" << std::endl;
 		}
 	}
 	else if(myEntered)
 	{
 		myEntered = false;
 		Exit();
-		std::cout << "EXIT" << std::endl;
 	}
 }
 
-void UIElement::Draw(Shader aShader)
+void UIElement::Render(Shader* aShader)
 {
-	aShader.Use();
-	glBindVertexArray(myVAO); // seeing as we only have a single VAO there's no need to bind it every time, but we'll do so to keep things a bit more organized
-	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+	aShader->Use();
+	glm::mat4 model = glm::mat4(1.0f);
+	model = glm::translate(model, glm::vec3(myTransform.myPosition + -0.5f * myTransform.myScale, 0.0f));
+
+	model = glm::translate(model, glm::vec3(0.5f * myTransform.myScale.x, 0.5f * myTransform.myScale.y, 0.0f));
+	model = glm::rotate(model, myAngle, glm::vec3(0.0f, 0.0f, 1.0f));
+	model = glm::translate(model, glm::vec3(-0.5f * myTransform.myScale.x, -0.5f * myTransform.myScale.y, 0.0f));
+
+	model = glm::scale(model, glm::vec3(myTransform.myScale, 1.0f));
+
+	aShader->SetMat4("myModel", model);
+	aShader->SetVec3("mySpriteColor", glm::vec3(0.0f, 1.0f, 0.0f));
+
+	//glActiveTexture(GL_TEXTURE0);
+	//texture.Bind();
+
+	glBindVertexArray(myVAO);
+	glDrawArrays(GL_TRIANGLES, 0, 6);
+	glBindVertexArray(0);
 }
 
 void UIElement::SetUIManager(UIManager* aManager)
@@ -100,14 +136,7 @@ void UIElement::SetUIManager(UIManager* aManager)
 	myUIManager = aManager;
 }
 
-void UIElement::SetSize(const float aWidth, const float aHeight)
-{
-	myWidth = aWidth;
-	myHeight = aHeight;
-}
-
-
-void UIElement::SetPosition(glm::vec3 aPosition)
+void UIElement::SetPosition(glm::vec2 aPosition)
 {
 	myTransform.myPosition = aPosition;
 }
@@ -117,12 +146,12 @@ void UIElement::SetRotation(glm::vec3 aRotation)
 	myTransform.myRotation = aRotation;
 }
 
-void UIElement::SetScale(glm::vec3 aScale)
+void UIElement::SetScale(glm::vec2 aScale)
 {
 	myTransform.myScale = aScale;
 }
 
-const glm::vec3 UIElement::GetPosition()
+const glm::vec2 UIElement::GetPosition()
 {
 	return myTransform.myPosition;
 }
@@ -132,55 +161,35 @@ const glm::vec3 UIElement::GetRotation()
 	return myTransform.myRotation;
 }
 
-const glm::vec3 UIElement::GetScale()
+const glm::vec2 UIElement::GetScale()
 {
 	return myTransform.myScale;
 }
 
 void UIElement::CreateUI()
 {
-	/*glGenVertexArrays(1, &myVAO);
-	glGenBuffers(1, &myVBO);
-	glGenBuffers(1, &myEBO);
+	// Configure VAO/VBO
+	GLuint VBO;
+	GLfloat vertices[] = {
+		// Pos      // Tex
+		0.0f, 1.0f, 0.0f, 1.0f,
+		1.0f, 0.0f, 1.0f, 0.0f,
+		0.0f, 0.0f, 0.0f, 0.0f,
 
-	glBindVertexArray(myVAO);
+		0.0f, 1.0f, 0.0f, 1.0f,
+		1.0f, 1.0f, 1.0f, 1.0f,
+		1.0f, 0.0f, 1.0f, 0.0f
+	};
 
-	glBindBuffer(GL_ARRAY_BUFFER, myVBO);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(myVertices), myVertices, GL_STATIC_DRAW);
-
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, myEBO);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(myIndices), myIndices, GL_STATIC_DRAW);
-
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
-	glEnableVertexAttribArray(0);
-
-	// free resources
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	glBindVertexArray(0);*/
-
-	//unsigned int VBO, VAO, EBO;
 	glGenVertexArrays(1, &myVAO);
-	glGenBuffers(1, &myVBO);
-	glGenBuffers(1, &myEBO);
-	// bind the Vertex Array Object first, then bind and set vertex buffer(s), and then configure vertex attributes(s).
+	glGenBuffers(1, &VBO);
+
+	glBindBuffer(GL_ARRAY_BUFFER, VBO);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+
 	glBindVertexArray(myVAO);
-
-	glBindBuffer(GL_ARRAY_BUFFER, myVBO);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(myVertices), myVertices, GL_STATIC_DRAW);
-
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, myEBO);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(myIndices), myIndices, GL_STATIC_DRAW);
-
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(0);
-
-	// note that this is allowed, the call to glVertexAttribPointer registered VBO as the vertex attribute's bound vertex buffer object so afterwards we can safely unbind
-	//glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-	// remember: do NOT unbind the EBO while a VAO is active as the bound element buffer object IS stored in the VAO; keep the EBO bound.
-	//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-
-	// You can unbind the VAO afterwards so other VAO calls won't accidentally modify this VAO, but this rarely happens. Modifying other
-	// VAOs requires a call to glBindVertexArray anyways so we generally don't unbind VAOs (nor VBOs) when it's not directly necessary.
-	//glBindVertexArray(0);
+	glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 4 * sizeof(GLfloat), (GLvoid*)0);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindVertexArray(0);
 }

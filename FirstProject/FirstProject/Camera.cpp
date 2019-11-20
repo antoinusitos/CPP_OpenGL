@@ -102,7 +102,8 @@ void Camera::Render(Shader aShader, GLFWwindow* aWindow)
 	// pass projection matrix to shader (as projection matrix rarely changes there's no need to do this per frame)
 	// -----------
 	glm::mat4 myProjection = glm::mat4(1.0f);
-	myProjection = glm::perspective(glm::radians(myFov), (float)width / (float)height, 0.1f, 100.0f);
+	//myProjection = glm::perspective(glm::radians(myFov), (float)width / (float)height, 0.1f, 100.0f);
+	myProjection = glm::ortho(0.0f, static_cast<GLfloat>(width), static_cast<GLfloat>(height), 0.0f, -1.0f, 1.0f);
 	aShader.SetMat4("myProjection", myProjection);
 
 	// create transformations
