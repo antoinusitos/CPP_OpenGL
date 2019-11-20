@@ -10,6 +10,10 @@ UIManager::UIManager()
 
 UIManager::~UIManager()
 {
+	/*for (unsigned int i = 0; i < myElements.size(); i++)
+	{
+		delete myElements[i];
+	}*/
 }
 
 void UIManager::UpdateManager(float aDeltaTime)
@@ -21,7 +25,7 @@ void UIManager::UpdateManager(float aDeltaTime)
 
 	for (unsigned int i = 0; i < myElements.size(); i++)
 	{
-		myElements[i].Update(aDeltaTime);
+		myElements[i]->Update(aDeltaTime);
 	}
 
 	Update(aDeltaTime);
@@ -38,7 +42,7 @@ void UIManager::RenderManager()
 
 	for (unsigned int i = 0; i < myElements.size(); i++)
 	{
-		myElements[i].Render(myShader);
+		myElements[i]->Render(myShader);
 	}
 
 	Render(myShader);
@@ -51,6 +55,8 @@ void UIManager::UpdateMousePosition(glm::vec2 aNewPosition)
 
 const glm::vec2 UIManager::GetMousePosition()
 {
+
+	std::cout << "mousePos x:" << myMousePosition.x << " mouse y:" << myMousePosition.y << std::endl;
 	return myMousePosition;
 }
 

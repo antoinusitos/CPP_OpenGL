@@ -16,7 +16,7 @@
 
 #include "FileWatcher.h"
 
-#include "EditorUIManager.h";
+#include "EditorUIManager.h"
 
 void framebuffer_size_callback(GLFWwindow* aWindow, int aWidth, int aHeight);
 void processInput(GLFWwindow* aWindow);
@@ -44,7 +44,7 @@ float myLastMousePosY = 300.0f;
 bool myFirstMouse = false;
 
 //TEST
-EditorUIManager myEditorUIManager = EditorUIManager();
+//EditorUIManager myEditorUIManager;
 //TEST
 
 int main()
@@ -125,7 +125,8 @@ int main()
 	glm::vec3 pointLightPositions = glm::vec3(-0.7f, 0.2f, 1.0f);
 
 	//TEST
-	//EditorUIManager myEditorUIManager = EditorUIManager();
+	EditorUIManager myEditorUIManager = EditorUIManager();
+	myEditorUIManager = EditorUIManager();
 	myEditorUIManager.SetShader(myUIShader);
 	//TEST
 
@@ -154,6 +155,7 @@ int main()
 		});
 
 		//TEST
+
 		myEditorUIManager.UpdateMousePosition(glm::vec2(myLastMousePosX, myLastMousePosY));
 		myEditorUIManager.UpdateManager(myDeltaTime);
 		//TEST
@@ -270,14 +272,14 @@ void processInput(GLFWwindow* aWindow)
 		myCamera->InvertY();
 	}
 
-	if (glfwGetMouseButton(aWindow, GLFW_MOUSE_BUTTON_1) == GLFW_PRESS)
+	/*if (glfwGetMouseButton(aWindow, GLFW_MOUSE_BUTTON_1) == GLFW_PRESS)
 	{
 		myEditorUIManager.UpdateMouseStatus(true);
 	}
 	else
 	{
 		myEditorUIManager.UpdateMouseStatus(false);
-	}
+	}*/
 }
 
 void Mouse_Callback(GLFWwindow* aWindow, double aXPos, double aYPos)

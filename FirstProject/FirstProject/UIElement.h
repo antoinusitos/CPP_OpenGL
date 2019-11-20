@@ -51,6 +51,6 @@ protected:
 	UITransform myTransform;
 	float myAngle = 0;
 
-	unsigned int myVAO;
+	unsigned int myVAO = -1;
 };
 

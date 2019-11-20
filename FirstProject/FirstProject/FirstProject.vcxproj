@@ -21,32 +21,32 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>{FD3D6AC7-F486-4033-930B-4C197D713F43}</ProjectGuid>
     <RootNamespace>FirstProject</RootNamespace>
-    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
@@ -69,8 +69,12 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>D:\Dev\OpenGL_C++\glad\include;D:\Dev\OpenGL_C++\glfw-3.3\include\;D:\Dev\OpenGL_C++\glm\include;D:\Dev\OpenGL_C++\assimp-5.0.0\include;D:\Dev\OpenGL_C++\assimp-5.0.0\Build\include;$(IncludePath)</IncludePath>
-    <LibraryPath>D:\Dev\OpenGL_C++\glfw-3.3\build\src\Debug;D:\Dev\OpenGL_C++\assimp-5.0.0\Build\test\Debug;$(LibraryPath)</LibraryPath>
+    <IncludePath>D:\dev\git\CPP_OpenGL\glad\include;D:\dev\git\CPP_OpenGL\glm\include;D:\dev\git\CPP_OpenGL\glfw-3.3\include;D:\dev\git\CPP_OpenGL\assimp-5.0.0\Build\include;D:\dev\git\CPP_OpenGL\assimp-5.0.0\include;$(IncludePath)</IncludePath>
+    <LibraryPath>D:\dev\git\CPP_OpenGL\glfw-3.3\build\src\Debug;D:\dev\git\CPP_OpenGL\assimp-5.0.0\Build\code\Debug;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <IncludePath>D:\dev\git\CPP_OpenGL\glad\include;D:\dev\git\CPP_OpenGL\glm\include;D:\dev\git\CPP_OpenGL\glfw-3.3\include;D:\dev\git\CPP_OpenGL\assimp-5.0.0\Build\include;D:\dev\git\CPP_OpenGL\assimp-5.0.0\include;$(IncludePath)</IncludePath>
+    <LibraryPath>D:\dev\git\CPP_OpenGL\glfw-3.3\build\src\Debug;D:\dev\git\CPP_OpenGL\assimp-5.0.0\Build\code\Debug;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -79,7 +83,7 @@
       <SDLCheck>true</SDLCheck>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>glfw3.lib;opengl32.lib;assimp-vc141-mtd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;glfw3.lib;assimp-vc141-mtd.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -88,6 +92,9 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
     </ClCompile>
+    <Link>
+      <AdditionalDependencies>opengl32.lib;glfw3.lib;assimp-vc141-mtd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>

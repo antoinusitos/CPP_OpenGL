@@ -83,10 +83,13 @@ void UIElement::Update(const float aDeltaTime)
 
 	glm::vec2 mousePos = myUIManager->GetMousePosition();
 
-	/*if (myUIManager->GetMouseStatus() && myEntered)
+	//std::cout << "mousePos x:" << mousePos.x << " mouse y:" << mousePos.y << std::endl;
+	//std::cout << "myPosition x:" << myTransform.myPosition.x << " myPosition y:" << myTransform.myPosition.y << std::endl;
+
+	if (myUIManager->GetMouseStatus() && myEntered)
 	{
 		MouseClick();
-	}*/
+	}
 
 	if (mousePos.x <= (myTransform.myPosition.x + (myTransform.myScale.x / 2.0f)) && mousePos.x >= (myTransform.myPosition.x - (myTransform.myScale.x / 2.0f)) &&
 		mousePos.y <= (myTransform.myPosition.y + (myTransform.myScale.y / 2.0f)) && mousePos.y >= (myTransform.myPosition.y - (myTransform.myScale.y / 2.0f)))

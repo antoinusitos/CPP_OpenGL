@@ -28,7 +28,7 @@ protected:
 	virtual void Render(Shader* aShader);
 
 protected:
-	std::vector<UIElement> myElements;
+	std::vector<UIElement*> myElements;
 
 	bool myIsActive = true;
 	bool myIsHidden = false;
