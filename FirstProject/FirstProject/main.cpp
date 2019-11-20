@@ -108,8 +108,10 @@ int main()
 #pragma endregion
 
 	Model myModel = Model("Models/NanoSuit/nanosuit.obj");
+	myModel.SetPosition(glm::vec3(0.0f, -1.75f, 0.0f));
+	myModel.SetScale(glm::vec3(0.1f, 0.1f, 0.1f));
 
-	Box myBox = Box(0,3,0);
+	Box myBox = Box(0,1,0);
 	glm::vec3 pointLightPositions = glm::vec3(-0.7f, 0.2f, 1.0f);
 
 #pragma region Rendering
@@ -183,10 +185,7 @@ int main()
 
 		myBox.Render(myShaderLights);
 
-		model = glm::mat4(1.0f);
-		model = glm::translate(model, glm::vec3(0.0f, -1.75f, 0.0f)); // translate it down so it's at the center of the scene
-		model = glm::scale(model, glm::vec3(0.1f, 0.1f, 0.1f));	// it's a bit too big for our scene, so scale it down
-		myShaderLights.SetMat4("myModel", model);
+		myModel.Update(myDeltaTime);
 		myModel.Draw(myShaderLights);
 
 #pragma endregion

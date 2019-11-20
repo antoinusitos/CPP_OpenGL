@@ -127,6 +127,7 @@
   <ItemGroup>
     <ClInclude Include="Box.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="Data.h" />
     <ClInclude Include="FileWatcher.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="Model.h" />

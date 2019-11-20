@@ -2,6 +2,7 @@
 
 #include <vector>
 #include "Mesh.h"
+#include "Data.h"
 
 class Shader;
 class Mesh;
@@ -11,14 +12,8 @@ struct aiNode;
 struct aiScene;
 struct aiMesh;
 struct aiMaterial;
-enum aiTextureType;
 
-struct Transform
-{
-	glm::vec3 myPosition;
-	glm::vec3 myRotation;
-	glm::vec3 myScale;
-}
+enum aiTextureType;
 
 class Model
 {
@@ -31,12 +26,19 @@ public:
 	void SetRotation(glm::vec3 aRotation);
 	void SetScale(glm::vec3 aScale);
 
+	glm::vec3 GetPosition();
+	glm::vec3 GetRotation();
+	glm::vec3 GetScale();
+
+	void Update(float aDeltaTime);
+
 private:
 	std::vector<Texture> myTexturesLoaded;
 	std::vector<Mesh> myMeshes;
 	std::string myDirectory;
 	bool myGammaCorrection;
 	Transform myTransform;
+	float myAngle = 0;
 
 private:
 	void LoadModel(std::string aPath);

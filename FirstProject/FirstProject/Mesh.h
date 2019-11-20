@@ -9,6 +9,8 @@
 
 class Shader;
 
+struct Transform;
+
 struct Vertex 
 {
 	glm::vec3 myPosition;
@@ -37,7 +39,7 @@ public:
 	// functions
 	// ---------
 	Mesh(std::vector<Vertex> someVertices, std::vector<unsigned int> someIndices, std::vector<Texture> someTextures);
-	void Draw(Shader aShader);
+	void Draw(Shader aShader, Transform aTransform);
 
 private:
 	// render data

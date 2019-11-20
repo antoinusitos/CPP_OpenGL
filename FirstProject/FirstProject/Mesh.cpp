@@ -1,6 +1,7 @@
 #include "Mesh.h"
 #include "Shader.h"
 #include "stb_image.h"
+#include "Data.h"
 
 Mesh::Mesh(std::vector<Vertex> someVertices, std::vector<unsigned int> someIndices, std::vector<Texture> someTextures)
 {
@@ -38,7 +39,7 @@ void Mesh::SetupMesh()
 	glBindVertexArray(0);
 }
 
-void Mesh::Draw(Shader aShader)
+void Mesh::Draw(Shader aShader, Transform aTransform)
 {
 	unsigned int diffuseNb = 1;
 	unsigned int specularNb = 1;
@@ -48,6 +49,7 @@ void Mesh::Draw(Shader aShader)
 	aShader.SetInt("myMaterial.mySpecular", 1);
 	aShader.SetInt("myMaterial.myEmissive", 2);
 	aShader.SetFloat("myMaterial.myShininess", 64);
+
 	for (unsigned int i = 0; i < myTextures.size(); i++)
 	{
 		/*glActiveTexture(GL_TEXTURE0 + i); // activate proper texture unit before binding
@@ -88,7 +90,7 @@ void Mesh::Draw(Shader aShader)
 			// -----------
 			glBindTexture(GL_TEXTURE_2D, myTextures[i].myId);
 		}
-		else if (name == "texture_normal")
+		/*else if (name == "texture_normal")
 		{
 			// activate the texture unit first before binding texture
 			// -----------
@@ -97,7 +99,7 @@ void Mesh::Draw(Shader aShader)
 			// Tell OpenGL to use the texture we loaded
 			// -----------
 			glBindTexture(GL_TEXTURE_2D, myTextures[i].myId);
-		}
+		}*/
 	}
 
 	// draw mesh
@@ -106,4 +108,9 @@ void Mesh::Draw(Shader aShader)
 	glBindVertexArray(0);
 
 	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, 0);
+	glActiveTexture(GL_TEXTURE1);
+	glBindTexture(GL_TEXTURE_2D, 0);
+	glActiveTexture(GL_TEXTURE2);
+	glBindTexture(GL_TEXTURE_2D, 0);
 }

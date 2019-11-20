@@ -8,17 +8,63 @@
 
 #include "stb_image.h"
 
+#include <glm/gtc/matrix_transform.hpp>
+
 Model::Model(char* aPath, bool aGamma) : myGammaCorrection(aGamma)
 {
+	myTransform.myPosition = glm::vec3(0.0f);
+	myTransform.myRotation = glm::vec3(0.0f, 1.0f, 0.0f);
+	myTransform.myScale = glm::vec3(1.0f);
 	LoadModel(aPath);
 }
 
 void Model::Draw(Shader aShader)
 {
+	glm::mat4 model = glm::mat4(1.0f);
+	model = glm::translate(model, myTransform.myPosition);
+	model = glm::rotate(model, myAngle, myTransform.myRotation);
+	model = glm::scale(model, myTransform.myScale);
+	aShader.SetMat4("myModel", model);
+
 	for (unsigned int i = 0; i < myMeshes.size(); i++)
 	{
-		myMeshes[i].Draw(aShader);
+		myMeshes[i].Draw(aShader, myTransform);
 	}
+}
+
+void Model::SetPosition(glm::vec3 aPosition)
+{
+	myTransform.myPosition = aPosition;
+}
+
+void Model::SetRotation(glm::vec3 aRotation)
+{
+	myTransform.myRotation = aRotation;
+}
+
+void Model::SetScale(glm::vec3 aScale)
+{
+	myTransform.myScale = aScale;
+}
+
+glm::vec3 Model::GetPosition()
+{
+	return myTransform.myPosition;
+}
+
+glm::vec3 Model::GetRotation()
+{
+	return myTransform.myRotation;
+}
+
+glm::vec3 Model::GetScale()
+{
+	return myTransform.myScale;
+}
+
+void Model::Update(float aDeltaTime)
+{
+	myAngle += aDeltaTime;
 }
 
 void Model::LoadModel(std::string aPath)
