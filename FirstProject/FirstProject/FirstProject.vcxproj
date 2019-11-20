@@ -119,20 +119,28 @@
     <ClCompile Include="..\..\glad\src\glad.c" />
     <ClCompile Include="Box.cpp" />
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="EditorUIManager.cpp" />
+    <ClCompile Include="GameUIManager.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="Model.cpp" />
     <ClCompile Include="stb_image.cpp" />
+    <ClCompile Include="UIElement.cpp" />
+    <ClCompile Include="UIManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Box.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Data.h" />
+    <ClInclude Include="EditorUIManager.h" />
     <ClInclude Include="FileWatcher.h" />
+    <ClInclude Include="GameUIManager.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="Model.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="stb_image.h" />
+    <ClInclude Include="UIElement.h" />
+    <ClInclude Include="UIManager.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Color.frag" />
@@ -145,6 +153,8 @@
     <None Include="ModelLoading.vert" />
     <None Include="simple.frag" />
     <None Include="simple.vert" />
+    <None Include="UI.frag" />
+    <None Include="UI.vert" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
