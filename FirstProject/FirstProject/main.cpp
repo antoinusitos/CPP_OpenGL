@@ -79,7 +79,6 @@ int main()
 	// configure global opengl state
 	// -----------------------------
 	glEnable(GL_DEPTH_TEST);
-	//glDepthMask(GL_FALSE);
 
 	// hide and capture the cursor
 	// -----------------------------
