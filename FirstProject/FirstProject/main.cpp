@@ -79,6 +79,7 @@ int main()
 	// configure global opengl state
 	// -----------------------------
 	glEnable(GL_DEPTH_TEST);
+	//glDepthMask(GL_FALSE);
 
 	// hide and capture the cursor
 	// -----------------------------
@@ -111,7 +112,7 @@ int main()
 	myModel.SetPosition(glm::vec3(0.0f, -1.75f, 0.0f));
 	myModel.SetScale(glm::vec3(0.1f, 0.1f, 0.1f));
 
-	Box myBox = Box(0,1,0);
+	Box myBox = Box(0,0,-1);
 	glm::vec3 pointLightPositions = glm::vec3(-0.7f, 0.2f, 1.0f);
 
 #pragma region Rendering
