@@ -133,6 +133,7 @@
     <ClCompile Include="Model.cpp" />
     <ClCompile Include="stb_image.cpp" />
     <ClCompile Include="UIButton.cpp" />
+    <ClCompile Include="UIContainer.cpp" />
     <ClCompile Include="UIElement.cpp" />
     <ClCompile Include="UIManager.cpp" />
     <ClCompile Include="UIPanel.cpp" />
@@ -149,6 +150,7 @@
     <ClInclude Include="Shader.h" />
     <ClInclude Include="stb_image.h" />
     <ClInclude Include="UIButton.h" />
+    <ClInclude Include="UIContainer.h" />
     <ClInclude Include="UIElement.h" />
     <ClInclude Include="UIManager.h" />
     <ClInclude Include="UIPanel.h" />
