@@ -2,6 +2,7 @@
 #include "UIElement.h"
 #include <iostream>
 #include "Shader.h"
+#include <GLFW/glfw3.h>
 
 namespace Engine
 {
@@ -74,6 +75,16 @@ namespace Engine
 	void UIManager::SetShader(Shader* aShader)
 	{
 		myShader = aShader;
+	}
+
+	void UIManager::InitUIManager()
+	{
+
+	}
+
+	void UIManager::SetWindow(GLFWwindow* aWindow)
+	{
+		myWindow = aWindow;
 	}
 
 	void UIManager::Update(float aDeltaTime)

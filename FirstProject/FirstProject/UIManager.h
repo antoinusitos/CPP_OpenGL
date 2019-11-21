@@ -4,6 +4,8 @@
 #include <glm/glm.hpp> 
 #include "Data.h"
 
+struct GLFWwindow;
+
 namespace Engine
 {
 	class Shader;
@@ -26,6 +28,10 @@ namespace Engine
 
 		void SetShader(Shader* aShader);
 
+		virtual void InitUIManager();
+
+		void SetWindow(GLFWwindow* aWindow);
+
 	protected:
 		virtual void Update(float aDeltaTime);
 		virtual void Render(Shader* aShader);
@@ -40,5 +46,7 @@ namespace Engine
 		bool myMouseStatus = false;
 
 		Shader* myShader;
+
+		GLFWwindow* myWindow;
 	};
 }

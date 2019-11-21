@@ -31,7 +31,6 @@ namespace Engine
 		{
 			myMouseHoverFunction;
 		}
-		//std::cout << "HOVER" << std::endl;
 	}
 
 	void UIElement::MouseEnter()
@@ -40,7 +39,6 @@ namespace Engine
 		{
 			myMouseEnterFunction();
 		}
-		//std::cout << "ENTER" << std::endl;
 	}
 
 	void UIElement::MouseExit()
@@ -49,7 +47,6 @@ namespace Engine
 		{
 			myMouseExitFunction();
 		}
-		//std::cout << "EXIT" << std::endl;
 	}
 
 	void UIElement::MouseClick()
@@ -58,7 +55,14 @@ namespace Engine
 		{
 			myMouseClickFunction();
 		}
-		//std::cout << "Mouse click" << std::endl;
+	}
+
+	void UIElement::MouseRelease()
+	{
+		if (myMouseReleaseFunction != nullptr)
+		{
+			myMouseReleaseFunction();
+		}
 	}
 
 	void UIElement::Update(const float aDeltaTime)
@@ -73,11 +77,13 @@ namespace Engine
 			{
 				myClicked = true;
 				MouseClick();
+				return;
 			}
 		}
 		else if (myClicked)
 		{
 			myClicked = false;
+			MouseRelease();
 		}
 
 		if (mousePos.myX <= (myTransform.myPosition.myX + (myTransform.myScale.myX / 2.0f)) && mousePos.myX >= (myTransform.myPosition.myX - (myTransform.myScale.myX / 2.0f)) &&

@@ -123,6 +123,8 @@ int main()
 	//TEST
 	Editor::EditorUIManager* myEditorUIManager = new Editor::EditorUIManager();
 	myEditorUIManager->SetShader(myUIShader);
+	myEditorUIManager->SetWindow(myWindow);
+	myEditorUIManager->InitUIManager();
 	//TEST
 
 #pragma region Rendering

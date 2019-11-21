@@ -12,6 +12,7 @@ namespace Engine
 	protected:
 		void Init() override;
 		virtual void Click();
+		virtual void Release();
 		virtual void Enter();
 		virtual void Exit();
 

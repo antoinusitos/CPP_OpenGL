@@ -8,5 +8,7 @@ namespace Editor
 	public:
 		EditorUIManager();
 		~EditorUIManager();
+
+		void InitUIManager() override;
 	};
 }

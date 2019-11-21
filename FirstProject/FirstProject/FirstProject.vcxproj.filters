@@ -66,6 +66,9 @@
     <ClCompile Include="UIManager.cpp">
       <Filter>Source Files\Engine\UI</Filter>
     </ClCompile>
+    <ClCompile Include="UIPanel.cpp">
+      <Filter>Source Files\Engine\UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stb_image.h">
@@ -105,6 +108,9 @@
       <Filter>Source Files\Engine\UI</Filter>
     </ClInclude>
     <ClInclude Include="UIManager.h">
+      <Filter>Source Files\Engine\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UIPanel.h">
       <Filter>Source Files\Engine\UI</Filter>
     </ClInclude>
   </ItemGroup>

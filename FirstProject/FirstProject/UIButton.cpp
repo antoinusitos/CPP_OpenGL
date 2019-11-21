@@ -17,6 +17,7 @@ namespace Engine
 	void UIButton::Init()
 	{
 		myMouseClickFunction = std::bind(&UIButton::Click, this);
+		myMouseReleaseFunction = std::bind(&UIButton::Release, this);
 		myMouseEnterFunction = std::bind(&UIButton::Enter, this);
 		myMouseExitFunction = std::bind(&UIButton::Exit, this);
 
@@ -28,6 +29,13 @@ namespace Engine
 	void UIButton::Click()
 	{
 		std::cout << "Clicked on " << myName << std::endl;
+		myColor = Vector3(0.0f, 1.0f, 0.0f);
+	}
+
+	void UIButton::Release()
+	{
+		std::cout << "Released on " << myName << std::endl;
+		myColor = myHoverColor;
 	}
 
 	void UIButton::Enter()
