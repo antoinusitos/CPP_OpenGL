@@ -7,48 +7,51 @@
 #include <string>
 #include <vector>
 
-class Shader;
-
-struct Transform;
-
-struct Vertex 
+namespace Engine
 {
-	glm::vec3 myPosition;
-	glm::vec3 myNormal;
-	glm::vec2 myTexCoords;
-};
+	class Shader;
 
-struct Texture 
-{
-	unsigned int myId;
-	std::string myType;
-	std::string myPath;
-};
+	struct Transform;
 
-class Mesh
-{
-public:
-	// mesh data
-	// ---------
-	std::vector<Vertex> myVertices;
-	std::vector<unsigned int> myIndices;
-	std::vector<Texture> myTextures;
+	struct Vertex
+	{
+		glm::vec3 myPosition;
+		glm::vec3 myNormal;
+		glm::vec2 myTexCoords;
+	};
 
-	unsigned int myTexture;
+	struct Texture
+	{
+		unsigned int myId;
+		std::string myType;
+		std::string myPath;
+	};
 
-	// functions
-	// ---------
-	Mesh(std::vector<Vertex> someVertices, std::vector<unsigned int> someIndices, std::vector<Texture> someTextures);
-	void Draw(Shader aShader, Transform aTransform);
+	class Mesh
+	{
+	public:
+		// mesh data
+		// ---------
+		std::vector<Vertex> myVertices;
+		std::vector<unsigned int> myIndices;
+		std::vector<Texture> myTextures;
 
-private:
-	// render data
-	// ---------
-	unsigned int myVAO;
-	unsigned int myVBO;
-	unsigned int myEBO;
+		unsigned int myTexture;
 
-	// functions
-	// ---------
-	void SetupMesh();
-};
+		// functions
+		// ---------
+		Mesh(std::vector<Vertex> someVertices, std::vector<unsigned int> someIndices, std::vector<Texture> someTextures);
+		void Draw(Shader aShader, Transform aTransform);
+
+	private:
+		// render data
+		// ---------
+		unsigned int myVAO;
+		unsigned int myVBO;
+		unsigned int myEBO;
+
+		// functions
+		// ---------
+		void SetupMesh();
+	};
+}

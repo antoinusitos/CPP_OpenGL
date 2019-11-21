@@ -8,188 +8,199 @@
 #include "Shader.h"
 
 #include <iostream>
-
-UIElement::UIElement()
+namespace Engine
 {
-	myTransform.myPosition = Vector2(400.0f, 300.0f);
-	myTransform.myRotation = Vector3(0.0f, 1.0f, 0.0f);
-	myTransform.myScale = Vector2(100.0f, 100.0f);
-}
-
-UIElement::~UIElement()
-{
-	glDeleteVertexArrays(1, &myVAO);
-}
-
-void UIElement::Hover()
-{
-	if (myHoverFunction != nullptr)
+	UIElement::UIElement()
 	{
-		myHoverFunction();
-	}
-	//std::cout << "HOVER" << std::endl;
-}
-
-void UIElement::Enter()
-{
-	if (myEnterFunction != nullptr)
-	{
-		myEnterFunction();
-	}
-	std::cout << "ENTER" << std::endl;
-}
-
-void UIElement::Exit()
-{
-	if (myExitFunction != nullptr)
-	{
-		myExitFunction();
-	}
-	std::cout << "EXIT" << std::endl;
-}
-
-void UIElement::MouseClick()
-{
-	if (myMouseClickFunction != nullptr)
-	{
-		myMouseClickFunction();
-	}
-	std::cout << "Mouse click" << std::endl;
-}
-
-void UIElement::BindHoverFunction(callback_function aFunction)
-{
-	myHoverFunction = aFunction;
-}
-
-void UIElement::BindEnterFunction(callback_function aFunction)
-{
-	myEnterFunction = aFunction;
-}
-
-void UIElement::BindExitFunction(callback_function aFunction)
-{
-	myExitFunction = aFunction;
-}
-
-void UIElement::BindMouseClickFunction(callback_function aFunction)
-{
-	myMouseClickFunction = aFunction;
-}
-
-void UIElement::Update(const float aDeltaTime)
-{
-	assert("ERROR::UIELEMENT::UPDATE:: UI manager is not set.", myUIManager != nullptr);
-
-	Vector2 mousePos = myUIManager->GetMousePosition();
-
-	if (myUIManager->GetMouseStatus() && myEntered)
-	{
-		MouseClick();
+		myTransform.myPosition = Vector2(400.0f, 300.0f);
+		myTransform.myRotation = Vector3(0.0f, 1.0f, 0.0f);
+		myTransform.myScale = Vector2(100.0f, 100.0f);
+		myColor = Vector3(0.0f, 1.0f, 0.0f);
 	}
 
-	if (mousePos.myX <= (myTransform.myPosition.myX + (myTransform.myScale.myX / 2.0f)) && mousePos.myX >= (myTransform.myPosition.myX - (myTransform.myScale.myX / 2.0f)) &&
-		mousePos.myY <= (myTransform.myPosition.myY + (myTransform.myScale.myY / 2.0f)) && mousePos.myY >= (myTransform.myPosition.myY - (myTransform.myScale.myY / 2.0f)))
+	UIElement::~UIElement()
 	{
-		if (myEntered)
+		glDeleteVertexArrays(1, &myVAO);
+	}
+
+	void UIElement::Hover()
+	{
+		if (myHoverFunction != nullptr)
 		{
-			Hover();
+			myHoverFunction();
 		}
-		else
-		{
-			myEntered = true;
-			Enter();
-		}
+		//std::cout << "HOVER" << std::endl;
 	}
-	else if(myEntered)
+
+	void UIElement::Enter()
 	{
-		myEntered = false;
-		Exit();
+		if (myEnterFunction != nullptr)
+		{
+			myEnterFunction();
+		}
+		//std::cout << "ENTER" << std::endl;
 	}
-}
 
-void UIElement::Render(Shader* aShader)
-{
-	aShader->Use();
-	glm::mat4 model = glm::mat4(1.0f);
-	model = glm::translate(model, glm::vec3(myTransform.myPosition.myX + -0.5f * myTransform.myScale.myX, myTransform.myPosition.myY + -0.5f * myTransform.myScale.myY, 0.0f));
+	void UIElement::Exit()
+	{
+		if (myExitFunction != nullptr)
+		{
+			myExitFunction();
+		}
+		//std::cout << "EXIT" << std::endl;
+	}
 
-	model = glm::translate(model, glm::vec3(0.5f * myTransform.myScale.myX, 0.5f * myTransform.myScale.myY, 0.0f));
-	model = glm::rotate(model, myAngle, glm::vec3(0.0f, 0.0f, 1.0f));
-	model = glm::translate(model, glm::vec3(-0.5f * myTransform.myScale.myX, -0.5f * myTransform.myScale.myY, 0.0f));
+	void UIElement::MouseClick()
+	{
+		if (myMouseClickFunction != nullptr)
+		{
+			myMouseClickFunction();
+		}
+		//std::cout << "Mouse click" << std::endl;
+	}
 
-	model = glm::scale(model, glm::vec3(myTransform.myScale.myX, myTransform.myScale.myY, 1.0f));
+	void UIElement::BindHoverFunction(callback_function aFunction)
+	{
+		myHoverFunction = aFunction;
+	}
 
-	aShader->SetMat4("myModel", model);
-	aShader->SetVec3("mySpriteColor", glm::vec3(0.0f, 1.0f, 0.0f));
+	void UIElement::BindEnterFunction(callback_function aFunction)
+	{
+		myEnterFunction = aFunction;
+	}
 
-	//glActiveTexture(GL_TEXTURE0);
-	//texture.Bind();
+	void UIElement::BindExitFunction(callback_function aFunction)
+	{
+		myExitFunction = aFunction;
+	}
 
-	glBindVertexArray(myVAO);
-	glDrawArrays(GL_TRIANGLES, 0, 6);
-	glBindVertexArray(0);
-}
+	void UIElement::BindMouseClickFunction(callback_function aFunction)
+	{
+		myMouseClickFunction = aFunction;
+	}
 
-void UIElement::SetUIManager(UIManager* aManager)
-{
-	myUIManager = aManager;
-}
+	void UIElement::Update(const float aDeltaTime)
+	{
+		assert("ERROR::UIELEMENT::UPDATE:: UI manager is not set.", myUIManager != nullptr);
 
-void UIElement::SetPosition(Vector2 aPosition)
-{
-	myTransform.myPosition = aPosition;
-}
+		Vector2 mousePos = myUIManager->GetMousePosition();
 
-void UIElement::SetRotation(Vector3 aRotation)
-{
-	myTransform.myRotation = aRotation;
-}
+		if (myUIManager->GetMouseStatus())
+		{
+			if (myEntered && !myClicked)
+			{
+				myClicked = true;
+				MouseClick();
+			}
+		}
+		else if (myClicked)
+		{
+			myClicked = false;
+		}
 
-void UIElement::SetScale(Vector2 aScale)
-{
-	myTransform.myScale = aScale;
-}
+		if (mousePos.myX <= (myTransform.myPosition.myX + (myTransform.myScale.myX / 2.0f)) && mousePos.myX >= (myTransform.myPosition.myX - (myTransform.myScale.myX / 2.0f)) &&
+			mousePos.myY <= (myTransform.myPosition.myY + (myTransform.myScale.myY / 2.0f)) && mousePos.myY >= (myTransform.myPosition.myY - (myTransform.myScale.myY / 2.0f)))
+		{
+			if (myEntered)
+			{
+				Hover();
+			}
+			else
+			{
+				myEntered = true;
+				Enter();
+			}
+		}
+		else if (myEntered)
+		{
+			myEntered = false;
+			Exit();
+		}
+	}
 
-const Vector2 UIElement::GetPosition()
-{
-	return myTransform.myPosition;
-}
+	void UIElement::Render(Shader* aShader)
+	{
+		aShader->Use();
+		glm::mat4 model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(myTransform.myPosition.myX + -0.5f * myTransform.myScale.myX, myTransform.myPosition.myY + -0.5f * myTransform.myScale.myY, 0.0f));
 
-const Vector3 UIElement::GetRotation()
-{
-	return myTransform.myRotation;
-}
+		model = glm::translate(model, glm::vec3(0.5f * myTransform.myScale.myX, 0.5f * myTransform.myScale.myY, 0.0f));
+		model = glm::rotate(model, myAngle, glm::vec3(0.0f, 0.0f, 1.0f));
+		model = glm::translate(model, glm::vec3(-0.5f * myTransform.myScale.myX, -0.5f * myTransform.myScale.myY, 0.0f));
 
-const Vector2 UIElement::GetScale()
-{
-	return myTransform.myScale;
-}
+		model = glm::scale(model, glm::vec3(myTransform.myScale.myX, myTransform.myScale.myY, 1.0f));
 
-void UIElement::CreateUI()
-{
-	// Configure VAO/VBO
-	GLuint VBO;
-	GLfloat vertices[] = {
-		// Pos      // Tex
-		0.0f, 1.0f, 0.0f, 1.0f,
-		1.0f, 0.0f, 1.0f, 0.0f,
-		0.0f, 0.0f, 0.0f, 0.0f,
+		aShader->SetMat4("myModel", model);
+		aShader->SetVec3("mySpriteColor", glm::vec3(myColor.myX, myColor.myY, myColor.myZ));
 
-		0.0f, 1.0f, 0.0f, 1.0f,
-		1.0f, 1.0f, 1.0f, 1.0f,
-		1.0f, 0.0f, 1.0f, 0.0f
-	};
+		//glActiveTexture(GL_TEXTURE0);
+		//texture.Bind();
 
-	glGenVertexArrays(1, &myVAO);
-	glGenBuffers(1, &VBO);
+		glBindVertexArray(myVAO);
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+		glBindVertexArray(0);
+	}
 
-	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+	void UIElement::SetUIManager(UIManager* aManager)
+	{
+		myUIManager = aManager;
+	}
 
-	glBindVertexArray(myVAO);
-	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 4 * sizeof(GLfloat), (GLvoid*)0);
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	glBindVertexArray(0);
+	void UIElement::SetPosition(Vector2 aPosition)
+	{
+		myTransform.myPosition = aPosition;
+	}
+
+	void UIElement::SetRotation(Vector3 aRotation)
+	{
+		myTransform.myRotation = aRotation;
+	}
+
+	void UIElement::SetScale(Vector2 aScale)
+	{
+		myTransform.myScale = aScale;
+	}
+
+	const Vector2 UIElement::GetPosition()
+	{
+		return myTransform.myPosition;
+	}
+
+	const Vector3 UIElement::GetRotation()
+	{
+		return myTransform.myRotation;
+	}
+
+	const Vector2 UIElement::GetScale()
+	{
+		return myTransform.myScale;
+	}
+
+	void UIElement::CreateUI()
+	{
+		// Configure VAO/VBO
+		GLuint VBO;
+		GLfloat vertices[] = {
+			// Pos      // Tex
+			0.0f, 1.0f, 0.0f, 1.0f,
+			1.0f, 0.0f, 1.0f, 0.0f,
+			0.0f, 0.0f, 0.0f, 0.0f,
+
+			0.0f, 1.0f, 0.0f, 1.0f,
+			1.0f, 1.0f, 1.0f, 1.0f,
+			1.0f, 0.0f, 1.0f, 0.0f
+		};
+
+		glGenVertexArrays(1, &myVAO);
+		glGenBuffers(1, &VBO);
+
+		glBindBuffer(GL_ARRAY_BUFFER, VBO);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+
+		glBindVertexArray(myVAO);
+		glEnableVertexAttribArray(0);
+		glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 4 * sizeof(GLfloat), (GLvoid*)0);
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
+		glBindVertexArray(0);
+	}
 }

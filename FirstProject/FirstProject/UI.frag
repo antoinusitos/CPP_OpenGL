@@ -7,5 +7,5 @@ uniform vec3 mySpriteColor;
 
 void main()
 {
-    myFragColor = vec4(mySpriteColor, 1.0) * texture(image, TexCoords);
+    myFragColor = vec4(mySpriteColor, 1.0);// * texture(image, TexCoords);
 }

@@ -19,6 +19,9 @@
     <Filter Include="Source Files\Shaders">
       <UniqueIdentifier>{ed2203c7-fba0-4ce0-a640-f4539e433502}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Engine">
+      <UniqueIdentifier>{76a54a6e-eda1-4d97-a3e2-f3401d1c00a5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\glad\src\glad.c">

@@ -5,52 +5,57 @@
 
 typedef void(*callback_function)(void);
 
-class UIManager;
-class Shader;
-
-class UIElement
+namespace Engine
 {
-public:
-	UIElement();
-	~UIElement();
+	class UIManager;
+	class Shader;
 
-	void Hover();
-	void Enter();
-	void Exit();
+	class UIElement
+	{
+	public:
+		UIElement();
+		~UIElement();
 
-	void MouseClick();
+		void Hover();
+		void Enter();
+		void Exit();
 
-	void BindHoverFunction(callback_function aFunction);
-	void BindEnterFunction(callback_function aFunction);
-	void BindExitFunction(callback_function aFunction);
-	void BindMouseClickFunction(callback_function aFunction);
+		void MouseClick();
 
-	virtual void Update(const float aDeltaTime);
-	virtual void Render(Shader* aShader);
+		void BindHoverFunction(callback_function aFunction);
+		void BindEnterFunction(callback_function aFunction);
+		void BindExitFunction(callback_function aFunction);
+		void BindMouseClickFunction(callback_function aFunction);
 
-	void SetUIManager(UIManager* aManager);
+		virtual void Update(const float aDeltaTime);
+		virtual void Render(Shader* aShader);
 
-	void SetPosition(Vector2 aPosition);
-	void SetRotation(Vector3 aRotation);
-	void SetScale(Vector2 aScale);
+		void SetUIManager(UIManager* aManager);
 
-	const Vector2 GetPosition();
-	const Vector3 GetRotation();
-	const Vector2 GetScale();
+		void SetPosition(Vector2 aPosition);
+		void SetRotation(Vector3 aRotation);
+		void SetScale(Vector2 aScale);
 
-	void CreateUI();
+		const Vector2 GetPosition();
+		const Vector3 GetRotation();
+		const Vector2 GetScale();
 
-protected:
-	bool myEntered = false;
-	callback_function myHoverFunction = nullptr;
-	callback_function myEnterFunction = nullptr;
-	callback_function myExitFunction = nullptr;
-	callback_function myMouseClickFunction = nullptr;
-	UIManager* myUIManager;
+		void CreateUI();
 
-	UITransform myTransform;
-	float myAngle = 0;
+	protected:
+		bool myEntered = false;
+		bool myClicked = false;
+		callback_function myHoverFunction = nullptr;
+		callback_function myEnterFunction = nullptr;
+		callback_function myExitFunction = nullptr;
+		callback_function myMouseClickFunction = nullptr;
+		UIManager* myUIManager;
 
-	unsigned int myVAO = -1;
-};
+		UITransform myTransform;
+		float myAngle = 0;
 
+		unsigned int myVAO = -1;
+
+		Vector3 myColor;
+	};
+}

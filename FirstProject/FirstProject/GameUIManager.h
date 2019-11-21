@@ -1,7 +1,6 @@
 #pragma once
 #include "UIManager.h"
-class GameUIManager :
-	public UIManager
+class GameUIManager : public Engine::UIManager
 {
 public:
 	GameUIManager();

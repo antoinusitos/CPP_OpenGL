@@ -19,7 +19,7 @@
 #include "EditorUIManager.h"
 
 void framebuffer_size_callback(GLFWwindow* aWindow, int aWidth, int aHeight);
-void processInput(GLFWwindow* aWindow, UIManager* aUIManager);
+void processInput(GLFWwindow* aWindow, Engine::UIManager* aUIManager);
 void Mouse_Callback(GLFWwindow* aWindow, double aXPos, double aYPos);
 void Scroll_Callback(GLFWwindow* aWindow, double aXOffset, double aYOffset);
 
@@ -29,7 +29,7 @@ const unsigned int SCR_HEIGHT = 600;
 
 // camera
 // -----------
-Camera* myCamera = new Camera(glm::vec3(0.0f, 0.0f, 3.0f));
+Engine::Camera* myCamera = new Engine::Camera(glm::vec3(0.0f, 0.0f, 3.0f));
 
 // timing
 // -----------
@@ -100,13 +100,13 @@ int main()
 #pragma region fileWatcher
 
 	// Create a FileWatcher instance that will check the current folder for changes every 5 seconds
-	FileWatcher fw{ "./", std::chrono::milliseconds(1000) };
+	Engine::FileWatcher fw{ "./", std::chrono::milliseconds(1000) };
 #pragma endregion
 
 #pragma region Shader
 
-	Shader myShaderLights("Lights.vert", "Lights.frag");
-	Shader* myUIShader = new Shader("UI.vert", "UI.frag");
+	Engine::Shader myShaderLights("Lights.vert", "Lights.frag");
+	Engine::Shader* myUIShader = new Engine::Shader("UI.vert", "UI.frag");
 
 	fw.myShaders.push_back(myShaderLights);
 	fw.myShaders.push_back(*myUIShader);
@@ -117,11 +117,11 @@ int main()
 	myModel.SetPosition(glm::vec3(0.0f, -1.75f, 0.0f));
 	myModel.SetScale(glm::vec3(0.1f, 0.1f, 0.1f));*/
 
-	Box myBox = Box(0,0,-1);
-	glm::vec3 pointLightPositions = glm::vec3(-0.7f, 0.2f, 1.0f);
+	//Box myBox = Box(0,0,-1);
+	//glm::vec3 pointLightPositions = glm::vec3(-0.7f, 0.2f, 1.0f);
 
 	//TEST
-	EditorUIManager* myEditorUIManager = new EditorUIManager();
+	Editor::EditorUIManager* myEditorUIManager = new Editor::EditorUIManager();
 	myEditorUIManager->SetShader(myUIShader);
 	//TEST
 
@@ -140,10 +140,10 @@ int main()
 		// Checking file modification
 		// -----------
 		fw.myDeltaTime = myDeltaTime;
-		fw.Update([](std::string path_to_watch, FileStatus status) -> void
+		fw.Update([](std::string path_to_watch, Engine::FileStatus status) -> void
 		{
 			// Process only regular files, all other file types are ignored
-			if (!std::experimental::filesystem::is_regular_file(std::experimental::filesystem::path(path_to_watch)) && status != FileStatus::erased)
+			if (!std::experimental::filesystem::is_regular_file(std::experimental::filesystem::path(path_to_watch)) && status != Engine::FileStatus::erased)
 			{
 				return;
 			}
@@ -238,7 +238,7 @@ void framebuffer_size_callback(GLFWwindow* aWindow, int aWidth, int aHeight)
 
 // process all input: query GLFW whether relevant keys are pressed/released this frame and react accordingly
 // ---------------------------------------------------------------------------------------------------------
-void processInput(GLFWwindow* aWindow, UIManager* aUIManager)
+void processInput(GLFWwindow* aWindow, Engine::UIManager* aUIManager)
 { 
 	if (glfwGetKey(aWindow, GLFW_KEY_ESCAPE) == GLFW_PRESS)
 	{
@@ -248,20 +248,20 @@ void processInput(GLFWwindow* aWindow, UIManager* aUIManager)
 	float myCameraSpeed = 2.5f * myDeltaTime;
 	if (glfwGetKey(aWindow, GLFW_KEY_W) == GLFW_PRESS)
 	{
-		myCamera->ProcessKeyboard(FORWARD, myDeltaTime);
+		myCamera->ProcessKeyboard(Engine::FORWARD, myDeltaTime);
 	}
 	if (glfwGetKey(aWindow, GLFW_KEY_S) == GLFW_PRESS)
 	{
-		myCamera->ProcessKeyboard(BACKWARD, myDeltaTime);
+		myCamera->ProcessKeyboard(Engine::BACKWARD, myDeltaTime);
 	}
 
 	if (glfwGetKey(aWindow, GLFW_KEY_A) == GLFW_PRESS)
 	{
-		myCamera->ProcessKeyboard(LEFT, myDeltaTime);
+		myCamera->ProcessKeyboard(Engine::LEFT, myDeltaTime);
 	}
 	if (glfwGetKey(aWindow, GLFW_KEY_D) == GLFW_PRESS)
 	{
-		myCamera->ProcessKeyboard(RIGHT, myDeltaTime);
+		myCamera->ProcessKeyboard(Engine::RIGHT, myDeltaTime);
 	}
 
 	if (glfwGetKey(aWindow, GLFW_KEY_Y) == GLFW_PRESS)

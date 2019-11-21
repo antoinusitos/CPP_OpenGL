@@ -2,15 +2,17 @@
 #include "UIElement.h"
 #include <iostream>
 
-EditorUIManager::EditorUIManager() : UIManager()
+namespace Editor
 {
-	UIElement* elem = new UIElement();
-	elem->CreateUI();
-	elem->SetUIManager(this);
-	myElements.push_back(elem);
-}
+	EditorUIManager::EditorUIManager() : Engine::UIManager()
+	{
+		Engine::UIElement* elem = new Engine::UIElement();
+		elem->CreateUI();
+		elem->SetUIManager(this);
+		myElements.push_back(elem);
+	}
 
-
-EditorUIManager::~EditorUIManager()
-{
+	EditorUIManager::~EditorUIManager()
+	{
+	}
 }

@@ -4,39 +4,41 @@
 #include <glm/glm.hpp> 
 #include "Data.h"
 
-class Shader;
-class UIElement;
-
-class UIManager
+namespace Engine
 {
-public:
-	UIManager();
-	~UIManager();
+	class Shader;
+	class UIElement;
 
-	void UpdateManager(float aDeltaTime);
-	void RenderManager();
+	class UIManager
+	{
+	public:
+		UIManager();
+		~UIManager();
 
-	void UpdateMousePosition(glm::vec2 aNewPosition);
-	const Vector2 GetMousePosition();
+		void UpdateManager(float aDeltaTime);
+		void RenderManager();
 
-	void UpdateMouseStatus(bool aStatus);
-	const bool GetMouseStatus();
+		void UpdateMousePosition(glm::vec2 aNewPosition);
+		const Vector2 GetMousePosition();
 
-	void SetShader(Shader* aShader);
+		void UpdateMouseStatus(bool aStatus);
+		const bool GetMouseStatus();
 
-protected:
-	virtual void Update(float aDeltaTime);
-	virtual void Render(Shader* aShader);
+		void SetShader(Shader* aShader);
 
-protected:
-	std::vector<UIElement*> myElements;
+	protected:
+		virtual void Update(float aDeltaTime);
+		virtual void Render(Shader* aShader);
 
-	bool myIsActive = true;
-	bool myIsHidden = false;
+	protected:
+		std::vector<UIElement*> myElements;
 
-	Vector2 myMousePosition = Vector2(0.0f);
-	bool myMouseStatus = false;
+		bool myIsActive = true;
+		bool myIsHidden = false;
 
-	Shader* myShader;
-};
+		Vector2 myMousePosition = Vector2(0.0f);
+		bool myMouseStatus = false;
 
+		Shader* myShader;
+	};
+}

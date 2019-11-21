@@ -1,9 +1,12 @@
 #pragma once
 #include "UIManager.h"
-class EditorUIManager : public UIManager
-{
-public:
-	EditorUIManager();
-	~EditorUIManager();
-};
 
+namespace Editor
+{
+	class EditorUIManager : public Engine::UIManager
+	{
+	public:
+		EditorUIManager();
+		~EditorUIManager();
+	};
+}
