@@ -11,9 +11,9 @@
 
 UIElement::UIElement()
 {
-	myTransform.myPosition = glm::vec2(400.0f, 300.0f);
-	myTransform.myRotation = glm::vec3(0.0f, 1.0f, 0.0f);
-	myTransform.myScale = glm::vec2(100.0f, 100.0f);
+	myTransform.myPosition = Vector2(400.0f, 300.0f);
+	myTransform.myRotation = Vector3(0.0f, 1.0f, 0.0f);
+	myTransform.myScale = Vector2(100.0f, 100.0f);
 }
 
 UIElement::~UIElement()
@@ -27,7 +27,7 @@ void UIElement::Hover()
 	{
 		myHoverFunction();
 	}
-	std::cout << "HOVER" << std::endl;
+	//std::cout << "HOVER" << std::endl;
 }
 
 void UIElement::Enter()
@@ -81,18 +81,15 @@ void UIElement::Update(const float aDeltaTime)
 {
 	assert("ERROR::UIELEMENT::UPDATE:: UI manager is not set.", myUIManager != nullptr);
 
-	glm::vec2 mousePos = myUIManager->GetMousePosition();
-
-	//std::cout << "mousePos x:" << mousePos.x << " mouse y:" << mousePos.y << std::endl;
-	//std::cout << "myPosition x:" << myTransform.myPosition.x << " myPosition y:" << myTransform.myPosition.y << std::endl;
+	Vector2 mousePos = myUIManager->GetMousePosition();
 
 	if (myUIManager->GetMouseStatus() && myEntered)
 	{
 		MouseClick();
 	}
 
-	if (mousePos.x <= (myTransform.myPosition.x + (myTransform.myScale.x / 2.0f)) && mousePos.x >= (myTransform.myPosition.x - (myTransform.myScale.x / 2.0f)) &&
-		mousePos.y <= (myTransform.myPosition.y + (myTransform.myScale.y / 2.0f)) && mousePos.y >= (myTransform.myPosition.y - (myTransform.myScale.y / 2.0f)))
+	if (mousePos.myX <= (myTransform.myPosition.myX + (myTransform.myScale.myX / 2.0f)) && mousePos.myX >= (myTransform.myPosition.myX - (myTransform.myScale.myX / 2.0f)) &&
+		mousePos.myY <= (myTransform.myPosition.myY + (myTransform.myScale.myY / 2.0f)) && mousePos.myY >= (myTransform.myPosition.myY - (myTransform.myScale.myY / 2.0f)))
 	{
 		if (myEntered)
 		{
@@ -115,13 +112,13 @@ void UIElement::Render(Shader* aShader)
 {
 	aShader->Use();
 	glm::mat4 model = glm::mat4(1.0f);
-	model = glm::translate(model, glm::vec3(myTransform.myPosition + -0.5f * myTransform.myScale, 0.0f));
+	model = glm::translate(model, glm::vec3(myTransform.myPosition.myX + -0.5f * myTransform.myScale.myX, myTransform.myPosition.myY + -0.5f * myTransform.myScale.myY, 0.0f));
 
-	model = glm::translate(model, glm::vec3(0.5f * myTransform.myScale.x, 0.5f * myTransform.myScale.y, 0.0f));
+	model = glm::translate(model, glm::vec3(0.5f * myTransform.myScale.myX, 0.5f * myTransform.myScale.myY, 0.0f));
 	model = glm::rotate(model, myAngle, glm::vec3(0.0f, 0.0f, 1.0f));
-	model = glm::translate(model, glm::vec3(-0.5f * myTransform.myScale.x, -0.5f * myTransform.myScale.y, 0.0f));
+	model = glm::translate(model, glm::vec3(-0.5f * myTransform.myScale.myX, -0.5f * myTransform.myScale.myY, 0.0f));
 
-	model = glm::scale(model, glm::vec3(myTransform.myScale, 1.0f));
+	model = glm::scale(model, glm::vec3(myTransform.myScale.myX, myTransform.myScale.myY, 1.0f));
 
 	aShader->SetMat4("myModel", model);
 	aShader->SetVec3("mySpriteColor", glm::vec3(0.0f, 1.0f, 0.0f));
@@ -139,32 +136,32 @@ void UIElement::SetUIManager(UIManager* aManager)
 	myUIManager = aManager;
 }
 
-void UIElement::SetPosition(glm::vec2 aPosition)
+void UIElement::SetPosition(Vector2 aPosition)
 {
 	myTransform.myPosition = aPosition;
 }
 
-void UIElement::SetRotation(glm::vec3 aRotation)
+void UIElement::SetRotation(Vector3 aRotation)
 {
 	myTransform.myRotation = aRotation;
 }
 
-void UIElement::SetScale(glm::vec2 aScale)
+void UIElement::SetScale(Vector2 aScale)
 {
 	myTransform.myScale = aScale;
 }
 
-const glm::vec2 UIElement::GetPosition()
+const Vector2 UIElement::GetPosition()
 {
 	return myTransform.myPosition;
 }
 
-const glm::vec3 UIElement::GetRotation()
+const Vector3 UIElement::GetRotation()
 {
 	return myTransform.myRotation;
 }
 
-const glm::vec2 UIElement::GetScale()
+const Vector2 UIElement::GetScale()
 {
 	return myTransform.myScale;
 }

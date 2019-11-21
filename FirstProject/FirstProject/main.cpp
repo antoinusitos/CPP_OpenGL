@@ -19,7 +19,7 @@
 #include "EditorUIManager.h"
 
 void framebuffer_size_callback(GLFWwindow* aWindow, int aWidth, int aHeight);
-void processInput(GLFWwindow* aWindow);
+void processInput(GLFWwindow* aWindow, UIManager* aUIManager);
 void Mouse_Callback(GLFWwindow* aWindow, double aXPos, double aYPos);
 void Scroll_Callback(GLFWwindow* aWindow, double aXOffset, double aYOffset);
 
@@ -42,10 +42,6 @@ float myLastMousePosX = 400.0f;
 float myLastMousePosY = 300.0f;
 
 bool myFirstMouse = false;
-
-//TEST
-//EditorUIManager myEditorUIManager;
-//TEST
 
 int main()
 {
@@ -125,9 +121,8 @@ int main()
 	glm::vec3 pointLightPositions = glm::vec3(-0.7f, 0.2f, 1.0f);
 
 	//TEST
-	EditorUIManager myEditorUIManager = EditorUIManager();
-	myEditorUIManager = EditorUIManager();
-	myEditorUIManager.SetShader(myUIShader);
+	EditorUIManager* myEditorUIManager = new EditorUIManager();
+	myEditorUIManager->SetShader(myUIShader);
 	//TEST
 
 #pragma region Rendering
@@ -156,13 +151,13 @@ int main()
 
 		//TEST
 
-		myEditorUIManager.UpdateMousePosition(glm::vec2(myLastMousePosX, myLastMousePosY));
-		myEditorUIManager.UpdateManager(myDeltaTime);
+		myEditorUIManager->UpdateMousePosition(glm::vec2(myLastMousePosX, myLastMousePosY));
+		myEditorUIManager->UpdateManager(myDeltaTime);
 		//TEST
 
 		// input
 		// -----------
-		processInput(myWindow);
+		processInput(myWindow, myEditorUIManager);
 
 		// clear the window
 		// -----------
@@ -212,7 +207,7 @@ int main()
 
 		//TEST
 		myCamera->Render(*myUIShader, myWindow);
-		myEditorUIManager.RenderManager();
+		myEditorUIManager->RenderManager();
 		//TEST
 #pragma endregion
 
@@ -223,6 +218,8 @@ int main()
 	}
 
 #pragma endregion
+
+	delete myEditorUIManager;
 
 	// glfw: terminate, clearing all previously allocated GLFW resources.
 	// ------------------------------------------------------------------
@@ -241,7 +238,7 @@ void framebuffer_size_callback(GLFWwindow* aWindow, int aWidth, int aHeight)
 
 // process all input: query GLFW whether relevant keys are pressed/released this frame and react accordingly
 // ---------------------------------------------------------------------------------------------------------
-void processInput(GLFWwindow* aWindow) 
+void processInput(GLFWwindow* aWindow, UIManager* aUIManager)
 { 
 	if (glfwGetKey(aWindow, GLFW_KEY_ESCAPE) == GLFW_PRESS)
 	{
@@ -272,14 +269,14 @@ void processInput(GLFWwindow* aWindow)
 		myCamera->InvertY();
 	}
 
-	/*if (glfwGetMouseButton(aWindow, GLFW_MOUSE_BUTTON_1) == GLFW_PRESS)
+	if (glfwGetMouseButton(aWindow, GLFW_MOUSE_BUTTON_1) == GLFW_PRESS)
 	{
-		myEditorUIManager.UpdateMouseStatus(true);
+		aUIManager->UpdateMouseStatus(true);
 	}
 	else
 	{
-		myEditorUIManager.UpdateMouseStatus(false);
-	}*/
+		aUIManager->UpdateMouseStatus(false);
+	}
 }
 
 void Mouse_Callback(GLFWwindow* aWindow, double aXPos, double aYPos)

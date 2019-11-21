@@ -12,18 +12,18 @@
 
 Model::Model(char* aPath, bool aGamma) : myGammaCorrection(aGamma)
 {
-	myTransform.myPosition = glm::vec3(0.0f);
-	myTransform.myRotation = glm::vec3(0.0f, 1.0f, 0.0f);
-	myTransform.myScale = glm::vec3(1.0f);
+	myTransform.myPosition = Vector3(0.0f);
+	myTransform.myRotation = Vector3(0.0f, 1.0f, 0.0f);
+	myTransform.myScale = Vector3(1.0f);
 	LoadModel(aPath);
 }
 
 void Model::Draw(Shader aShader)
 {
 	glm::mat4 model = glm::mat4(1.0f);
-	model = glm::translate(model, myTransform.myPosition);
-	model = glm::rotate(model, myAngle, myTransform.myRotation);
-	model = glm::scale(model, myTransform.myScale);
+	model = glm::translate(model, glm::vec3(myTransform.myPosition.myX, myTransform.myPosition.myY, myTransform.myPosition.myZ));
+	model = glm::rotate(model, myAngle, glm::vec3(myTransform.myRotation.myX, myTransform.myRotation.myY, myTransform.myRotation.myZ));
+	model = glm::scale(model, glm::vec3(myTransform.myScale.myX, myTransform.myScale.myY, myTransform.myScale.myZ));
 	aShader.SetMat4("myModel", model);
 
 	for (unsigned int i = 0; i < myMeshes.size(); i++)
@@ -32,32 +32,32 @@ void Model::Draw(Shader aShader)
 	}
 }
 
-void Model::SetPosition(glm::vec3 aPosition)
+void Model::SetPosition(Vector3 aPosition)
 {
 	myTransform.myPosition = aPosition;
 }
 
-void Model::SetRotation(glm::vec3 aRotation)
+void Model::SetRotation(Vector3 aRotation)
 {
 	myTransform.myRotation = aRotation;
 }
 
-void Model::SetScale(glm::vec3 aScale)
+void Model::SetScale(Vector3 aScale)
 {
 	myTransform.myScale = aScale;
 }
 
-glm::vec3 Model::GetPosition()
+Vector3 Model::GetPosition()
 {
 	return myTransform.myPosition;
 }
 
-glm::vec3 Model::GetRotation()
+Vector3 Model::GetRotation()
 {
 	return myTransform.myRotation;
 }
 
-glm::vec3 Model::GetScale()
+Vector3 Model::GetScale()
 {
 	return myTransform.myScale;
 }

@@ -10,10 +10,10 @@ UIManager::UIManager()
 
 UIManager::~UIManager()
 {
-	/*for (unsigned int i = 0; i < myElements.size(); i++)
+	for (unsigned int i = 0; i < myElements.size(); i++)
 	{
 		delete myElements[i];
-	}*/
+	}
 }
 
 void UIManager::UpdateManager(float aDeltaTime)
@@ -50,13 +50,12 @@ void UIManager::RenderManager()
 
 void UIManager::UpdateMousePosition(glm::vec2 aNewPosition)
 {
-	myMousePosition = aNewPosition;
+	myMousePosition = Vector2(aNewPosition.x, aNewPosition.y);
 }
 
-const glm::vec2 UIManager::GetMousePosition()
+const Vector2 UIManager::GetMousePosition()
 {
-
-	std::cout << "mousePos x:" << myMousePosition.x << " mouse y:" << myMousePosition.y << std::endl;
+	//std::cout << "mousePos x:" << myMousePosition.myX << " mouse y:" << myMousePosition.myY << std::endl;
 	return myMousePosition;
 }
 

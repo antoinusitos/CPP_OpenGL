@@ -22,13 +22,13 @@ public:
 
 	void Draw(Shader aShader);
 	
-	void SetPosition(glm::vec3 aPosition);
-	void SetRotation(glm::vec3 aRotation);
-	void SetScale(glm::vec3 aScale);
+	void SetPosition(Vector3 aPosition);
+	void SetRotation(Vector3 aRotation);
+	void SetScale(Vector3 aScale);
 
-	glm::vec3 GetPosition();
-	glm::vec3 GetRotation();
-	glm::vec3 GetScale();
+	Vector3 GetPosition();
+	Vector3 GetRotation();
+	Vector3 GetScale();
 
 	void Update(float aDeltaTime);
 

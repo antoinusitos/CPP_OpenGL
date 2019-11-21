@@ -2,6 +2,7 @@
 
 #include <vector>
 #include <glm/glm.hpp> 
+#include "Data.h"
 
 class Shader;
 class UIElement;
@@ -16,7 +17,7 @@ public:
 	void RenderManager();
 
 	void UpdateMousePosition(glm::vec2 aNewPosition);
-	const glm::vec2 GetMousePosition();
+	const Vector2 GetMousePosition();
 
 	void UpdateMouseStatus(bool aStatus);
 	const bool GetMouseStatus();
@@ -33,7 +34,7 @@ protected:
 	bool myIsActive = true;
 	bool myIsHidden = false;
 
-	glm::vec2 myMousePosition = glm::vec2(0.0f);
+	Vector2 myMousePosition = Vector2(0.0f);
 	bool myMouseStatus = false;
 
 	Shader* myShader;

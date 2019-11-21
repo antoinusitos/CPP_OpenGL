@@ -30,13 +30,13 @@ public:
 
 	void SetUIManager(UIManager* aManager);
 
-	void SetPosition(glm::vec2 aPosition);
-	void SetRotation(glm::vec3 aRotation);
-	void SetScale(glm::vec2 aScale);
+	void SetPosition(Vector2 aPosition);
+	void SetRotation(Vector3 aRotation);
+	void SetScale(Vector2 aScale);
 
-	const glm::vec2 GetPosition();
-	const glm::vec3 GetRotation();
-	const glm::vec2 GetScale();
+	const Vector2 GetPosition();
+	const Vector3 GetRotation();
+	const Vector2 GetScale();
 
 	void CreateUI();
 

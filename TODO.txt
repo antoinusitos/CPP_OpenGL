@@ -1,0 +1,8 @@
+NOTE : 
+- Don't generate VAO/VBO/EBO before the window is created otherwise it will crash will access violation
+- GLM::vec is very bad at storing
+
+TODO :
+- UI collision setting
+- UI panel
+- UI horizontal and vertical layout
