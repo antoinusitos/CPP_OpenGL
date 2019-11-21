@@ -134,6 +134,7 @@
     <ClCompile Include="stb_image.cpp" />
     <ClCompile Include="UIButton.cpp" />
     <ClCompile Include="UIContainer.cpp" />
+    <ClCompile Include="UIContainerHorizontal.cpp" />
     <ClCompile Include="UIElement.cpp" />
     <ClCompile Include="UIManager.cpp" />
     <ClCompile Include="UIPanel.cpp" />
@@ -151,6 +152,7 @@
     <ClInclude Include="stb_image.h" />
     <ClInclude Include="UIButton.h" />
     <ClInclude Include="UIContainer.h" />
+    <ClInclude Include="UIContainerHorizontal.h" />
     <ClInclude Include="UIElement.h" />
     <ClInclude Include="UIManager.h" />
     <ClInclude Include="UIPanel.h" />
