@@ -32,6 +32,8 @@ namespace Engine
 
 		void SetWindow(GLFWwindow* aWindow);
 
+		void Quit();
+
 	protected:
 		virtual void Update(float aDeltaTime);
 		virtual void Render(Shader* aShader);

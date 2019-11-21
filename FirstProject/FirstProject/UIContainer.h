@@ -17,6 +17,8 @@ namespace Engine
 
 		void AttachUIElement(UIElement* anElement);
 
+		void SetVisibility(const bool aNewVisibility) override;
+
 	protected:
 		std::vector<UIElement*> myElements;
 

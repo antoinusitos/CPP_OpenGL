@@ -39,6 +39,8 @@ namespace Engine
 
 		void CreateUI();
 
+		virtual void SetVisibility(const bool aNewVisibility);
+
 	protected:
 		std::string myName = "";
 
@@ -57,6 +59,8 @@ namespace Engine
 		unsigned int myVAO = -1;
 
 		Vector3 myColor;
+
+		bool myVisibility = true;
 
 	protected:
 		virtual void Init();

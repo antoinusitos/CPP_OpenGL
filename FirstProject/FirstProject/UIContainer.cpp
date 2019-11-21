@@ -12,6 +12,9 @@ namespace Engine
 
 	void UIContainer::Render(Shader* aShader)
 	{
+		if (!myVisibility)
+			return;
+
 		for (unsigned int i = 0; i < myElements.size(); i++)
 		{
 			myElements[i]->Render(aShader);
@@ -33,6 +36,16 @@ namespace Engine
 	void UIContainer::AttachUIElement(UIElement* anElement)
 	{
 		myElements.push_back(anElement);
+	}
+
+	void UIContainer::SetVisibility(const bool aNewVisibility)
+	{
+		UIPanel::SetVisibility(aNewVisibility);
+
+		for (unsigned int i = 0; i < myElements.size(); i++)
+		{
+			myElements[i]->SetVisibility(aNewVisibility);
+		}
 	}
 
 }

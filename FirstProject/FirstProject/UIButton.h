@@ -1,5 +1,6 @@
 #pragma once
 #include "UIElement.h"
+#include <vector>
 
 namespace Engine
 {
@@ -8,6 +9,8 @@ namespace Engine
 	public:
 		UIButton(std::string aName);
 		~UIButton();
+
+		void AddUIAction(UIAction anAction);
 
 	protected:
 		void Init() override;
@@ -18,6 +21,8 @@ namespace Engine
 
 		Vector3 myBaseColor;
 		Vector3 myHoverColor;
+
+		std::vector<UIAction> myUIActions;
 	};
 }
 

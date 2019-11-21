@@ -67,6 +67,9 @@ namespace Engine
 
 	void UIElement::Update(const float aDeltaTime)
 	{
+		if (!myVisibility)
+			return;
+
 		assert("ERROR::UIELEMENT::UPDATE:: UI manager is not set.", myUIManager != nullptr);
 
 		Vector2 mousePos = myUIManager->GetMousePosition();
@@ -108,6 +111,9 @@ namespace Engine
 
 	void UIElement::Render(Shader* aShader)
 	{
+		if (!myVisibility)
+			return;
+
 		aShader->Use();
 		glm::mat4 model = glm::mat4(1.0f);
 		model = glm::translate(model, glm::vec3(myTransform.myPosition.myX + -0.5f * myTransform.myScale.myX, myTransform.myPosition.myY + -0.5f * myTransform.myScale.myY, 0.0f));
@@ -192,6 +198,11 @@ namespace Engine
 		glBindVertexArray(0);
 
 		Init();
+	}
+
+	void UIElement::SetVisibility(const bool aNewVisibility)
+	{
+		myVisibility = aNewVisibility;
 	}
 
 	void UIElement::Init()

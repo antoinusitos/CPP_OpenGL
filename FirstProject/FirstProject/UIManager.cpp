@@ -87,6 +87,11 @@ namespace Engine
 		myWindow = aWindow;
 	}
 
+	void UIManager::Quit()
+	{
+		glfwSetWindowShouldClose(myWindow, true);
+	}
+
 	void UIManager::Update(float aDeltaTime)
 	{
 

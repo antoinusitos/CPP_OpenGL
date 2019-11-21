@@ -13,16 +13,21 @@ namespace Engine
 	void UIContainerVertical::UpdateLayout()
 	{
 		float positionY = 0.0f;
+		float elementSize = 0.0f;
 		for (unsigned int i = 0; i < myElements.size(); i++)
 		{
 			Vector2 scale = myElements[i]->GetScale();
+			elementSize = scale.myY;
 			if (i == 0)
 				positionY += scale.myY / 2.0f;
 			else
 				positionY += scale.myY;
-			myElements[i]->SetPosition(Vector2(myElements[i]->GetPosition().myX, positionY));
+			//myTransform.myPosition.myX - myTransform.myScale.myX / 2.0f + positionX, myTransform.myPosition.myY - myTransform.myScale.myY / 2.0f + myElements[i]->GetPosition().myY
+			myElements[i]->SetPosition(Vector2(myTransform.myPosition.myX - myTransform.myScale.myX / 2.0f + myElements[i]->GetScale().myX / 2.0f, myTransform.myPosition.myY - myTransform.myScale.myY / 2.0f + positionY));
 			positionY += mySpacing;
 		}
+
+		myTransform.myScale = Vector2(myTransform.myScale.myX, myElements.size() * elementSize);
 	}
 
 	void UIContainerVertical::SetMySpacing(const float aValue)
