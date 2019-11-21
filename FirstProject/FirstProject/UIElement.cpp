@@ -11,12 +11,13 @@
 
 namespace Engine
 {
-	UIElement::UIElement()
+	UIElement::UIElement(std::string aName)
 	{
 		myTransform.myPosition = Vector2(400.0f, 300.0f);
 		myTransform.myRotation = Vector3(0.0f, 1.0f, 0.0f);
 		myTransform.myScale = Vector2(100.0f, 100.0f);
 		myColor = Vector3(0.0f, 1.0f, 0.0f);
+		myName = aName;
 	}
 
 	UIElement::~UIElement()
@@ -24,29 +25,29 @@ namespace Engine
 		glDeleteVertexArrays(1, &myVAO);
 	}
 
-	void UIElement::Hover()
+	void UIElement::MouseHover()
 	{
-		if (myHoverFunction != nullptr)
+		if (myMouseHoverFunction != nullptr)
 		{
-			myHoverFunction;
+			myMouseHoverFunction;
 		}
 		//std::cout << "HOVER" << std::endl;
 	}
 
-	void UIElement::Enter()
+	void UIElement::MouseEnter()
 	{
-		if (myEnterFunction != nullptr)
+		if (myMouseEnterFunction != nullptr)
 		{
-			myEnterFunction();
+			myMouseEnterFunction();
 		}
 		//std::cout << "ENTER" << std::endl;
 	}
 
-	void UIElement::Exit()
+	void UIElement::MouseExit()
 	{
-		if (myExitFunction != nullptr)
+		if (myMouseExitFunction != nullptr)
 		{
-			myExitFunction();
+			myMouseExitFunction();
 		}
 		//std::cout << "EXIT" << std::endl;
 	}
@@ -55,29 +56,9 @@ namespace Engine
 	{
 		if (myMouseClickFunction != nullptr)
 		{
-			myMouseClickFunction;
+			myMouseClickFunction();
 		}
 		//std::cout << "Mouse click" << std::endl;
-	}
-
-	void UIElement::BindHoverFunction(void f())//callback_function aFunction)
-	{
-		myHoverFunction = &f;
-	}
-
-	void UIElement::BindEnterFunction(callback_function aFunction)
-	{
-		myEnterFunction = aFunction;
-	}
-
-	void UIElement::BindExitFunction(callback_function aFunction)
-	{
-		myExitFunction = aFunction;
-	}
-
-	void UIElement::BindMouseClickFunction(void f())//callback_function aFunction)
-	{
-		myMouseClickFunction = f;
 	}
 
 	void UIElement::Update(const float aDeltaTime)
@@ -104,18 +85,18 @@ namespace Engine
 		{
 			if (myEntered)
 			{
-				Hover();
+				MouseHover();
 			}
 			else
 			{
 				myEntered = true;
-				Enter();
+				MouseEnter();
 			}
 		}
 		else if (myEntered)
 		{
 			myEntered = false;
-			Exit();
+			MouseExit();
 		}
 	}
 

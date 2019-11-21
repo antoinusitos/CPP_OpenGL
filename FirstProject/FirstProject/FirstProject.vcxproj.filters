@@ -13,131 +13,137 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Source Files\Shape">
-      <UniqueIdentifier>{44c611cc-7473-4089-ae16-5812439e362e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Shaders">
-      <UniqueIdentifier>{ed2203c7-fba0-4ce0-a640-f4539e433502}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Engine">
       <UniqueIdentifier>{76a54a6e-eda1-4d97-a3e2-f3401d1c00a5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Engine\Shape">
+      <UniqueIdentifier>{44c611cc-7473-4089-ae16-5812439e362e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Shaders">
+      <UniqueIdentifier>{ed2203c7-fba0-4ce0-a640-f4539e433502}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Editor">
+      <UniqueIdentifier>{6b6f1290-43f4-464b-a160-af2cce2d3403}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\UI">
+      <UniqueIdentifier>{9e1ef5b0-8bab-4c74-b49d-830f4653c3e9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\glad\src\glad.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="stb_image.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Camera.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Box.cpp">
-      <Filter>Source Files\Shape</Filter>
-    </ClCompile>
-    <ClCompile Include="Mesh.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Model.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="UIManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="EditorUIManager.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Engine\Shape</Filter>
     </ClCompile>
     <ClCompile Include="GameUIManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="UIElement.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="Model.cpp">
+      <Filter>Source Files\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Mesh.cpp">
+      <Filter>Source Files\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>Source Files\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\glad\src\glad.c">
+      <Filter>Source Files\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="stb_image.cpp">
+      <Filter>Source Files\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="EditorUIManager.cpp">
+      <Filter>Source Files\Editor</Filter>
     </ClCompile>
     <ClCompile Include="UIButton.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Engine\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UIElement.cpp">
+      <Filter>Source Files\Engine\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UIManager.cpp">
+      <Filter>Source Files\Engine\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Model.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Camera.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="FileWatcher.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Mesh.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="stb_image.h">
+      <Filter>Source Files\Engine</Filter>
     </ClInclude>
     <ClInclude Include="Shader.h">
-      <Filter>Header Files</Filter>
+      <Filter>Source Files\Engine</Filter>
     </ClInclude>
-    <ClInclude Include="stb_image.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="Model.h">
+      <Filter>Source Files\Engine</Filter>
     </ClInclude>
-    <ClInclude Include="Box.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="Mesh.h">
+      <Filter>Source Files\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="FileWatcher.h">
+      <Filter>Source Files\Engine</Filter>
     </ClInclude>
     <ClInclude Include="Data.h">
-      <Filter>Header Files</Filter>
+      <Filter>Source Files\Engine</Filter>
     </ClInclude>
-    <ClInclude Include="UIManager.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="Camera.h">
+      <Filter>Source Files\Engine</Filter>
     </ClInclude>
-    <ClInclude Include="EditorUIManager.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="Box.h">
+      <Filter>Source Files\Engine\Shape</Filter>
     </ClInclude>
     <ClInclude Include="GameUIManager.h">
-      <Filter>Header Files</Filter>
+      <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="UIElement.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="EditorUIManager.h">
+      <Filter>Source Files\Editor</Filter>
     </ClInclude>
     <ClInclude Include="UIButton.h">
-      <Filter>Header Files</Filter>
+      <Filter>Source Files\Engine\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UIElement.h">
+      <Filter>Source Files\Engine\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UIManager.h">
+      <Filter>Source Files\Engine\UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Color.frag">
-      <Filter>Source Files\Shaders</Filter>
+      <Filter>Source Files\Engine\Shaders</Filter>
     </None>
     <None Include="Color.vert">
-      <Filter>Source Files\Shaders</Filter>
+      <Filter>Source Files\Engine\Shaders</Filter>
     </None>
     <None Include="Light.frag">
-      <Filter>Source Files\Shaders</Filter>
+      <Filter>Source Files\Engine\Shaders</Filter>
     </None>
     <None Include="Light.vert">
-      <Filter>Source Files\Shaders</Filter>
+      <Filter>Source Files\Engine\Shaders</Filter>
     </None>
     <None Include="simple.frag">
-      <Filter>Source Files\Shaders</Filter>
+      <Filter>Source Files\Engine\Shaders</Filter>
     </None>
     <None Include="simple.vert">
-      <Filter>Source Files\Shaders</Filter>
+      <Filter>Source Files\Engine\Shaders</Filter>
     </None>
     <None Include="Lights.frag">
-      <Filter>Source Files\Shaders</Filter>
+      <Filter>Source Files\Engine\Shaders</Filter>
     </None>
     <None Include="Lights.vert">
-      <Filter>Source Files\Shaders</Filter>
+      <Filter>Source Files\Engine\Shaders</Filter>
     </None>
     <None Include="ModelLoading.frag">
-      <Filter>Source Files\Shaders</Filter>
+      <Filter>Source Files\Engine\Shaders</Filter>
     </None>
     <None Include="ModelLoading.vert">
-      <Filter>Source Files\Shaders</Filter>
+      <Filter>Source Files\Engine\Shaders</Filter>
     </None>
     <None Include="UI.vert">
-      <Filter>Source Files\Shaders</Filter>
+      <Filter>Source Files\Engine\Shaders</Filter>
     </None>
     <None Include="UI.frag">
-      <Filter>Source Files\Shaders</Filter>
+      <Filter>Source Files\Engine\Shaders</Filter>
     </None>
   </ItemGroup>
 </Project>

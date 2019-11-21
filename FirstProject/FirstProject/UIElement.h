@@ -2,6 +2,7 @@
 
 #include "Data.h"
 #include <glad/glad.h>
+#include <functional>
 
 typedef void(*callback_function)(void);
 
@@ -13,19 +14,14 @@ namespace Engine
 	class UIElement
 	{
 	public:
-		UIElement();
+		UIElement(std::string aName = "New UI Element");
 		~UIElement();
 
-		void Hover();
-		void Enter();
-		void Exit();
+		void MouseHover();
+		void MouseEnter();
+		void MouseExit();
 
 		void MouseClick();
-
-		void BindHoverFunction(void f());//callback_function aFunction);
-		void BindEnterFunction(callback_function aFunction);
-		void BindExitFunction(callback_function aFunction);
-		void BindMouseClickFunction(void f());//callback_function aFunction);
 
 		virtual void Update(const float aDeltaTime);
 		virtual void Render(Shader* aShader);
@@ -43,14 +39,14 @@ namespace Engine
 		void CreateUI();
 
 	protected:
+		std::string myName = "";
+
 		bool myEntered = false;
 		bool myClicked = false;
-		void* myHoverFunction = nullptr;
-		void* myMouseClickFunction = nullptr;
-		//callback_function myHoverFunction = nullptr;
-		callback_function myEnterFunction = nullptr;
-		callback_function myExitFunction = nullptr;
-		//callback_function myMouseClickFunction = nullptr;
+		std::function<void()> myMouseEnterFunction;
+		std::function<void()> myMouseHoverFunction;
+		std::function<void()> myMouseExitFunction;
+		std::function<void()> myMouseClickFunction;
 		UIManager* myUIManager;
 
 		UITransform myTransform;
