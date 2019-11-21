@@ -6,3 +6,13 @@ TODO :
 - UI collision setting
 - UI panel
 - UI horizontal and vertical layout
+
+In UIElement
+std::fonction<void()> myFunc;
+
+In UIButton
+MyFunc = UIButton::func;
+Ou
+MyFunc = func;
+
+Tester les deux possibilités
