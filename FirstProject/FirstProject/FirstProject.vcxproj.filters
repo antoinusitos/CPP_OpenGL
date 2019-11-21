@@ -70,10 +70,13 @@
       <Filter>Source Files\Engine\UI</Filter>
     </ClCompile>
     <ClCompile Include="UIContainer.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Engine\UI</Filter>
     </ClCompile>
     <ClCompile Include="UIContainerHorizontal.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Engine\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UIContainerVertical.cpp">
+      <Filter>Source Files\Engine\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -123,6 +126,9 @@
       <Filter>Source Files\Engine\UI</Filter>
     </ClInclude>
     <ClInclude Include="UIContainerHorizontal.h">
+      <Filter>Source Files\Engine\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UIContainerVertical.h">
       <Filter>Source Files\Engine\UI</Filter>
     </ClInclude>
   </ItemGroup>

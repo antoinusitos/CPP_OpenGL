@@ -22,7 +22,13 @@ namespace Engine
 			else
 				positionX += scale.myX;
 			myElements[i]->SetPosition(Vector2(positionX, myElements[i]->GetPosition().myY));
+			positionX += mySpacing;
 		}
+	}
+
+	void UIContainerHorizontal::SetMySpacing(const float aValue)
+	{
+		mySpacing = aValue;
 	}
 
 }
