@@ -22,10 +22,10 @@ namespace Engine
 
 		void MouseClick();
 
-		void BindHoverFunction(callback_function aFunction);
+		void BindHoverFunction(void f());//callback_function aFunction);
 		void BindEnterFunction(callback_function aFunction);
 		void BindExitFunction(callback_function aFunction);
-		void BindMouseClickFunction(callback_function aFunction);
+		void BindMouseClickFunction(void f());//callback_function aFunction);
 
 		virtual void Update(const float aDeltaTime);
 		virtual void Render(Shader* aShader);
@@ -45,10 +45,12 @@ namespace Engine
 	protected:
 		bool myEntered = false;
 		bool myClicked = false;
-		callback_function myHoverFunction = nullptr;
+		void* myHoverFunction = nullptr;
+		void* myMouseClickFunction = nullptr;
+		//callback_function myHoverFunction = nullptr;
 		callback_function myEnterFunction = nullptr;
 		callback_function myExitFunction = nullptr;
-		callback_function myMouseClickFunction = nullptr;
+		//callback_function myMouseClickFunction = nullptr;
 		UIManager* myUIManager;
 
 		UITransform myTransform;
@@ -57,5 +59,8 @@ namespace Engine
 		unsigned int myVAO = -1;
 
 		Vector3 myColor;
+
+	protected:
+		virtual void Init();
 	};
 }

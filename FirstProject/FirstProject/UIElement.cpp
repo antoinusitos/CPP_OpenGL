@@ -8,6 +8,7 @@
 #include "Shader.h"
 
 #include <iostream>
+
 namespace Engine
 {
 	UIElement::UIElement()
@@ -27,7 +28,7 @@ namespace Engine
 	{
 		if (myHoverFunction != nullptr)
 		{
-			myHoverFunction();
+			myHoverFunction;
 		}
 		//std::cout << "HOVER" << std::endl;
 	}
@@ -54,14 +55,14 @@ namespace Engine
 	{
 		if (myMouseClickFunction != nullptr)
 		{
-			myMouseClickFunction();
+			myMouseClickFunction;
 		}
 		//std::cout << "Mouse click" << std::endl;
 	}
 
-	void UIElement::BindHoverFunction(callback_function aFunction)
+	void UIElement::BindHoverFunction(void f())//callback_function aFunction)
 	{
-		myHoverFunction = aFunction;
+		myHoverFunction = &f;
 	}
 
 	void UIElement::BindEnterFunction(callback_function aFunction)
@@ -74,9 +75,9 @@ namespace Engine
 		myExitFunction = aFunction;
 	}
 
-	void UIElement::BindMouseClickFunction(callback_function aFunction)
+	void UIElement::BindMouseClickFunction(void f())//callback_function aFunction)
 	{
-		myMouseClickFunction = aFunction;
+		myMouseClickFunction = f;
 	}
 
 	void UIElement::Update(const float aDeltaTime)
@@ -202,5 +203,13 @@ namespace Engine
 		glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 4 * sizeof(GLfloat), (GLvoid*)0);
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 		glBindVertexArray(0);
+
+		Init();
 	}
+
+	void UIElement::Init()
+	{
+
+	}
+
 }
