@@ -3,4 +3,3 @@
 - GLM::vec is very bad at storing
 
 TODO :
-- Resource manager
