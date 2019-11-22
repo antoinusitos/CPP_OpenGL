@@ -54,6 +54,8 @@ namespace Engine
 		UIManager* myUIManager;
 
 		UITransform myTransform;
+                UITransform myCollision;
+
 		float myAngle = 0;
 
 		unsigned int myVAO = -1;
