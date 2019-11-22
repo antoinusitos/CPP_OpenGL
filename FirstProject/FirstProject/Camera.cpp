@@ -48,6 +48,9 @@ namespace Engine
 	// Processes input received from a mouse input system. Expects the offset value in both the x and y direction.
 	void Camera::ProcessMouseMovement(float aXOffset, float aYOffset, GLboolean aConstrainPitch)
 	{
+		if (!myIsMoving)
+			return;
+
 		aXOffset *= mySensitivity;
 		aYOffset *= mySensitivity;
 
@@ -96,22 +99,32 @@ namespace Engine
 		myUp = glm::normalize(glm::cross(myRight, myFront));
 	}
 
-	void Camera::Render(Shader aShader, GLFWwindow* aWindow)
+	void Camera::Render(Shader* aShader, GLFWwindow* aWindow, bool aIsOrtho)
 	{
+		aShader->Use();
+
 		int width, height;
 		glfwGetWindowSize(aWindow, &width, &height);
 
 		// pass projection matrix to shader (as projection matrix rarely changes there's no need to do this per frame)
 		// -----------
 		glm::mat4 myProjection = glm::mat4(1.0f);
-		//myProjection = glm::perspective(glm::radians(myFov), (float)width / (float)height, 0.1f, 100.0f);
-		myProjection = glm::ortho(0.0f, static_cast<GLfloat>(width), static_cast<GLfloat>(height), 0.0f, -1.0f, 1.0f);
-		aShader.SetMat4("myProjection", myProjection);
+		if(aIsOrtho)
+			myProjection = glm::ortho(0.0f, static_cast<GLfloat>(width), static_cast<GLfloat>(height), 0.0f, -1.0f, 1.0f);
+		else
+			myProjection = glm::perspective(glm::radians(myFov), (float)width / (float)height, 0.1f, 100.0f);
+		aShader->SetMat4("myProjection", myProjection);
 
 		// create transformations
 		// -----------
 		glm::mat4 myView = glm::mat4(1.0f);
 		myView = GetViewMatrix();
-		aShader.SetMat4("myView", myView);
+		aShader->SetMat4("myView", myView);
 	}
+
+	void Camera::SetIsMoving(bool aValue)
+	{
+		myIsMoving = aValue;
+	}
+
 }

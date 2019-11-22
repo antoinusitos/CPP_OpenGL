@@ -20,7 +20,6 @@ namespace Engine
 
 	void UIMenuPanel::HidePanel()
 	{
-		LogManager::GetInstance()->AddLog("Hide menu panel");
 		SetVisibility(false);
 	}
 }

@@ -43,6 +43,8 @@ namespace Engine
 			return;
 		}
 
+		myShader->Use();
+
 		for (unsigned int i = 0; i < myElements.size(); i++)
 		{
 			myElements[i]->Render(myShader);

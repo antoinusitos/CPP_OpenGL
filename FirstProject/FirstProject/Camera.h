@@ -46,6 +46,7 @@ namespace Engine
 		float myMovementSpeed;
 		float mySensitivity;
 		bool myInvertedY;
+		bool myIsMoving = false;
 
 	public:
 		// Constructor with vectors
@@ -63,7 +64,9 @@ namespace Engine
 		void ProcessMouseScroll(float aYOffset);
 		void InvertY();
 
-		void Render(Shader aShader, GLFWwindow* aWindow);
+		void Render(Shader* aShader, GLFWwindow* aWindow, bool aIsOrtho);
+
+		void SetIsMoving(bool aValue);
 
 	private:
 		// Calculates the front vector from the Camera's (updated) Euler Angles

@@ -12,7 +12,7 @@
 
 namespace Engine
 {
-	Model::Model(char* aPath, bool aGamma) : myGammaCorrection(aGamma)
+	Model::Model(const char* aPath, bool aGamma) : myGammaCorrection(aGamma)
 	{
 		myTransform.myPosition = Vector3(0.0f);
 		myTransform.myRotation = Vector3(0.0f, 1.0f, 0.0f);
@@ -20,13 +20,13 @@ namespace Engine
 		LoadModel(aPath);
 	}
 
-	void Model::Draw(Shader aShader)
+	void Model::Draw(Shader* aShader)
 	{
 		glm::mat4 model = glm::mat4(1.0f);
 		model = glm::translate(model, glm::vec3(myTransform.myPosition.myX, myTransform.myPosition.myY, myTransform.myPosition.myZ));
 		model = glm::rotate(model, myAngle, glm::vec3(myTransform.myRotation.myX, myTransform.myRotation.myY, myTransform.myRotation.myZ));
 		model = glm::scale(model, glm::vec3(myTransform.myScale.myX, myTransform.myScale.myY, myTransform.myScale.myZ));
-		aShader.SetMat4("myModel", model);
+		aShader->SetMat4("myModel", model);
 
 		for (unsigned int i = 0; i < myMeshes.size(); i++)
 		{

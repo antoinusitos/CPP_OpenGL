@@ -41,7 +41,7 @@ namespace Engine
 		// functions
 		// ---------
 		Mesh(std::vector<Vertex> someVertices, std::vector<unsigned int> someIndices, std::vector<Texture> someTextures);
-		void Draw(Shader aShader, Transform aTransform);
+		void Draw(Shader* aShader, Transform aTransform);
 
 	private:
 		// render data

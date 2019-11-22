@@ -7,6 +7,7 @@
 #include <string>
 #include <functional>
 #include "Shader.h"
+#include "LogManager.h"
 
 namespace Engine
 {
@@ -75,7 +76,7 @@ namespace Engine
 							myPaths[file.path().string()] = current_file_last_write_time;
 							action(file.path().string(), FileStatus::modified);
 
-							std::cout << "checking shaders ..." << std::endl;
+							LogManager::GetInstance()->AddLog("checking shaders ...");
 
 							std::string filePath = file.path().string();
 							std::string delimiter = "\\";
@@ -86,28 +87,28 @@ namespace Engine
 								filePath.erase(0, pos + delimiter.length());
 							}
 
-							/*for (unsigned int i = 0; i < myShaders.size(); i++)
+							for (unsigned int i = 0; i < myShaders.size(); i++)
 							{
-								if (myShaders[i].GetFragmentPath() == filePath.c_str())
+								if (myShaders[i]->GetFragmentPath() == filePath.c_str())
 								{
-									std::cout << "Compiling Shader " << filePath << "..." << std::endl;
-									myShaders[i].UpdateShader();
+									LogManager::GetInstance()->AddLog("Compiling Shader " + filePath);
+									myShaders[i]->UpdateShader();
 									return;
 								}
-								else if (myShaders[i].GetVertexPath() == filePath.c_str())
+								else if (myShaders[i]->GetVertexPath() == filePath.c_str())
 								{
-									std::cout << "Compiling Shader " << filePath << "..." << std::endl;
-									myShaders[i].UpdateShader();
+									LogManager::GetInstance()->AddLog("Compiling Shader " + filePath);
+									myShaders[i]->UpdateShader();
 									return;
 								}
-							}*/
+							}
 						}
 					}
 				}
 			}
 		}
 
-		std::vector<Shader> myShaders;
+		std::vector<Shader*> myShaders;
 		float myDeltaTime = 0;
 
 	private:

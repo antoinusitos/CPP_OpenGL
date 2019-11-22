@@ -41,16 +41,16 @@ namespace Engine
 		glBindVertexArray(0);
 	}
 
-	void Mesh::Draw(Shader aShader, Transform aTransform)
+	void Mesh::Draw(Shader* aShader, Transform aTransform)
 	{
 		unsigned int diffuseNb = 1;
 		unsigned int specularNb = 1;
 		unsigned int normalNb = 1;
 		unsigned int heightNb = 1;
-		aShader.SetInt("myMaterial.myDiffuse", 0);
-		aShader.SetInt("myMaterial.mySpecular", 1);
-		aShader.SetInt("myMaterial.myEmissive", 2);
-		aShader.SetFloat("myMaterial.myShininess", 64);
+		aShader->SetInt("myMaterial.myDiffuse", 0);
+		aShader->SetInt("myMaterial.mySpecular", 1);
+		aShader->SetInt("myMaterial.myEmissive", 2);
+		aShader->SetFloat("myMaterial.myShininess", 64);
 
 		for (unsigned int i = 0; i < myTextures.size(); i++)
 		{

@@ -20,9 +20,9 @@ namespace Engine
 	class Model
 	{
 	public:
-		Model(char* aPath, bool aGamma = false);
+		Model(const char* aPath, bool aGamma = false);
 
-		void Draw(Shader aShader);
+		void Draw(Shader* aShader);
 
 		void SetPosition(Vector3 aPosition);
 		void SetRotation(Vector3 aRotation);
