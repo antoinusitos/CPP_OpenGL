@@ -12,6 +12,8 @@ struct aiMaterial;
 
 enum aiTextureType;
 
+struct GLFWwindow;
+
 namespace Engine
 {
 	class Shader;
@@ -22,7 +24,7 @@ namespace Engine
 	public:
 		Model(const char* aPath, bool aGamma = false);
 
-		void Draw(Shader* aShader);
+		void Render(Shader* aShader, GLFWwindow* aWindow);
 
 		void SetPosition(Vector3 aPosition);
 		void SetRotation(Vector3 aRotation);
@@ -38,6 +40,7 @@ namespace Engine
 		std::vector<Texture> myTexturesLoaded;
 		std::vector<Mesh> myMeshes;
 		std::string myDirectory;
+		std::string myFullPath;
 		bool myGammaCorrection;
 		Transform myTransform;
 		float myAngle = 0;

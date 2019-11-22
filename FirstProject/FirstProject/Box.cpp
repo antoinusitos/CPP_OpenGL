@@ -2,6 +2,9 @@
 #include "Shader.h"
 #include "stb_image.h"
 #include "ResourceManager.h"
+#include "CameraManager.h"
+#include "Camera.h"
+#include <GLFW/glfw3.h>
 
 namespace Engine
 {
@@ -66,11 +69,11 @@ namespace Engine
 		myMaterial.myShininess = 32.0f;
 
 		//myTexture = loadTexture("Images/container2.png");
-		myTexture = ResourceManager::GetInstance()->LoadTexture("container2.png", "container2");
+		myTexture = ResourceManager::GetInstance()->LoadTexture("container2", "container2.png");
 		//myTextureSpecular = loadTexture("Images/container2_specular.png");
-		myTextureSpecular = ResourceManager::GetInstance()->LoadTexture("container2_specular.png", "container2_specular");
+		myTextureSpecular = ResourceManager::GetInstance()->LoadTexture("container2_specular", "container2_specular.png");
 		//myTextureEmissive = loadTexture("Images/matrix.jpg");
-		myTextureEmissive = ResourceManager::GetInstance()->LoadTexture("matrix.jpg", "matrix");
+		myTextureEmissive = ResourceManager::GetInstance()->LoadTexture("matrix", "matrix.jpg");
 	}
 
 	void Box::Scale(glm::vec3 aScale)
@@ -88,8 +91,10 @@ namespace Engine
 
 	}
 
-	void Box::Render(Shader* aShader)
+	void Box::Render(Shader* aShader, GLFWwindow* aWindow)
 	{
+		CameraManager::GetInstance()->GetCamera()->Render(aShader, aWindow, false);
+
 		aShader->SetInt("myMaterial.myDiffuse", 0);
 		aShader->SetInt("myMaterial.mySpecular", 1);
 		aShader->SetInt("myMaterial.myEmissive", 2);

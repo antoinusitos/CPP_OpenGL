@@ -26,7 +26,6 @@ namespace Engine
 		for (auto &file : std::experimental::filesystem::recursive_directory_iterator(myPathToWatch))
 		{
 			myPaths[file.path().string()] = std::experimental::filesystem::last_write_time(file);
-
 		}
 	}
 

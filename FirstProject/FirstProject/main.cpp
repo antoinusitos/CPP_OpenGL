@@ -19,6 +19,7 @@
 #include "ResourceManager.h"
 #include "EditorUIManager.h"
 #include "CameraManager.h"
+#include "Camera.h"
 
 void framebuffer_size_callback(GLFWwindow* aWindow, int aWidth, int aHeight);
 void processInput(GLFWwindow* aWindow, Engine::UIManager* aUIManager);
@@ -110,12 +111,16 @@ int main()
 
 #pragma endregion
 
-	/*Engine::Model* myModel = Engine::ResourceManager::GetInstance()->LoadModel("Models/NanoSuit/nanosuit.obj");
+	Engine::Model* myModel = Engine::ResourceManager::GetInstance()->LoadModel("nanosuit", "NanoSuit/nanosuit.obj");
 	myModel->SetPosition(Engine::Vector3(0.0f, -1.75f, 0.0f));
 	myModel->SetScale(Engine::Vector3(0.1f, 0.1f, 0.1f));
 
+	Engine::Model* myModel2 = Engine::ResourceManager::GetInstance()->LoadModel("nanosuit", "NanoSuit/nanosuit.obj");
+	myModel2->SetPosition(Engine::Vector3(3.0f, -1.75f, 0.0f));
+	myModel2->SetScale(Engine::Vector3(0.1f, 0.1f, 0.1f));
+
 	Engine::Box* myBox = new Engine::Box(0,0,-1);
-	glm::vec3 pointLightPositions = glm::vec3(-0.7f, 0.2f, 1.0f);*/
+	glm::vec3 pointLightPositions = glm::vec3(-0.7f, 0.2f, 1.0f);
 
 	//TEST
 	Editor::EditorUIManager* myEditorUIManager = new Editor::EditorUIManager();
@@ -162,9 +167,9 @@ int main()
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 #pragma region rectangle rendering
-		/*myCamera->Render(myShaderLights, myWindow, false);
+		Engine::Camera* cam = Engine::CameraManager::GetInstance()->GetCamera();
 
-		myShaderLights->SetVec3("myViewPos", myCamera->myPosition);
+		myShaderLights->SetVec3("myViewPos", Engine::CameraManager::GetInstance()->GetCamera()->myPosition);
 		myShaderLights->SetFloat("myMaterial.myShininess", 32.0f);
 
 		myShaderLights->SetVec3("myDirectionalLight.myDirection", -0.2f, -1.0f, -0.3f);
@@ -180,8 +185,8 @@ int main()
 		myShaderLights->SetFloat("myPointLights[0].myLinear", 0.09);
 		myShaderLights->SetFloat("myPointLights[0].myQuadratic", 0.032);
 
-		myShaderLights->SetVec3("mySpotLight.myPosition", myCamera->myPosition);
-		myShaderLights->SetVec3("mySpotLight.myDirection", myCamera->myFront);
+		myShaderLights->SetVec3("mySpotLight.myPosition", cam->myPosition);
+		myShaderLights->SetVec3("mySpotLight.myDirection", cam->myFront);
 		myShaderLights->SetVec3("mySpotLight.myAmbient", 0.0f, 0.0f, 0.0f);
 		myShaderLights->SetVec3("mySpotLight.myDiffuse", 1.0f, 1.0f, 1.0f);
 		myShaderLights->SetVec3("mySpotLight.mySpecular", 1.0f, 1.0f, 1.0f);
@@ -194,10 +199,12 @@ int main()
 		glm::mat4 model = glm::mat4(1.0f);
 		myShaderLights->SetMat4("myModel", model);
 
-		myBox->Render(myShaderLights);
+		myBox->Render(myShaderLights, myWindow);
 
 		myModel->Update(myDeltaTime);
-		myModel->Draw(myShaderLights);*/
+		myModel->Render(myShaderLights, myWindow);
+
+		myModel2->Render(myShaderLights, myWindow);
 
 		//TEST
 		myEditorUIManager->RenderManager(myWindow);

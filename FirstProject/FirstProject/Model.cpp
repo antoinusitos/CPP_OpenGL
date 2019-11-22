@@ -9,6 +9,11 @@
 #include "stb_image.h"
 
 #include <glm/gtc/matrix_transform.hpp>
+#include <GLFW/glfw3.h>
+
+#include "CameraManager.h"
+#include "Camera.h"
+#include "ResourceManager.h"
 
 namespace Engine
 {
@@ -20,8 +25,10 @@ namespace Engine
 		LoadModel(aPath);
 	}
 
-	void Model::Draw(Shader* aShader)
+	void Model::Render(Shader* aShader, GLFWwindow* aWindow)
 	{
+		CameraManager::GetInstance()->GetCamera()->Render(aShader, aWindow, false);
+
 		glm::mat4 model = glm::mat4(1.0f);
 		model = glm::translate(model, glm::vec3(myTransform.myPosition.myX, myTransform.myPosition.myY, myTransform.myPosition.myZ));
 		model = glm::rotate(model, myAngle, glm::vec3(myTransform.myRotation.myX, myTransform.myRotation.myY, myTransform.myRotation.myZ));
@@ -72,13 +79,15 @@ namespace Engine
 	void Model::LoadModel(std::string aPath)
 	{
 		Assimp::Importer importer;
-		const aiScene* scene = importer.ReadFile(aPath, aiProcess_Triangulate | aiProcess_FlipUVs);
+		const aiScene* scene = importer.ReadFile("Models/" + aPath, aiProcess_Triangulate | aiProcess_FlipUVs);
 
 		if (scene == nullptr || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || scene->mRootNode == nullptr)
 		{
 			std::cout << "ERROR::ASSIMP::" << importer.GetErrorString() << std::endl;
 			return;
 		}
+
+		myFullPath = aPath;
 
 		myDirectory = aPath.substr(0, aPath.find_last_of('/'));
 
@@ -203,7 +212,12 @@ namespace Engine
 			if (!skip)
 			{
 				Texture texture;
-				texture.myId = TextureFromFile(str.C_Str(), myDirectory);
+				std::string fullpath = "Models/";
+				fullpath += myDirectory.c_str();
+				fullpath += "/";
+				fullpath += str.C_Str();
+				texture.myId = ResourceManager::GetInstance()->LoadTexture(str.C_Str(), fullpath.c_str(), true);//  TextureFromFile(str.C_Str(), myDirectory);
+				//texture.myId = TextureFromFile(str.C_Str(), myDirectory);
 				texture.myType = aTypeName;
 				texture.myPath = str.C_Str();
 				textures.push_back(texture);

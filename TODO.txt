@@ -3,3 +3,4 @@
 - GLM::vec is very bad at storing
 
 TODO :
+- Allow to see shaders and models in a panel

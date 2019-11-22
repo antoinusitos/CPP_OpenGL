@@ -7,6 +7,7 @@ namespace Engine
 {
 	class UIElement;
 	class Shader;
+	class Model;
 
 	struct Vector2
 	{
@@ -158,6 +159,18 @@ namespace Engine
 		{
 			myName = aName;
 			myShader = aShader;
+		}
+	};
+
+	struct ModelInfos
+	{
+		std::string myName;
+		Model* myModel;
+
+		ModelInfos(std::string aName, Model* aModel)
+		{
+			myName = aName;
+			myModel = aModel;
 		}
 	};
 

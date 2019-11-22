@@ -9,6 +9,7 @@ namespace Engine
 	class Shader;
 	struct ImageInfos;
 	struct ShaderInfos;
+	struct ModelInfos;
 
 	class ResourceManager
 	{
@@ -18,14 +19,14 @@ namespace Engine
 
 		static ResourceManager* GetInstance();
 
-		Model* LoadModel(const char* aPath, bool aGamma = false);
+		Model* LoadModel(const std::string aName, const char* aPath, bool aGamma = false);
 		Shader* LoadShader(const std::string aName, const char* aVertexPath, const char* aFragmentPath);
-		unsigned int LoadTexture(const std::string aName, const char* aPath);
+		unsigned int LoadTexture(const std::string aName, const char* aPath, bool useCustomPath = false);
 
 	private:
 		static ResourceManager* mySingleton;
 
-		std::vector<Model*> myModels;
+		std::vector<ModelInfos*> myModels;
 		std::vector<ShaderInfos*> myShaders;
 		std::vector<ImageInfos*> myImagesInfos;
 	};

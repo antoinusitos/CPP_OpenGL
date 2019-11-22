@@ -5,6 +5,8 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
+struct GLFWwindow;
+
 namespace Engine
 {
 	class Shader;
@@ -81,7 +83,7 @@ namespace Engine
 		void Scale(glm::vec3 aScale);
 		void Rotate(float anAngle);
 
-		void Render(Shader* aShader);
+		void Render(Shader* aShader, GLFWwindow* aWindow);
 		void Update(float aDeltaTime);
 		void FreeCube();
 

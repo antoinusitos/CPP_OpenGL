@@ -28,9 +28,19 @@ namespace Engine
 		return mySingleton;
 	}
 
-	Model* ResourceManager::LoadModel(const char* aPath, bool aGamma)
+	Model* ResourceManager::LoadModel(const std::string aName, const char* aPath, bool aGamma)
 	{
-		return new Model(aPath, aGamma);
+		for (int i = 0; i < myModels.size(); i++)
+		{
+			if (myModels[i]->myName == aName)
+			{
+				return myModels[i]->myModel;
+			}
+		}
+
+		Model* model = new Model(aPath, aGamma);
+		myModels.push_back(new ModelInfos(aName, model));
+		return model;
 	}
 
 	Shader* ResourceManager::LoadShader(const std::string aName, const char* aVertexPath, const char* aFragmentPath)
@@ -49,7 +59,7 @@ namespace Engine
 		return shader;
 	}
 
-	unsigned int ResourceManager::LoadTexture(const std::string aName, const char* aPath)
+	unsigned int ResourceManager::LoadTexture(const std::string aName, const char* aPath, bool useCustomPath)
 	{
 		for (int i = 0; i < myImagesInfos.size(); i++)
 		{
@@ -64,6 +74,10 @@ namespace Engine
 
 		std::string theFile = std::string(aPath);
 		std::string thePath = std::string("Images/" + theFile);
+		if (useCustomPath)
+		{
+			thePath = std::string(aPath);
+		}
 
 		int width, height, nrComponents;
 		unsigned char *data = stbi_load(thePath.c_str(), &width, &height, &nrComponents, 0);
