@@ -18,6 +18,7 @@ namespace Engine
 		myTransform.myScale = Vector2(100.0f, 100.0f);
 		myColor = Vector3(0.0f, 1.0f, 0.0f);
 		myName = aName;
+                myCollision = myTransform;
 	}
 
 	UIElement::~UIElement()
@@ -89,8 +90,8 @@ namespace Engine
 			MouseRelease();
 		}
 
-		if (mousePos.myX <= (myTransform.myPosition.myX + (myTransform.myScale.myX / 2.0f)) && mousePos.myX >= (myTransform.myPosition.myX - (myTransform.myScale.myX / 2.0f)) &&
-			mousePos.myY <= (myTransform.myPosition.myY + (myTransform.myScale.myY / 2.0f)) && mousePos.myY >= (myTransform.myPosition.myY - (myTransform.myScale.myY / 2.0f)))
+		if (mousePos.myX <= (myCollision.myPosition.myX + (myCollision.myScale.myX / 2.0f)) && mousePos.myX >= (myCollision.myPosition.myX - (myCollision.myScale.myX / 2.0f)) &&
+			mousePos.myY <= (myCollision.myPosition.myY + (myCollision.myScale.myY / 2.0f)) && mousePos.myY >= (myCollision.myPosition.myY - (myCollision.myScale.myY / 2.0f)))
 		{
 			if (myEntered)
 			{
