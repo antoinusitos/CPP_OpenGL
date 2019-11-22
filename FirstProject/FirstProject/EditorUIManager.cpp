@@ -6,6 +6,8 @@
 #include "UIContainerHorizontal.h"
 #include "UIContainerVertical.h"
 #include "UIWindow.h"
+#include "UICheckBox.h"
+#include "UIMenuPanel.h"
 #include "Data.h"
 #include <iostream>
 #include <GLFW/glfw3.h>
@@ -26,7 +28,7 @@ namespace Editor
 		int width, height;
 		glfwGetWindowSize(myWindow, &width, &height);
 
-		Engine::UIContainerVertical* fileMenuPanel = new Engine::UIContainerVertical(std::string("File Menu container"));
+		Engine::UIMenuPanel* fileMenuPanel = new Engine::UIMenuPanel(std::string("File Menu container"));
 
 		Engine::UIButton* fileMenu = new Engine::UIButton(std::string("File Menu"));
 
@@ -42,12 +44,12 @@ namespace Editor
 		quitButton->SetUIManager(this);
 		quitButton->AddUIAction(Engine::UIAction(Engine::QUIT, nullptr, false));
 
-		//Engine::UIContainerVertical* fileMenuPanel = new Engine::UIContainerVertical(std::string("File Menu container"));
 		fileMenuPanel->SetScale(Engine::Vector2(quitButton->GetScale().myX, 60.0f));
 		fileMenuPanel->SetPosition(Engine::Vector2(quitButton->GetScale().myX / 2.0f, fileMenu->GetScale().myY + 60.0f / 2.0f));
 		fileMenuPanel->CreateUI();
 		fileMenuPanel->Init();
 		fileMenuPanel->SetUIManager(this);
+		fileMenuPanel->AlignCollisionWithTransform();
 		fileMenuPanel->AttachUIElement(saveButton);
 		fileMenuPanel->AttachUIElement(quitButton);
 		fileMenuPanel->UpdateLayout();
@@ -57,17 +59,15 @@ namespace Editor
 		saveButton->AlignCollisionWithTransform();
 		quitButton->AlignCollisionWithTransform();
 
-		//Engine::UIButton* fileMenu = new Engine::UIButton(std::string("File Menu"));
 		fileMenu->CreateUI();
 		fileMenu->Init();
 		fileMenu->SetUIManager(this);
-		fileMenu->AddUIAction(Engine::UIAction(Engine::VISIBILITY, fileMenuPanel, true));
+		fileMenu->AddUIAction(Engine::UIAction(Engine::TOGGLEVISIBILITY, fileMenuPanel, true));
 
 		Engine::UIButton* editMenu = new Engine::UIButton(std::string("Edit Menu"));
 		editMenu->CreateUI();
 		editMenu->Init();
 		editMenu->SetUIManager(this);
-		editMenu->AddUIAction(Engine::UIAction(Engine::VISIBILITY, fileMenuPanel, false));
 
 		Engine::UIContainerHorizontal* menuPanel = new Engine::UIContainerHorizontal(std::string("Menu Container Horizontal"));
 		menuPanel->SetScale(Engine::Vector2((float)width, 20.0f));
@@ -89,17 +89,26 @@ namespace Editor
 		logWindow->CreateUI();
 		logWindow->SetUIManager(this);
 		logWindow->Init();
+		logWindow->SetVisibility(false);
 		myElements.push_back(logWindow);
 
 		Engine::UIButton* logPanel = new Engine::UIButton(std::string("Log Panel"));
 		logPanel->SetScale(Engine::Vector2((float)width, 20.0f));
-		logPanel->SetPosition(Engine::Vector2((float)width / 2.0f, height - 20.0f / 2.0f));
+		logPanel->SetPosition(Engine::Vector2((float)width / 2.0f, (float)height - 20.0f / 2.0f));
 		logPanel->CreateUI();
 		logPanel->Init();
 		logPanel->SetUIManager(this);
 		logPanel->AlignCollisionWithTransform();
-		logPanel->AddUIAction(Engine::UIAction(Engine::VISIBILITY, logWindow, true));
+		logPanel->AddUIAction(Engine::UIAction(Engine::TOGGLEVISIBILITY, logWindow, true));
 		logPanel->AddUIAction(Engine::UIAction(Engine::POSITION, logWindow, Engine::Vector2(400.0f, 400.0f)));
 		myElements.push_back(logPanel);
+
+		Engine::UICheckBox* checkBox = new Engine::UICheckBox(std::string("Check Box"));
+		checkBox->SetPosition(Engine::Vector2((float)width / 2.0f, (float)height / 2.0f));
+		checkBox->CreateUI();
+		checkBox->Init();
+		checkBox->SetUIManager(this);
+		checkBox->AlignCollisionWithTransform();
+		myElements.push_back(checkBox);
 	}
 }

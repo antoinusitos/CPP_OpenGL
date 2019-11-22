@@ -25,7 +25,7 @@ namespace Engine
 
 	void UIContainer::Update(const float aDeltaTime)
 	{
-		if (!myVisibility)
+		if (!myVisibility && !myForceUpdate)
 			return;
 
 		for (unsigned int i = 0; i < myElements.size(); i++)

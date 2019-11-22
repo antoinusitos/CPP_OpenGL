@@ -45,8 +45,12 @@ namespace Engine
 
 		virtual void Init();
 
+		const bool GetVisibility();
+
 	public:
 		bool myDebug = false;
+
+		bool myForceUpdate = false;
 
 	protected:
 		std::string myName = "";

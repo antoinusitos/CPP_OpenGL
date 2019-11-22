@@ -30,7 +30,7 @@ namespace Engine
 	{
 		if (myMouseHoverFunction != nullptr)
 		{
-			myMouseHoverFunction;
+			myMouseHoverFunction();
 		}
 	}
 
@@ -68,7 +68,7 @@ namespace Engine
 
 	void UIElement::Update(const float aDeltaTime)
 	{
-		if (!myVisibility)
+		if (!myVisibility && !myForceUpdate)
 			return;
 
 		assert("ERROR::UIELEMENT::UPDATE:: UI manager is not set.", myUIManager != nullptr);
@@ -93,11 +93,9 @@ namespace Engine
 		if (mousePos.myX <= (myCollision.myPosition.myX + (myCollision.myScale.myX / 2.0f)) && mousePos.myX >= (myCollision.myPosition.myX - (myCollision.myScale.myX / 2.0f)) &&
 			mousePos.myY <= (myCollision.myPosition.myY + (myCollision.myScale.myY / 2.0f)) && mousePos.myY >= (myCollision.myPosition.myY - (myCollision.myScale.myY / 2.0f)))
 		{
-			if (myEntered)
-			{
-				MouseHover();
-			}
-			else
+			MouseHover();
+
+			if (!myEntered)
 			{
 				myEntered = true;
 				MouseEnter();
@@ -216,6 +214,11 @@ namespace Engine
 	void UIElement::Init()
 	{
 
+	}
+
+	const bool UIElement::GetVisibility()
+	{
+		return myVisibility;
 	}
 
 }

@@ -3,7 +3,4 @@
 - GLM::vec is very bad at storing
 
 TODO :
-- UI window
-- log window and panel log
-- log manager
 - Resource manager

@@ -2,6 +2,7 @@
 #include <iostream>
 #include <string>
 #include "UIManager.h"
+#include "LogManager.h"
 
 namespace Engine
 {
@@ -24,7 +25,7 @@ namespace Engine
 	{
 		myMouseClickFunction = std::bind(&UIButton::Click, this);
 		myMouseReleaseFunction = std::bind(&UIButton::Release, this);
-		myMouseEnterFunction = std::bind(&UIButton::Enter, this);
+		myMouseHoverFunction = std::bind(&UIButton::Hover, this);
 		myMouseExitFunction = std::bind(&UIButton::Exit, this);
 
 		myBaseColor = Vector3(1.0f);
@@ -34,7 +35,7 @@ namespace Engine
 
 	void UIButton::Click()
 	{
-		std::cout << "Clicked on " << myName << std::endl;
+		LogManager::GetInstance()->AddLog("Clicked on " + myName);
 		myColor = Vector3(0.0f, 1.0f, 0.0f);
 
 		for (unsigned int i = 0; i < myUIActions.size(); i++)
@@ -44,6 +45,11 @@ namespace Engine
 			case VISIBILITY:
 			{
 				myUIActions[i].myElement->SetVisibility(myUIActions[i].myValue2);
+				break;
+			}
+			case TOGGLEVISIBILITY:
+			{
+				myUIActions[i].myElement->SetVisibility(!myUIActions[i].myElement->GetVisibility());
 				break;
 			}
 			case QUIT:
@@ -64,19 +70,19 @@ namespace Engine
 
 	void UIButton::Release()
 	{
-		std::cout << "Released on " << myName << std::endl;
+		//LogManager::GetInstance()->AddLog("Released on " + myName);
 		myColor = myHoverColor;
 	}
 
-	void UIButton::Enter()
+	void UIButton::Hover()
 	{
-		std::cout << "Mouse Enter" << std::endl;
+		//LogManager::GetInstance()->AddLog("Mouse Enter on " + myName);
 		myColor = myHoverColor;
 	}
 
 	void UIButton::Exit()
 	{
-		std::cout << "Mouse Exit" << std::endl;
+		//LogManager::GetInstance()->AddLog("Mouse Exit on " + myName);
 		myColor = myBaseColor;
 	}
 

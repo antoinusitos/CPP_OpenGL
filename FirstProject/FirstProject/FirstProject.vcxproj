@@ -128,16 +128,19 @@
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="EditorUIManager.cpp" />
     <ClCompile Include="GameUIManager.cpp" />
+    <ClCompile Include="LogManager.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="Model.cpp" />
     <ClCompile Include="stb_image.cpp" />
     <ClCompile Include="UIButton.cpp" />
+    <ClCompile Include="UICheckBox.cpp" />
     <ClCompile Include="UIContainer.cpp" />
     <ClCompile Include="UIContainerHorizontal.cpp" />
     <ClCompile Include="UIContainerVertical.cpp" />
     <ClCompile Include="UIElement.cpp" />
     <ClCompile Include="UIManager.cpp" />
+    <ClCompile Include="UIMenuPanel.cpp" />
     <ClCompile Include="UIPanel.cpp" />
     <ClCompile Include="UIWindow.cpp" />
   </ItemGroup>
@@ -148,16 +151,19 @@
     <ClInclude Include="EditorUIManager.h" />
     <ClInclude Include="FileWatcher.h" />
     <ClInclude Include="GameUIManager.h" />
+    <ClInclude Include="LogManager.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="Model.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="stb_image.h" />
     <ClInclude Include="UIButton.h" />
+    <ClInclude Include="UICheckBox.h" />
     <ClInclude Include="UIContainer.h" />
     <ClInclude Include="UIContainerHorizontal.h" />
     <ClInclude Include="UIContainerVertical.h" />
     <ClInclude Include="UIElement.h" />
     <ClInclude Include="UIManager.h" />
+    <ClInclude Include="UIMenuPanel.h" />
     <ClInclude Include="UIPanel.h" />
     <ClInclude Include="UIWindow.h" />
   </ItemGroup>

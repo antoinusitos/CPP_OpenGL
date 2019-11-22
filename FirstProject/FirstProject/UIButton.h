@@ -16,7 +16,7 @@ namespace Engine
 	protected:
 		virtual void Click();
 		virtual void Release();
-		virtual void Enter();
+		virtual void Hover();
 		virtual void Exit();
 
 		Vector3 myBaseColor;

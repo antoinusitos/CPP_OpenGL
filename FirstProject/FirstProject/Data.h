@@ -139,6 +139,7 @@ namespace Engine
 	enum UIActionType
 	{
 		VISIBILITY,
+		TOGGLEVISIBILITY,
 		QUIT,
 		POSITION,
 	};

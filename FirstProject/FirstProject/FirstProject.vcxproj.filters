@@ -28,6 +28,9 @@
     <Filter Include="Source Files\Engine\UI">
       <UniqueIdentifier>{9e1ef5b0-8bab-4c74-b49d-830f4653c3e9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Game">
+      <UniqueIdentifier>{dd59a36e-ce86-428a-8aed-b415f8fb387a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -35,9 +38,6 @@
     </ClCompile>
     <ClCompile Include="Box.cpp">
       <Filter>Source Files\Engine\Shape</Filter>
-    </ClCompile>
-    <ClCompile Include="GameUIManager.cpp">
-      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Model.cpp">
       <Filter>Source Files\Engine</Filter>
@@ -79,7 +79,19 @@
       <Filter>Source Files\Engine\UI</Filter>
     </ClCompile>
     <ClCompile Include="UIWindow.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Engine\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="LogManager.cpp">
+      <Filter>Source Files\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="GameUIManager.cpp">
+      <Filter>Source Files\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="UICheckBox.cpp">
+      <Filter>Source Files\Engine\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UIMenuPanel.cpp">
+      <Filter>Source Files\Engine\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -107,9 +119,6 @@
     <ClInclude Include="Box.h">
       <Filter>Source Files\Engine\Shape</Filter>
     </ClInclude>
-    <ClInclude Include="GameUIManager.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="EditorUIManager.h">
       <Filter>Source Files\Editor</Filter>
     </ClInclude>
@@ -135,7 +144,19 @@
       <Filter>Source Files\Engine\UI</Filter>
     </ClInclude>
     <ClInclude Include="UIWindow.h">
-      <Filter>Header Files</Filter>
+      <Filter>Source Files\Engine\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="LogManager.h">
+      <Filter>Source Files\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="GameUIManager.h">
+      <Filter>Source Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="UICheckBox.h">
+      <Filter>Source Files\Engine\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UIMenuPanel.h">
+      <Filter>Source Files\Engine\UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

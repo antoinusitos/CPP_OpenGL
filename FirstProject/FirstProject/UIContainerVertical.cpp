@@ -22,7 +22,6 @@ namespace Engine
 				positionY += scale.myY / 2.0f;
 			else
 				positionY += scale.myY;
-			//myTransform.myPosition.myX - myTransform.myScale.myX / 2.0f + positionX, myTransform.myPosition.myY - myTransform.myScale.myY / 2.0f + myElements[i]->GetPosition().myY
 			myElements[i]->SetPosition(Vector2(myTransform.myPosition.myX - myTransform.myScale.myX / 2.0f + myElements[i]->GetScale().myX / 2.0f, myTransform.myPosition.myY - myTransform.myScale.myY / 2.0f + positionY));
 			positionY += mySpacing;
 		}
