@@ -1,8 +1,9 @@
 ﻿NOTE : 
-- Don't generate VAO/VBO/EBO before the window is created otherwise it will crash will access violation
+- Don't generate VAO/VBO/EBO before the window is created otherwise it will crash will throw access violation
 - GLM::vec is very bad at storing
 
 TODO :
-- UI collision setting
-- UI vertical layout
+- UI window
+- log window and panel log
+- log manager
 - Resource manager
