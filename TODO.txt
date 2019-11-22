@@ -3,4 +3,8 @@
 - GLM::vec is very bad at storing
 
 TODO :
-- Allow to see shaders and models in a panel
+- Allow to see shaders and models in a pa
+nel
+File linker
+Folder linker
+Default texture
