@@ -96,6 +96,12 @@
     <ClCompile Include="ResourceManager.cpp">
       <Filter>Source Files\Engine</Filter>
     </ClCompile>
+    <ClCompile Include="CameraManager.cpp">
+      <Filter>Source Files\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="FileWatcher.cpp">
+      <Filter>Source Files\Engine</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stb_image.h">
@@ -164,6 +170,9 @@
     <ClInclude Include="ResourceManager.h">
       <Filter>Source Files\Engine</Filter>
     </ClInclude>
+    <ClInclude Include="CameraManager.h">
+      <Filter>Source Files\Engine</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Color.frag">
@@ -200,6 +209,12 @@
       <Filter>Source Files\Engine\Shaders</Filter>
     </None>
     <None Include="UI.frag">
+      <Filter>Source Files\Engine\Shaders</Filter>
+    </None>
+    <None Include="UITexture.frag">
+      <Filter>Source Files\Engine\Shaders</Filter>
+    </None>
+    <None Include="UITexture.vert">
       <Filter>Source Files\Engine\Shaders</Filter>
     </None>
   </ItemGroup>

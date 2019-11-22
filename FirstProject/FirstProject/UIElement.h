@@ -6,6 +6,8 @@
 
 typedef void(*callback_function)(void);
 
+struct GLFWwindow;
+
 namespace Engine
 {
 	class UIManager;
@@ -25,7 +27,7 @@ namespace Engine
 		void MouseRelease();
 
 		virtual void Update(const float aDeltaTime);
-		virtual void Render(Shader* aShader);
+		virtual void Render(GLFWwindow* aWindow);
 
 		void SetUIManager(UIManager* aManager);
 
@@ -65,7 +67,7 @@ namespace Engine
 		UIManager* myUIManager;
 
 		UITransform myTransform;
-                UITransform myCollision;
+        UITransform myCollision;
 
 		float myAngle = 0;
 
@@ -75,5 +77,6 @@ namespace Engine
 
 		bool myVisibility = true;
 
+		Shader* myShader;
 	};
 }

@@ -126,7 +126,9 @@
     <ClCompile Include="..\..\glad\src\glad.c" />
     <ClCompile Include="Box.cpp" />
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="CameraManager.cpp" />
     <ClCompile Include="EditorUIManager.cpp" />
+    <ClCompile Include="FileWatcher.cpp" />
     <ClCompile Include="GameUIManager.cpp" />
     <ClCompile Include="LogManager.cpp" />
     <ClCompile Include="main.cpp" />
@@ -148,6 +150,7 @@
   <ItemGroup>
     <ClInclude Include="Box.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="CameraManager.h" />
     <ClInclude Include="Data.h" />
     <ClInclude Include="EditorUIManager.h" />
     <ClInclude Include="FileWatcher.h" />
@@ -182,6 +185,8 @@
     <None Include="simple.vert" />
     <None Include="UI.frag" />
     <None Include="UI.vert" />
+    <None Include="UITexture.frag" />
+    <None Include="UITexture.vert" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -35,6 +35,8 @@ namespace Engine
 
 	void UIWindow::Init()
 	{
+		UIContainer::Init();
+
 		myCloseButton = new Engine::UIButton(std::string("Close Button"));
 		myCloseButton->SetScale(Vector2(30.0f));
 

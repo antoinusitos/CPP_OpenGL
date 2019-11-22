@@ -1,6 +1,7 @@
 #include "Box.h"
 #include "Shader.h"
 #include "stb_image.h"
+#include "ResourceManager.h"
 
 namespace Engine
 {
@@ -64,9 +65,12 @@ namespace Engine
 
 		myMaterial.myShininess = 32.0f;
 
-		myTexture = loadTexture("Images/container2.png");
-		myTextureSpecular = loadTexture("Images/container2_specular.png");
-		myTextureEmissive = loadTexture("Images/matrix.jpg");
+		//myTexture = loadTexture("Images/container2.png");
+		myTexture = ResourceManager::GetInstance()->LoadTexture("container2.png", "container2");
+		//myTextureSpecular = loadTexture("Images/container2_specular.png");
+		myTextureSpecular = ResourceManager::GetInstance()->LoadTexture("container2_specular.png", "container2_specular");
+		//myTextureEmissive = loadTexture("Images/matrix.jpg");
+		myTextureEmissive = ResourceManager::GetInstance()->LoadTexture("matrix.jpg", "matrix");
 	}
 
 	void Box::Scale(glm::vec3 aScale)
@@ -84,18 +88,18 @@ namespace Engine
 
 	}
 
-	void Box::Render(Shader aShader)
+	void Box::Render(Shader* aShader)
 	{
-		aShader.SetInt("myMaterial.myDiffuse", 0);
-		aShader.SetInt("myMaterial.mySpecular", 1);
-		aShader.SetInt("myMaterial.myEmissive", 2);
-		aShader.SetFloat("myMaterial.myShininess", myMaterial.myShininess);
+		aShader->SetInt("myMaterial.myDiffuse", 0);
+		aShader->SetInt("myMaterial.mySpecular", 1);
+		aShader->SetInt("myMaterial.myEmissive", 2);
+		aShader->SetFloat("myMaterial.myShininess", myMaterial.myShininess);
 
 		myModel = glm::mat4(1.0f);
 		myModel = glm::translate(myModel, myPosition);
 		myModel = glm::rotate(myModel, myAngle, myRotation);
 		myModel = glm::scale(myModel, myScale);
-		aShader.SetMat4("myModel", myModel);
+		aShader->SetMat4("myModel", myModel);
 
 		// activate the texture unit first before binding texture
 		// -----------

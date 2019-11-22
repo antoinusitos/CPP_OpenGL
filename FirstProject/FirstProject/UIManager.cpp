@@ -34,7 +34,7 @@ namespace Engine
 		Update(aDeltaTime);
 	}
 
-	void UIManager::RenderManager()
+	void UIManager::RenderManager(GLFWwindow* aWindow)
 	{
 		assert("ERROR::UIMANAGER::DrawManager:: shader is not set.", myShader != nullptr);
 
@@ -42,15 +42,13 @@ namespace Engine
 		{
 			return;
 		}
-
-		myShader->Use();
-
+		
 		for (unsigned int i = 0; i < myElements.size(); i++)
 		{
-			myElements[i]->Render(myShader);
+			myElements[i]->Render(aWindow);
 		}
 
-		Render(myShader);
+		Render(aWindow);
 	}
 
 	void UIManager::UpdateMousePosition(glm::vec2 aNewPosition)
@@ -74,11 +72,6 @@ namespace Engine
 		return myMouseStatus;
 	}
 
-	void UIManager::SetShader(Shader* aShader)
-	{
-		myShader = aShader;
-	}
-
 	void UIManager::InitUIManager()
 	{
 
@@ -99,7 +92,7 @@ namespace Engine
 
 	}
 
-	void UIManager::Render(Shader* aShader)
+	void UIManager::Render(GLFWwindow* aWindow)
 	{
 
 	}

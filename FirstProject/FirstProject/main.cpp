@@ -17,8 +17,8 @@
 #include "FileWatcher.h"
 
 #include "ResourceManager.h"
-
 #include "EditorUIManager.h"
+#include "CameraManager.h"
 
 void framebuffer_size_callback(GLFWwindow* aWindow, int aWidth, int aHeight);
 void processInput(GLFWwindow* aWindow, Engine::UIManager* aUIManager);
@@ -28,10 +28,6 @@ void Scroll_Callback(GLFWwindow* aWindow, double aXOffset, double aYOffset);
 // settings
 const unsigned int SCR_WIDTH = 800;
 const unsigned int SCR_HEIGHT = 600;
-
-// camera
-// -----------
-Engine::Camera* myCamera = new Engine::Camera(glm::vec3(0.0f, 0.0f, 3.0f));
 
 // timing
 // -----------
@@ -97,34 +93,32 @@ int main()
 	// Tell opengl to call back when the mouse wheel move
 	// -----------------------------
 	glfwSetScrollCallback(myWindow, Scroll_Callback);
+
+	Engine::CameraManager::GetInstance()->InitCamera();
 #pragma endregion
 
 #pragma region fileWatcher
 
 	// Create a FileWatcher instance that will check the current folder for changes every 5 seconds
-	Engine::FileWatcher fw{ "./", std::chrono::milliseconds(1000) };
+	Engine::FileWatcher::GetInstance()->SetPathToWatch("./", std::chrono::milliseconds(1000));
+
 #pragma endregion
 
 #pragma region Shader
 
-	Engine::Shader* myShaderLights = Engine::ResourceManager::GetInstance()->LoadShader("Lights.vert", "Lights.frag");
-	Engine::Shader* myUIShader = Engine::ResourceManager::GetInstance()->LoadShader("UI.vert", "UI.frag");
-
-	fw.myShaders.push_back(myShaderLights);
-	fw.myShaders.push_back(myUIShader);
+	Engine::Shader* myShaderLights = Engine::ResourceManager::GetInstance()->LoadShader("Lights", "Lights.vert", "Lights.frag");
 
 #pragma endregion
 
-	Engine::Model* myModel = Engine::ResourceManager::GetInstance()->LoadModel("Models/NanoSuit/nanosuit.obj");
+	/*Engine::Model* myModel = Engine::ResourceManager::GetInstance()->LoadModel("Models/NanoSuit/nanosuit.obj");
 	myModel->SetPosition(Engine::Vector3(0.0f, -1.75f, 0.0f));
 	myModel->SetScale(Engine::Vector3(0.1f, 0.1f, 0.1f));
 
-	//Box myBox = Box(0,0,-1);
-	glm::vec3 pointLightPositions = glm::vec3(-0.7f, 0.2f, 1.0f);
+	Engine::Box* myBox = new Engine::Box(0,0,-1);
+	glm::vec3 pointLightPositions = glm::vec3(-0.7f, 0.2f, 1.0f);*/
 
 	//TEST
 	Editor::EditorUIManager* myEditorUIManager = new Editor::EditorUIManager();
-	myEditorUIManager->SetShader(myUIShader);
 	myEditorUIManager->SetWindow(myWindow);
 	myEditorUIManager->InitUIManager();
 	//TEST
@@ -143,8 +137,8 @@ int main()
 
 		// Checking file modification
 		// -----------
-		fw.myDeltaTime = myDeltaTime;
-		fw.Update([](std::string path_to_watch, Engine::FileStatus status) -> void
+		Engine::FileWatcher::GetInstance()->SetDeltaTime(myDeltaTime);
+		Engine::FileWatcher::GetInstance()->Update([](std::string path_to_watch, Engine::FileStatus status) -> void
 		{
 			// Process only regular files, all other file types are ignored
 			if (!std::experimental::filesystem::is_regular_file(std::experimental::filesystem::path(path_to_watch)) && status != Engine::FileStatus::erased)
@@ -154,7 +148,6 @@ int main()
 		});
 
 		//TEST
-
 		myEditorUIManager->UpdateMousePosition(glm::vec2(myLastMousePosX, myLastMousePosY));
 		myEditorUIManager->UpdateManager(myDeltaTime);
 		//TEST
@@ -169,7 +162,7 @@ int main()
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 #pragma region rectangle rendering
-		myCamera->Render(myShaderLights, myWindow, false);
+		/*myCamera->Render(myShaderLights, myWindow, false);
 
 		myShaderLights->SetVec3("myViewPos", myCamera->myPosition);
 		myShaderLights->SetFloat("myMaterial.myShininess", 32.0f);
@@ -201,14 +194,13 @@ int main()
 		glm::mat4 model = glm::mat4(1.0f);
 		myShaderLights->SetMat4("myModel", model);
 
-		//myBox.Render(myShaderLights);
+		myBox->Render(myShaderLights);
 
 		myModel->Update(myDeltaTime);
-		myModel->Draw(myShaderLights);
+		myModel->Draw(myShaderLights);*/
 
 		//TEST
-		myCamera->Render(myUIShader, myWindow, true);
-		myEditorUIManager->RenderManager();
+		myEditorUIManager->RenderManager(myWindow);
 		//TEST
 #pragma endregion
 
@@ -246,28 +238,30 @@ void processInput(GLFWwindow* aWindow, Engine::UIManager* aUIManager)
 		glfwSetWindowShouldClose(aWindow, true);
 	}
 
+	Engine::Camera* cam = Engine::CameraManager::GetInstance()->GetCamera();
+
 	float myCameraSpeed = 2.5f * myDeltaTime;
 	if (glfwGetKey(aWindow, GLFW_KEY_W) == GLFW_PRESS)
 	{
-		myCamera->ProcessKeyboard(Engine::FORWARD, myDeltaTime);
+		cam->ProcessKeyboard(Engine::FORWARD, myDeltaTime);
 	}
 	if (glfwGetKey(aWindow, GLFW_KEY_S) == GLFW_PRESS)
 	{
-		myCamera->ProcessKeyboard(Engine::BACKWARD, myDeltaTime);
+		cam->ProcessKeyboard(Engine::BACKWARD, myDeltaTime);
 	}
 
 	if (glfwGetKey(aWindow, GLFW_KEY_A) == GLFW_PRESS)
 	{
-		myCamera->ProcessKeyboard(Engine::LEFT, myDeltaTime);
+		cam->ProcessKeyboard(Engine::LEFT, myDeltaTime);
 	}
 	if (glfwGetKey(aWindow, GLFW_KEY_D) == GLFW_PRESS)
 	{
-		myCamera->ProcessKeyboard(Engine::RIGHT, myDeltaTime);
+		cam->ProcessKeyboard(Engine::RIGHT, myDeltaTime);
 	}
 
 	if (glfwGetKey(aWindow, GLFW_KEY_Y) == GLFW_PRESS)
 	{
-		myCamera->InvertY();
+		cam->InvertY();
 	}
 
 	if (glfwGetMouseButton(aWindow, GLFW_MOUSE_BUTTON_1) == GLFW_PRESS)
@@ -281,11 +275,11 @@ void processInput(GLFWwindow* aWindow, Engine::UIManager* aUIManager)
 
 	if (glfwGetMouseButton(aWindow, GLFW_MOUSE_BUTTON_2) == GLFW_PRESS)
 	{
-		myCamera->SetIsMoving(true);
+		cam->SetIsMoving(true);
 	}
 	else
 	{
-		myCamera->SetIsMoving(false);
+		cam->SetIsMoving(false);
 	}
 }
 
@@ -304,10 +298,10 @@ void Mouse_Callback(GLFWwindow* aWindow, double aXPos, double aYPos)
 	myLastMousePosX = aXPos;
 	myLastMousePosY = aYPos;
 
-	myCamera->ProcessMouseMovement(xOffset, yOffset);
+	Engine::CameraManager::GetInstance()->GetCamera()->ProcessMouseMovement(xOffset, yOffset);
 }
 
 void Scroll_Callback(GLFWwindow* aWindow, double aXOffset, double aYOffset)
 {
-	myCamera->ProcessMouseScroll(aYOffset);
+	Engine::CameraManager::GetInstance()->GetCamera()->ProcessMouseScroll(aYOffset);
 }

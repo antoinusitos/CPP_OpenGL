@@ -10,17 +10,17 @@ namespace Engine
 	{
 	}
 
-	void UIContainer::Render(Shader* aShader)
+	void UIContainer::Render(GLFWwindow* aWindow)
 	{
 		if (!myVisibility)
 			return;
 
 		for (unsigned int i = 0; i < myElements.size(); i++)
 		{
-			myElements[i]->Render(aShader);
+			myElements[i]->Render(aWindow);
 		}
 
-		UIPanel::Render(aShader);
+		UIPanel::Render(aWindow);
 	}
 
 	void UIContainer::Update(const float aDeltaTime)

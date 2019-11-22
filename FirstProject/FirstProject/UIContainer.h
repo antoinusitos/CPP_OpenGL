@@ -2,6 +2,8 @@
 #include "UIPanel.h"
 #include <vector>
 
+struct GLFWwindow;
+
 namespace Engine
 {
 	class UIElement;
@@ -12,7 +14,7 @@ namespace Engine
 		UIContainer(std::string aName);
 		~UIContainer();
 
-		void Render(Shader* aShader) override;
+		void Render(GLFWwindow* aWindow) override;
 		void Update(const float aDeltaTime) override;
 
 		void AttachUIElement(UIElement* anElement);

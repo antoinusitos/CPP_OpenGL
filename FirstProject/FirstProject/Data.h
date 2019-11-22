@@ -6,6 +6,7 @@
 namespace Engine
 {
 	class UIElement;
+	class Shader;
 
 	struct Vector2
 	{
@@ -134,6 +135,30 @@ namespace Engine
 		Vector2 myPosition;
 		Vector3 myRotation;
 		Vector2 myScale;
+	};
+
+	struct ImageInfos
+	{
+		std::string myName;
+		unsigned int myID;
+
+		ImageInfos(std::string aName, unsigned int anID)
+		{
+			myName = aName;
+			myID = anID;
+		}
+	};
+
+	struct ShaderInfos
+	{
+		std::string myName;
+		Shader* myShader;
+
+		ShaderInfos(std::string aName, Shader* aShader)
+		{
+			myName = aName;
+			myShader = aShader;
+		}
 	};
 
 	enum UIActionType

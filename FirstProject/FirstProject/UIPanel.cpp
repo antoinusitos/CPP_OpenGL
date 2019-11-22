@@ -15,6 +15,7 @@ namespace Engine
 
 	void UIPanel::Init()
 	{
+		UIElement::Init();
 		myColor = Vector3(0.3f);
 	}
 }

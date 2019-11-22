@@ -81,7 +81,7 @@ namespace Engine
 		void Scale(glm::vec3 aScale);
 		void Rotate(float anAngle);
 
-		void Render(Shader aShader);
+		void Render(Shader* aShader);
 		void Update(float aDeltaTime);
 		void FreeCube();
 

@@ -18,15 +18,13 @@ namespace Engine
 		~UIManager();
 
 		void UpdateManager(float aDeltaTime);
-		void RenderManager();
+		void RenderManager(GLFWwindow* aWindow);
 
 		void UpdateMousePosition(glm::vec2 aNewPosition);
 		const Vector2 GetMousePosition();
 
 		void UpdateMouseStatus(bool aStatus);
 		const bool GetMouseStatus();
-
-		void SetShader(Shader* aShader);
 
 		virtual void InitUIManager();
 
@@ -36,7 +34,7 @@ namespace Engine
 
 	protected:
 		virtual void Update(float aDeltaTime);
-		virtual void Render(Shader* aShader);
+		virtual void Render(GLFWwindow* aWindow);
 
 	protected:
 		std::vector<UIElement*> myElements;
@@ -46,8 +44,6 @@ namespace Engine
 
 		Vector2 myMousePosition = Vector2(0.0f);
 		bool myMouseStatus = false;
-
-		Shader* myShader;
 
 		GLFWwindow* myWindow;
 	};

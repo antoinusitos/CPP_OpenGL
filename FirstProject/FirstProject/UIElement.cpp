@@ -3,11 +3,15 @@
 
 #include <glm/glm.hpp> 
 #include <glm/gtc/matrix_transform.hpp>
+#include <GLFW/glfw3.h>
 
 #include "UIManager.h"
 #include "Shader.h"
+#include "ResourceManager.h"
 
 #include <iostream>
+#include "CameraManager.h"
+#include "Camera.h"
 
 namespace Engine
 {
@@ -108,12 +112,15 @@ namespace Engine
 		}
 	}
 
-	void UIElement::Render(Shader* aShader)
+	void UIElement::Render(GLFWwindow* aWindow)
 	{
 		if (!myVisibility)
 			return;
 
-		aShader->Use();
+		myShader->Use();
+
+		CameraManager::GetInstance()->GetCamera()->Render(myShader, aWindow, true);
+
 		glm::mat4 model = glm::mat4(1.0f);
 		model = glm::translate(model, glm::vec3(myTransform.myPosition.myX + -0.5f * myTransform.myScale.myX, myTransform.myPosition.myY + -0.5f * myTransform.myScale.myY, 0.0f));
 
@@ -123,11 +130,8 @@ namespace Engine
 
 		model = glm::scale(model, glm::vec3(myTransform.myScale.myX, myTransform.myScale.myY, 1.0f));
 
-		aShader->SetMat4("myModel", model);
-		aShader->SetVec3("mySpriteColor", glm::vec3(myColor.myX, myColor.myY, myColor.myZ));
-
-		//glActiveTexture(GL_TEXTURE0);
-		//texture.Bind();
+		myShader->SetMat4("myModel", model);
+		myShader->SetVec3("mySpriteColor", glm::vec3(myColor.myX, myColor.myY, myColor.myZ));
 
 		glBindVertexArray(myVAO);
 		glDrawArrays(GL_TRIANGLES, 0, 6);
@@ -196,7 +200,6 @@ namespace Engine
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 		glBindVertexArray(0);
 
-		//Init();
 	}
 
 	void UIElement::SetVisibility(const bool aNewVisibility)
@@ -213,7 +216,7 @@ namespace Engine
 
 	void UIElement::Init()
 	{
-
+		myShader = ResourceManager::GetInstance()->LoadShader("UI", "UI.vert", "UI.frag");
 	}
 
 	const bool UIElement::GetVisibility()
