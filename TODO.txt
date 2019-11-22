@@ -3,8 +3,10 @@
 - GLM::vec is very bad at storing
 
 TODO :
-- Allow to see shaders and models in a pa
-nel
-File linker
-Folder linker
-Default texture
+- Allow to see shaders and models in a panel as a list
+- test to move objects, rotate them and scale them with button
+- editor manager with selected object
+- File linker (to change textures and Folder quickly for customisation and easy writing)
+- Folder linker (same reason)
+- Default texture if failed to load one
+- Rework UIElement to be rendered with or without image to remove override in chile classes
