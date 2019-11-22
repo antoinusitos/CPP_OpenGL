@@ -8,7 +8,6 @@ namespace Engine
 		UIPanel(std::string aName);
 		~UIPanel();
 
-	protected:
 		void Init() override;
 	};
 }

@@ -25,12 +25,15 @@ namespace Engine
 
 	void UIContainer::Update(const float aDeltaTime)
 	{
-		UIPanel::Update(aDeltaTime);
+		if (!myVisibility)
+			return;
 
 		for (unsigned int i = 0; i < myElements.size(); i++)
 		{
 			myElements[i]->Update(aDeltaTime);
 		}
+
+		UIPanel::Update(aDeltaTime);
 	}
 
 	void UIContainer::AttachUIElement(UIElement* anElement)

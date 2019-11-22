@@ -51,6 +51,11 @@ namespace Engine
 				myUIManager->Quit();
 				break;
 			}
+			case POSITION:
+			{
+				myUIActions[i].myElement->SetPosition(myUIActions[i].myValue3);
+				break;
+			}
 			default:
 				break;
 			}

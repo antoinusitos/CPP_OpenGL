@@ -41,6 +41,13 @@ namespace Engine
 
 		virtual void SetVisibility(const bool aNewVisibility);
 
+		void AlignCollisionWithTransform();
+
+		virtual void Init();
+
+	public:
+		bool myDebug = false;
+
 	protected:
 		std::string myName = "";
 
@@ -64,7 +71,5 @@ namespace Engine
 
 		bool myVisibility = true;
 
-	protected:
-		virtual void Init();
 	};
 }

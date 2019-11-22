@@ -18,7 +18,7 @@ namespace Engine
 		myTransform.myScale = Vector2(100.0f, 100.0f);
 		myColor = Vector3(0.0f, 1.0f, 0.0f);
 		myName = aName;
-                myCollision = myTransform;
+		AlignCollisionWithTransform();
 	}
 
 	UIElement::~UIElement()
@@ -198,12 +198,19 @@ namespace Engine
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 		glBindVertexArray(0);
 
-		Init();
+		//Init();
 	}
 
 	void UIElement::SetVisibility(const bool aNewVisibility)
 	{
 		myVisibility = aNewVisibility;
+	}
+
+	void UIElement::AlignCollisionWithTransform()
+	{
+		myCollision.myPosition = myTransform.myPosition;
+		myCollision.myRotation = myTransform.myRotation;
+		myCollision.myScale = myTransform.myScale;
 	}
 
 	void UIElement::Init()

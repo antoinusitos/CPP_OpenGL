@@ -1,6 +1,7 @@
 #pragma once
 
 #include <glm/glm.hpp>
+#include <string>
 
 namespace Engine
 {
@@ -27,6 +28,27 @@ namespace Engine
 		{
 			myX = aXValue;
 			myY = aYValue;
+		}
+
+		Vector2 operator-(Vector2 aVector)
+		{
+			Vector2 toReturn;
+			toReturn.myX = myX - aVector.myX;
+			toReturn.myY = myY - aVector.myX;
+			return toReturn;
+		}
+
+		Vector2 operator+(Vector2 aVector)
+		{
+			Vector2 toReturn;
+			toReturn.myX = myX + aVector.myX;
+			toReturn.myY = myY + aVector.myX;
+			return toReturn;
+		}
+
+		std::string ToString()
+		{
+			return "X : " + std::to_string(myX) + " ;Y : " + std::to_string(myY);
 		}
 	};
 
@@ -55,6 +77,11 @@ namespace Engine
 			myX = aXValue;
 			myY = aYValue;
 			myZ = aZValue;
+		}
+
+		std::string ToString()
+		{
+			return "X : " + std::to_string(myX) + " ;Y : " + std::to_string(myY) + " ;Z : " + std::to_string(myZ);
 		}
 	};
 
@@ -88,6 +115,11 @@ namespace Engine
 			myZ = aZValue;
 			myW = aWValue;
 		}
+
+		std::string ToString()
+		{
+			return "X : " + std::to_string(myX) + " ;Y : " + std::to_string(myY) + " ;Z : " + std::to_string(myZ) + " ;W : " + std::to_string(myW);
+		}
 	};
 
 	struct Transform
@@ -108,6 +140,7 @@ namespace Engine
 	{
 		VISIBILITY,
 		QUIT,
+		POSITION,
 	};
 
 	struct UIAction
@@ -116,6 +149,7 @@ namespace Engine
 		UIElement* myElement;
 		int myValue1;
 		bool myValue2;
+		Vector2 myValue3;
 
 		UIAction(UIActionType anActionType, UIElement* anElement, int aValue)
 		{
@@ -129,6 +163,13 @@ namespace Engine
 			myActionType = anActionType;
 			myElement = anElement;
 			myValue2 = aValue;
+		}
+
+		UIAction(UIActionType anActionType, UIElement* anElement, Vector2 aValue)
+		{
+			myActionType = anActionType;
+			myElement = anElement;
+			myValue3 = aValue;
 		}
 	};
 

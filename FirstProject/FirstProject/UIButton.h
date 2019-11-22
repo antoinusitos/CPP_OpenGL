@@ -12,8 +12,8 @@ namespace Engine
 
 		void AddUIAction(UIAction anAction);
 
-	protected:
 		void Init() override;
+	protected:
 		virtual void Click();
 		virtual void Release();
 		virtual void Enter();
