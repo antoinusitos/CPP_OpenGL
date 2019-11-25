@@ -10,3 +10,10 @@ TODO :
 - Folder linker (same reason)
 - Default texture if failed to load one
 - Rework UIElement to be rendered with or without image to remove override in chile classes
+- animation
+- animator
+- sprite animation
+- light manager
+- input manager
+- console input panel
+- debug
