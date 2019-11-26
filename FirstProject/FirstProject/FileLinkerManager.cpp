@@ -17,12 +17,9 @@ namespace Engine
 			std::string delimiter = ";";
 			while (getline(myfile, line))
 			{
-				size_t pos = 0;
-				pos = line.find(delimiter);
+				size_t pos = line.find(delimiter);
 				std::string name = line.substr(0, pos);
-				std::cout << name << std::endl;
 				line.erase(0, pos + delimiter.length());
-				std::cout << line << std::endl;
 
 				myFilesLinked.push_back(new FileLinker(name, line));
 			}
@@ -37,6 +34,10 @@ namespace Engine
 
 	FileLinkerManager::~FileLinkerManager()
 	{
+		for (unsigned int i = 0; i < myFilesLinked.size(); i++)
+		{
+			delete myFilesLinked[i];
+		}
 	}
 
 	FileLinkerManager* FileLinkerManager::GetInstance()
@@ -53,7 +54,6 @@ namespace Engine
 	{
 		for (unsigned int i = 0; i < myFilesLinked.size(); i++)
 		{
-			std::cout << "compare " << aName << " with " << myFilesLinked[i]->myFileName << std::endl;
 			if (myFilesLinked[i]->myFileName == aName)
 				return myFilesLinked[i];
 		}

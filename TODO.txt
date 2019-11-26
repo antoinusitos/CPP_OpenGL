@@ -3,9 +3,6 @@
 - GLM::vec is very bad at storing
 
 TODO :
-- File linker (to change textures and Folder quickly for customisation and easy writing)
-- Folder linker (same reason)
-- Default texture if failed to load one
 - editor manager with selected object
 - test to move objects, rotate them and scale them with button
 - Allow to see shaders and models in a panel as a list

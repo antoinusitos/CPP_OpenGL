@@ -160,6 +160,11 @@ namespace Engine
 			myName = aName;
 			myShader = aShader;
 		}
+
+		~ShaderInfos()
+		{
+			delete myShader;
+		}
 	};
 
 	struct ModelInfos
@@ -171,6 +176,11 @@ namespace Engine
 		{
 			myName = aName;
 			myModel = aModel;
+		}
+
+		~ModelInfos()
+		{
+			delete myModel;
 		}
 	};
 

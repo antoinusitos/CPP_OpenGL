@@ -17,6 +17,18 @@ namespace Engine
 
 	ResourceManager::~ResourceManager()
 	{
+		for (int i = 0; i < myImagesInfos.size(); i++)
+		{
+			delete myImagesInfos[i];
+		}
+		for (int i = 0; i < myModels.size(); i++)
+		{
+			delete myModels[i];
+		}
+		for (int i = 0; i < myShaders.size(); i++)
+		{
+			delete myShaders[i];
+		}
 	}
 
 	Engine::ResourceManager* ResourceManager::GetInstance()
@@ -77,55 +89,61 @@ namespace Engine
 		}
 
 		unsigned int textureID;
-		
+		glGenTextures(1, &textureID);
+
+		std::string theFile = "";
+		std::string thePath = "";
+
 		FileLinker* link = FileLinkerManager::GetInstance()->GetLinkedFile(aName);
 		if (link != nullptr)
 		{
-			glGenTextures(1, &textureID);
-
-			std::string theFile = std::string(link->myFile);
-			std::string thePath = std::string("Images/" + theFile);
+			theFile = std::string(link->myFile);
+			thePath = std::string("Images/" + theFile);
 			if (useCustomPath)
 			{
-				std::cout << "custom path" << std::endl;
-				thePath = std::string(link->myFileName);
+				thePath = std::string(link->myFile);
 			}
-
-			int width, height, nrComponents;
-			unsigned char *data = stbi_load(thePath.c_str(), &width, &height, &nrComponents, 0);
-			if (data)
-			{
-				GLenum format;
-				if (nrComponents == 1)
-					format = GL_RED;
-				else if (nrComponents == 3)
-					format = GL_RGB;
-				else if (nrComponents == 4)
-					format = GL_RGBA;
-
-				glBindTexture(GL_TEXTURE_2D, textureID);
-				glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
-				glGenerateMipmap(GL_TEXTURE_2D);
-
-				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-				stbi_image_free(data);
-
-				myImagesInfos.push_back(new ImageInfos(aName, textureID));
-			}
-			else
-			{
-				LogManager::GetInstance()->AddLog("Texture failed to load at path: " + thePath);
-				stbi_image_free(data);
-			}
-
-			return textureID;
 		}
-		
-		LogManager::GetInstance()->AddLog(std::string("Texture " + aName + " cannot be loaded from file linker"));
-		return 0;
+		else
+		{
+			LogManager::GetInstance()->AddLog(std::string("Texture " + aName + " cannot be loaded from file linker"));
+			link = FileLinkerManager::GetInstance()->GetLinkedFile("DefaultTexture");
+			theFile = std::string(link->myFile);
+			thePath = std::string("Images/" + theFile);
+		}
+
+		int width, height, nrComponents;
+		unsigned char *data = stbi_load(thePath.c_str(), &width, &height, &nrComponents, 0);
+		if (data)
+		{
+			GLenum format;
+			if (nrComponents == 1)
+				format = GL_RED;
+			else if (nrComponents == 3)
+				format = GL_RGB;
+			else if (nrComponents == 4)
+				format = GL_RGBA;
+
+			glBindTexture(GL_TEXTURE_2D, textureID);
+			glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
+			glGenerateMipmap(GL_TEXTURE_2D);
+
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+			stbi_image_free(data);
+
+			myImagesInfos.push_back(new ImageInfos(aName, textureID));
+		}
+		else
+		{
+			LogManager::GetInstance()->AddLog("Texture failed to load at path: " + thePath);
+			stbi_image_free(data);
+		}
+
+		return textureID;
+
 	}
 }

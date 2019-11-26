@@ -220,8 +220,7 @@ namespace Engine
 				fullpath += myDirectory.c_str();
 				fullpath += "/";
 				fullpath += str.C_Str();
-				texture.myId = ResourceManager::GetInstance()->LoadTexture(str.C_Str(), true);//  TextureFromFile(str.C_Str(), myDirectory);
-				//texture.myId = TextureFromFile(str.C_Str(), myDirectory);
+				texture.myId = ResourceManager::GetInstance()->LoadTexture(str.C_Str(), true);
 				texture.myType = aTypeName;
 				texture.myPath = str.C_Str();
 				textures.push_back(texture);
