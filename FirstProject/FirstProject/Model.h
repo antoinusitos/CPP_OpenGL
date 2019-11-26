@@ -34,6 +34,9 @@ namespace Engine
 		Vector3 GetRotation();
 		Vector3 GetScale();
 
+		float GetAngle();
+		void SetAngle(float aValue);
+
 		void Update(float aDeltaTime);
 
 	private:

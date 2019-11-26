@@ -75,9 +75,19 @@ namespace Engine
 		return myTransform.myScale;
 	}
 
+	float Model::GetAngle()
+	{
+		return myAngle;
+	}
+
+	void Model::SetAngle(float aValue)
+	{
+		myAngle = aValue;;
+	}
+
 	void Model::Update(float aDeltaTime)
 	{
-		myAngle += aDeltaTime;
+		//myAngle += aDeltaTime;
 	}
 
 	void Model::LoadModel(std::string aPath)
