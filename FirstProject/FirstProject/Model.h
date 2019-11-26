@@ -24,7 +24,7 @@ namespace Engine
 	public:
 		Model(const char* aPath, bool aGamma = false);
 
-		void Render(Shader* aShader, GLFWwindow* aWindow);
+		void Render(/*Shader* aShader, */GLFWwindow* aWindow);
 
 		void SetPosition(Vector3 aPosition);
 		void SetRotation(Vector3 aRotation);
@@ -44,6 +44,8 @@ namespace Engine
 		bool myGammaCorrection;
 		Transform myTransform;
 		float myAngle = 0;
+
+		Shader* myShader;
 
 	private:
 		void LoadModel(std::string aPath);

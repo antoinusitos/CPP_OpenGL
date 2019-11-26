@@ -107,7 +107,7 @@ int main()
 
 #pragma region Shader
 
-	Engine::Shader* myShaderLights = Engine::ResourceManager::GetInstance()->LoadShader("Lights", "Lights.vert", "Lights.frag");
+	//Engine::Shader* myShaderLights = Engine::ResourceManager::GetInstance()->LoadShader("Lights", "Lights.vert", "Lights.frag");
 
 #pragma endregion
 
@@ -120,7 +120,7 @@ int main()
 	myModel2->SetScale(Engine::Vector3(0.1f, 0.1f, 0.1f));
 
 	Engine::Box* myBox = new Engine::Box(0,0,-1);
-	glm::vec3 pointLightPositions = glm::vec3(-0.7f, 0.2f, 1.0f);
+	//glm::vec3 pointLightPositions = glm::vec3(-0.7f, 0.2f, 1.0f);
 
 	//TEST
 	Editor::EditorUIManager* myEditorUIManager = new Editor::EditorUIManager();
@@ -167,7 +167,7 @@ int main()
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 #pragma region rectangle rendering
-		Engine::Camera* cam = Engine::CameraManager::GetInstance()->GetCamera();
+		/*Engine::Camera* cam = Engine::CameraManager::GetInstance()->GetCamera();
 
 		myShaderLights->SetVec3("myViewPos", Engine::CameraManager::GetInstance()->GetCamera()->myPosition);
 		myShaderLights->SetFloat("myMaterial.myShininess", 32.0f);
@@ -197,14 +197,14 @@ int main()
 		myShaderLights->SetFloat("mySpotLight.myOuterCutOff", glm::cos(glm::radians(15.0f)));
 
 		glm::mat4 model = glm::mat4(1.0f);
-		myShaderLights->SetMat4("myModel", model);
+		myShaderLights->SetMat4("myModel", model);*/
 
-		myBox->Render(myShaderLights, myWindow);
+		myBox->Render(/*myShaderLights, */myWindow);
 
 		myModel->Update(myDeltaTime);
-		myModel->Render(myShaderLights, myWindow);
+		myModel->Render(/*myShaderLights, */myWindow);
 
-		myModel2->Render(myShaderLights, myWindow);
+		myModel2->Render(/*myShaderLights, */myWindow);
 
 		//TEST
 		myEditorUIManager->RenderManager(myWindow);

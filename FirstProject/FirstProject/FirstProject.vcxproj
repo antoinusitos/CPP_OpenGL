@@ -130,6 +130,7 @@
     <ClCompile Include="EditorUIManager.cpp" />
     <ClCompile Include="FileWatcher.cpp" />
     <ClCompile Include="GameUIManager.cpp" />
+    <ClCompile Include="LightManager.cpp" />
     <ClCompile Include="LogManager.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Mesh.cpp" />
@@ -155,6 +156,7 @@
     <ClInclude Include="EditorUIManager.h" />
     <ClInclude Include="FileWatcher.h" />
     <ClInclude Include="GameUIManager.h" />
+    <ClInclude Include="LightManager.h" />
     <ClInclude Include="LogManager.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="Model.h" />

@@ -14,6 +14,7 @@
 #include "CameraManager.h"
 #include "Camera.h"
 #include "ResourceManager.h"
+#include "LightManager.h"
 
 namespace Engine
 {
@@ -23,21 +24,24 @@ namespace Engine
 		myTransform.myRotation = Vector3(0.0f, 1.0f, 0.0f);
 		myTransform.myScale = Vector3(1.0f);
 		LoadModel(aPath);
+		myShader = ResourceManager::GetInstance()->LoadShader("Lights", "Lights.vert", "Lights.frag");
 	}
 
-	void Model::Render(Shader* aShader, GLFWwindow* aWindow)
+	void Model::Render(/*Shader* aShader, */GLFWwindow* aWindow)
 	{
-		CameraManager::GetInstance()->GetCamera()->Render(aShader, aWindow, false);
+		CameraManager::GetInstance()->GetCamera()->Render(myShader, aWindow, false);
+
+		LightManager::GetInstance()->AddLightToShader(myShader);
 
 		glm::mat4 model = glm::mat4(1.0f);
 		model = glm::translate(model, glm::vec3(myTransform.myPosition.myX, myTransform.myPosition.myY, myTransform.myPosition.myZ));
 		model = glm::rotate(model, myAngle, glm::vec3(myTransform.myRotation.myX, myTransform.myRotation.myY, myTransform.myRotation.myZ));
 		model = glm::scale(model, glm::vec3(myTransform.myScale.myX, myTransform.myScale.myY, myTransform.myScale.myZ));
-		aShader->SetMat4("myModel", model);
+		myShader->SetMat4("myModel", model);
 
 		for (unsigned int i = 0; i < myMeshes.size(); i++)
 		{
-			myMeshes[i].Draw(aShader, myTransform);
+			myMeshes[i].Draw(myShader, myTransform);
 		}
 	}
 
