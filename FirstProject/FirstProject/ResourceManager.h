@@ -19,9 +19,9 @@ namespace Engine
 
 		static ResourceManager* GetInstance();
 
-		Model* LoadModel(const std::string aName, const char* aPath, bool aGamma = false);
+		Model* LoadModel(const std::string aName, bool aGamma = false);
 		Shader* LoadShader(const std::string aName, const char* aVertexPath, const char* aFragmentPath);
-		unsigned int LoadTexture(const std::string aName, const char* aPath, bool useCustomPath = false);
+		unsigned int LoadTexture(const std::string aName, bool useCustomPath = false);
 
 	private:
 		static ResourceManager* mySingleton;

@@ -14,7 +14,7 @@ namespace Engine
 	{
 		myTransform.myPosition = Vector2(75.0f / 2.0f, 20.0f / 2.0f);
 		myTransform.myScale = Vector2(75.0f, 20.0f);
-		myImage = "CheckBox_Off.png";
+		myImage = "CheckBox_Off";
 	}
 
 	UIButton::~UIButton()

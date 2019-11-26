@@ -103,7 +103,10 @@
       <Filter>Source Files\Engine</Filter>
     </ClCompile>
     <ClCompile Include="LightManager.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="FileLinkerManager.cpp">
+      <Filter>Source Files\Engine</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -177,7 +180,10 @@
       <Filter>Source Files\Engine</Filter>
     </ClInclude>
     <ClInclude Include="LightManager.h">
-      <Filter>Header Files</Filter>
+      <Filter>Source Files\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="FileLinkerManager.h">
+      <Filter>Source Files\Engine</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

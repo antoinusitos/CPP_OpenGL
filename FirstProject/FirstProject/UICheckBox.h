@@ -28,8 +28,6 @@ namespace Engine
 		Vector3 myCheckedColor;
 		Vector3 myHoverColor;
 
-		char* myCheckedImage = "CheckBox_On.png";
-
 		unsigned int myCheckedImageID;
 	};
 }

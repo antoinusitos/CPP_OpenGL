@@ -70,11 +70,11 @@ namespace Engine
 		myMaterial.myShininess = 32.0f;
 
 		//myTexture = loadTexture("Images/container2.png");
-		myTexture = ResourceManager::GetInstance()->LoadTexture("container2", "container2.png");
+		myTexture = ResourceManager::GetInstance()->LoadTexture("container2");
 		//myTextureSpecular = loadTexture("Images/container2_specular.png");
-		myTextureSpecular = ResourceManager::GetInstance()->LoadTexture("container2_specular", "container2_specular.png");
+		myTextureSpecular = ResourceManager::GetInstance()->LoadTexture("container2_specular");
 		//myTextureEmissive = loadTexture("Images/matrix.jpg");
-		myTextureEmissive = ResourceManager::GetInstance()->LoadTexture("matrix", "matrix.jpg");
+		myTextureEmissive = ResourceManager::GetInstance()->LoadTexture("matrix");
 
 		myShader = ResourceManager::GetInstance()->LoadShader("Lights", "Lights.vert", "Lights.frag");
 	}

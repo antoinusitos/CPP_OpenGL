@@ -15,7 +15,7 @@ namespace Engine
 		myUncheckedColor = Vector3(1.0f);
 		myHoverColor = Vector3(0.5f);
 		myCheckedColor = Vector3(1.0f);
-		myImage = "CheckBox_Off.png";
+		myImage = "CheckBox_Off";
 	}
 
 	UICheckBox::~UICheckBox()
@@ -30,7 +30,7 @@ namespace Engine
 		myMouseHoverFunction = std::bind(&UICheckBox::Hover, this);
 		myMouseExitFunction = std::bind(&UICheckBox::Exit, this);
 
-		myCheckedImageID = ResourceManager::GetInstance()->LoadTexture("CheckBox_On", myCheckedImage);
+		myCheckedImageID = ResourceManager::GetInstance()->LoadTexture("CheckBox_On");
 
 		myColor = myUncheckedColor;
 	}

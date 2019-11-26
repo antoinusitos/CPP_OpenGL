@@ -211,5 +211,16 @@ namespace Engine
 			myValue3 = aValue;
 		}
 	};
+	
+	struct FileLinker
+	{
+		std::string myFileName;
+		std::string myFile;
 
+		FileLinker(std::string aFileName, std::string aFile)
+		{
+			myFileName = aFileName;
+			myFile = aFile;
+		}
+	};
 }

@@ -24,7 +24,7 @@ namespace Engine
 	public:
 		Model(const char* aPath, bool aGamma = false);
 
-		void Render(/*Shader* aShader, */GLFWwindow* aWindow);
+		void Render(GLFWwindow* aWindow);
 
 		void SetPosition(Vector3 aPosition);
 		void SetRotation(Vector3 aRotation);
@@ -52,6 +52,5 @@ namespace Engine
 		void ProcessNode(aiNode* aNode, const aiScene* aScene);
 		Mesh ProcessMesh(aiMesh* aMesh, const aiScene* aScene);
 		std::vector<Texture> LoadMaterialTextures(aiMaterial* aMaterial, aiTextureType aType, std::string aTypeName);
-		unsigned int TextureFromFile(const char* aPath, const std::string& aDirectory, bool aGamma = false);
 	};
 }

@@ -235,7 +235,7 @@ namespace Engine
 
 		if (myImage)
 		{
-			myImageID = ResourceManager::GetInstance()->LoadTexture(myImage, myImage);
+			myImageID = ResourceManager::GetInstance()->LoadTexture(myImage);
 			myCurrentImageID = myImageID;
 		}
 	}

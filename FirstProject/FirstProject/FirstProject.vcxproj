@@ -128,6 +128,7 @@
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CameraManager.cpp" />
     <ClCompile Include="EditorUIManager.cpp" />
+    <ClCompile Include="FileLinkerManager.cpp" />
     <ClCompile Include="FileWatcher.cpp" />
     <ClCompile Include="GameUIManager.cpp" />
     <ClCompile Include="LightManager.cpp" />
@@ -154,6 +155,7 @@
     <ClInclude Include="CameraManager.h" />
     <ClInclude Include="Data.h" />
     <ClInclude Include="EditorUIManager.h" />
+    <ClInclude Include="FileLinkerManager.h" />
     <ClInclude Include="FileWatcher.h" />
     <ClInclude Include="GameUIManager.h" />
     <ClInclude Include="LightManager.h" />
