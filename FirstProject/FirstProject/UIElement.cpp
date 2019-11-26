@@ -117,9 +117,15 @@ namespace Engine
 		if (!myVisibility)
 			return;
 
-		myShader->Use();
+		Shader* currentShader = myShader;
+		if (myImage)
+		{
+			currentShader = myShaderTexture;
+		}
 
-		CameraManager::GetInstance()->GetCamera()->Render(myShader, aWindow, true);
+		currentShader->Use();
+
+		CameraManager::GetInstance()->GetCamera()->Render(currentShader, aWindow, true);
 
 		glm::mat4 model = glm::mat4(1.0f);
 		model = glm::translate(model, glm::vec3(myTransform.myPosition.myX + -0.5f * myTransform.myScale.myX, myTransform.myPosition.myY + -0.5f * myTransform.myScale.myY, 0.0f));
@@ -130,8 +136,16 @@ namespace Engine
 
 		model = glm::scale(model, glm::vec3(myTransform.myScale.myX, myTransform.myScale.myY, 1.0f));
 
-		myShader->SetMat4("myModel", model);
-		myShader->SetVec3("mySpriteColor", glm::vec3(myColor.myX, myColor.myY, myColor.myZ));
+		currentShader->SetMat4("myModel", model);
+		currentShader->SetVec3("mySpriteColor", glm::vec3(myColor.myX, myColor.myY, myColor.myZ));
+
+		if (myImage)
+		{
+			currentShader->SetInt("myImage", 0);
+
+			glActiveTexture(GL_TEXTURE0);
+			glBindTexture(GL_TEXTURE_2D, myCurrentImageID);
+		}
 
 		glBindVertexArray(myVAO);
 		glDrawArrays(GL_TRIANGLES, 0, 6);
@@ -217,6 +231,13 @@ namespace Engine
 	void UIElement::Init()
 	{
 		myShader = ResourceManager::GetInstance()->LoadShader("UI", "UI.vert", "UI.frag");
+		myShaderTexture = ResourceManager::GetInstance()->LoadShader("UITexture", "UITexture.vert", "UITexture.frag");
+
+		if (myImage)
+		{
+			myImageID = ResourceManager::GetInstance()->LoadTexture(myImage, myImage);
+			myCurrentImageID = myImageID;
+		}
 	}
 
 	const bool UIElement::GetVisibility()

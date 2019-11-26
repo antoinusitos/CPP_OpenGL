@@ -15,6 +15,7 @@ namespace Engine
 		myUncheckedColor = Vector3(1.0f);
 		myHoverColor = Vector3(0.5f);
 		myCheckedColor = Vector3(1.0f);
+		myImage = "CheckBox_Off.png";
 	}
 
 	UICheckBox::~UICheckBox()
@@ -23,53 +24,29 @@ namespace Engine
 
 	void UICheckBox::Init()
 	{
+		UIElement::Init();
+
 		myMouseClickFunction = std::bind(&UICheckBox::Click, this);
 		myMouseHoverFunction = std::bind(&UICheckBox::Hover, this);
 		myMouseExitFunction = std::bind(&UICheckBox::Exit, this);
 
 		myCheckedImageID = ResourceManager::GetInstance()->LoadTexture("CheckBox_On", myCheckedImage);
-		myCheckOffImageID = ResourceManager::GetInstance()->LoadTexture("CheckBox_Off", myCheckOffImage);
-
-		myShader = ResourceManager::GetInstance()->LoadShader("UITexture", "UITexture.vert", "UITexture.frag");
 
 		myColor = myUncheckedColor;
 	}
 
-	void UICheckBox::Render(GLFWwindow* aWindow)
+	void UICheckBox::Update(const float aDeltaTime)
 	{
-		if (!myVisibility)
-			return;
+		UIElement::Update(aDeltaTime);
 
-		myShader->Use();
-
-		CameraManager::GetInstance()->GetCamera()->Render(myShader, aWindow, true);
-
-		glm::mat4 model = glm::mat4(1.0f);
-		model = glm::translate(model, glm::vec3(myTransform.myPosition.myX + -0.5f * myTransform.myScale.myX, myTransform.myPosition.myY + -0.5f * myTransform.myScale.myY, 0.0f));
-
-		model = glm::translate(model, glm::vec3(0.5f * myTransform.myScale.myX, 0.5f * myTransform.myScale.myY, 0.0f));
-		model = glm::rotate(model, myAngle, glm::vec3(0.0f, 0.0f, 1.0f));
-		model = glm::translate(model, glm::vec3(-0.5f * myTransform.myScale.myX, -0.5f * myTransform.myScale.myY, 0.0f));
-
-		model = glm::scale(model, glm::vec3(myTransform.myScale.myX, myTransform.myScale.myY, 1.0f));
-
-		myShader->SetMat4("myModel", model);
-		myShader->SetVec3("mySpriteColor", glm::vec3(myColor.myX, myColor.myY, myColor.myZ));
-		myShader->SetInt("myImage", 0);
-
-		glActiveTexture(GL_TEXTURE0);
 		if (myIsChecked)
 		{
-			glBindTexture(GL_TEXTURE_2D, myCheckedImageID);
+			myCurrentImageID = myCheckedImageID;
 		}
 		else
 		{
-			glBindTexture(GL_TEXTURE_2D, myCheckOffImageID);
+			myCurrentImageID = myImageID;
 		}
-
-		glBindVertexArray(myVAO);
-		glDrawArrays(GL_TRIANGLES, 0, 6);
-		glBindVertexArray(0);
 	}
 
 	void UICheckBox::Click()

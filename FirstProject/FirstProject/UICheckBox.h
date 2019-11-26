@@ -15,7 +15,7 @@ namespace Engine
 
 		void Init() override;
 
-		void Render(GLFWwindow* aWindow) override;
+		void Update(const float aDeltaTime) override;
 
 	protected:
 		virtual void Click();
@@ -29,11 +29,7 @@ namespace Engine
 		Vector3 myHoverColor;
 
 		char* myCheckedImage = "CheckBox_On.png";
-		char* myCheckOffImage = "CheckBox_Off.png";
 
 		unsigned int myCheckedImageID;
-		unsigned int myCheckOffImageID;
-
-		Shader* myShader;
 	};
 }

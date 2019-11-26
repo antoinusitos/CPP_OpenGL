@@ -14,8 +14,6 @@ namespace Engine
 
 		void Init() override;
 
-		void Render(GLFWwindow* aWindow) override;
-
 	protected:
 		virtual void Click();
 		virtual void Release();
@@ -26,10 +24,6 @@ namespace Engine
 		Vector3 myHoverColor;
 
 		std::vector<UIAction> myUIActions;
-
-		char* myImage = "CheckBox_Off.png";
-
-		unsigned int myImageID;
 	};
 }
 

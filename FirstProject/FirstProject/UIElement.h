@@ -78,5 +78,11 @@ namespace Engine
 		bool myVisibility = true;
 
 		Shader* myShader;
+		Shader* myShaderTexture;
+
+		char* myImage;
+
+		unsigned int myImageID;
+		unsigned int myCurrentImageID;
 	};
 }
