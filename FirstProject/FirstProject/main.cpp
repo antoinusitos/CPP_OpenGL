@@ -21,6 +21,7 @@
 #include "CameraManager.h"
 #include "Camera.h"
 #include "FileLinkerManager.h"
+#include "EditorManager.h"
 
 void framebuffer_size_callback(GLFWwindow* aWindow, int aWidth, int aHeight);
 void processInput(GLFWwindow* aWindow, Engine::UIManager* aUIManager);
@@ -112,18 +113,15 @@ int main()
 	myModel->SetPosition(Engine::Vector3(0.0f, -1.75f, 0.0f));
 	myModel->SetScale(Engine::Vector3(0.1f, 0.1f, 0.1f));
 
-	Engine::Model* myModel2 = Engine::ResourceManager::GetInstance()->LoadModel("nanosuit");
-	myModel2->SetPosition(Engine::Vector3(3.0f, -1.75f, 0.0f));
-	myModel2->SetScale(Engine::Vector3(0.1f, 0.1f, 0.1f));
-
 	Engine::Box* myBox = new Engine::Box(0,0,-1);
-	//glm::vec3 pointLightPositions = glm::vec3(-0.7f, 0.2f, 1.0f);
 
 	//TEST
+	Engine::EditorManager::GetInstance()->myObject = myModel;
+	//TEST
+
 	Editor::EditorUIManager* myEditorUIManager = new Editor::EditorUIManager();
 	myEditorUIManager->SetWindow(myWindow);
 	myEditorUIManager->InitUIManager();
-	//TEST
 
 #pragma region Rendering
 
@@ -149,10 +147,8 @@ int main()
 			}
 		});
 
-		//TEST
 		myEditorUIManager->UpdateMousePosition(glm::vec2(myLastMousePosX, myLastMousePosY));
 		myEditorUIManager->UpdateManager(myDeltaTime);
-		//TEST
 
 		// input
 		// -----------
@@ -169,11 +165,7 @@ int main()
 		myModel->Update(myDeltaTime);
 		myModel->Render(myWindow);
 
-		myModel2->Render(myWindow);
-
-		//TEST
 		myEditorUIManager->RenderManager(myWindow);
-		//TEST
 #pragma endregion
 
 		// check and call events and swap the buffers

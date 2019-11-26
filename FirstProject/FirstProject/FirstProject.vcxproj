@@ -127,6 +127,7 @@
     <ClCompile Include="Box.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CameraManager.cpp" />
+    <ClCompile Include="EditorManager.cpp" />
     <ClCompile Include="EditorUIManager.cpp" />
     <ClCompile Include="FileLinkerManager.cpp" />
     <ClCompile Include="FileWatcher.cpp" />
@@ -154,6 +155,7 @@
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CameraManager.h" />
     <ClInclude Include="Data.h" />
+    <ClInclude Include="EditorManager.h" />
     <ClInclude Include="EditorUIManager.h" />
     <ClInclude Include="FileLinkerManager.h" />
     <ClInclude Include="FileWatcher.h" />

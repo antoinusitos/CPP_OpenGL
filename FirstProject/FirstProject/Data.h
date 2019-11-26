@@ -190,6 +190,9 @@ namespace Engine
 		TOGGLEVISIBILITY,
 		QUIT,
 		POSITION,
+		POSITIONOBJECT,
+		ROTATIONOBJECT,
+		SCALEOBJECT,
 	};
 
 	struct UIAction
@@ -199,6 +202,8 @@ namespace Engine
 		int myValue1;
 		bool myValue2;
 		Vector2 myValue3;
+		Model* myObject;
+		float myValue4;
 
 		UIAction(UIActionType anActionType, UIElement* anElement, int aValue)
 		{
@@ -219,6 +224,13 @@ namespace Engine
 			myActionType = anActionType;
 			myElement = anElement;
 			myValue3 = aValue;
+		}
+
+		UIAction(UIActionType anActionType, Model* anObject, float aValue)
+		{
+			myActionType = anActionType;
+			myObject = anObject;
+			myValue4 = aValue;
 		}
 	};
 	

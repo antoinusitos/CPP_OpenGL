@@ -108,6 +108,9 @@
     <ClCompile Include="FileLinkerManager.cpp">
       <Filter>Source Files\Engine</Filter>
     </ClCompile>
+    <ClCompile Include="EditorManager.cpp">
+      <Filter>Source Files\Engine</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stb_image.h">
@@ -183,6 +186,9 @@
       <Filter>Source Files\Engine</Filter>
     </ClInclude>
     <ClInclude Include="FileLinkerManager.h">
+      <Filter>Source Files\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="EditorManager.h">
       <Filter>Source Files\Engine</Filter>
     </ClInclude>
   </ItemGroup>
