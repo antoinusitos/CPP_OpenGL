@@ -139,6 +139,7 @@
     <ClCompile Include="Model.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="stb_image.cpp" />
+    <ClCompile Include="TimeManager.cpp" />
     <ClCompile Include="UIButton.cpp" />
     <ClCompile Include="UICheckBox.cpp" />
     <ClCompile Include="UIContainer.cpp" />
@@ -167,6 +168,7 @@
     <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="stb_image.h" />
+    <ClInclude Include="TimeManager.h" />
     <ClInclude Include="UIButton.h" />
     <ClInclude Include="UICheckBox.h" />
     <ClInclude Include="UIContainer.h" />

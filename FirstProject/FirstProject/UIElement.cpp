@@ -62,6 +62,14 @@ namespace Engine
 		}
 	}
 
+	void UIElement::MouseHold()
+	{
+		if (myMouseHoldFunction != nullptr)
+		{
+			myMouseHoldFunction();
+		}
+	}
+
 	void UIElement::MouseRelease()
 	{
 		if (myMouseReleaseFunction != nullptr)
@@ -85,6 +93,11 @@ namespace Engine
 			{
 				myClicked = true;
 				MouseClick();
+				return;
+			}
+			else if(myEntered && myClicked)
+			{
+				MouseHold();
 				return;
 			}
 		}

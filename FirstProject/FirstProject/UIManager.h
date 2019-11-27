@@ -17,7 +17,7 @@ namespace Engine
 		UIManager();
 		~UIManager();
 
-		void UpdateManager(float aDeltaTime);
+		void UpdateManager();
 		void RenderManager(GLFWwindow* aWindow);
 
 		void UpdateMousePosition(glm::vec2 aNewPosition);

@@ -8,6 +8,7 @@
 #include "Camera.h"
 #include "Shader.h"
 #include "Model.h"
+#include "TimeManager.h"
 
 namespace Engine
 {
@@ -73,23 +74,23 @@ namespace Engine
 			case POSITIONOBJECT:
 			{
 				Vector3 pos = myUIActions[i].myObject->GetPosition();
-				pos.myX += myUIActions[i].myValue4;
+				pos.myX += myUIActions[i].myValue4 * TimeManager::GetInstance()->GetDeltaTime();
 				myUIActions[i].myObject->SetPosition(pos);
 				break;
 			}
 			case ROTATIONOBJECT:
 			{
 				float angle = myUIActions[i].myObject->GetAngle();
-				angle += myUIActions[i].myValue4;
+				angle += myUIActions[i].myValue4 * TimeManager::GetInstance()->GetDeltaTime();
 				myUIActions[i].myObject->SetAngle(angle);
 				break;
 			}
 			case SCALEOBJECT:
 			{
 				Vector3 scale = myUIActions[i].myObject->GetScale();
-				scale.myX += myUIActions[i].myValue4;
-				scale.myY += myUIActions[i].myValue4;
-				scale.myZ += myUIActions[i].myValue4;
+				scale.myX += myUIActions[i].myValue4 * TimeManager::GetInstance()->GetDeltaTime();
+				scale.myY += myUIActions[i].myValue4 * TimeManager::GetInstance()->GetDeltaTime();
+				scale.myZ += myUIActions[i].myValue4 * TimeManager::GetInstance()->GetDeltaTime();
 				myUIActions[i].myObject->SetScale(scale);
 				break;
 			}

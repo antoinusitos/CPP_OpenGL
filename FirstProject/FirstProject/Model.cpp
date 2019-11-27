@@ -87,7 +87,7 @@ namespace Engine
 
 	void Model::Update(float aDeltaTime)
 	{
-		//myAngle += aDeltaTime;
+
 	}
 
 	void Model::LoadModel(std::string aPath)

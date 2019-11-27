@@ -3,7 +3,7 @@
 - GLM::vec is very bad at storing
 
 TODO :
-- test to move objects, rotate them and scale them with button
+- Do debug and text rendering from the tuto
 - Allow to see shaders and models in a panel as a list
 - animation
 - animator

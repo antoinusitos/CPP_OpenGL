@@ -22,6 +22,7 @@
 #include "Camera.h"
 #include "FileLinkerManager.h"
 #include "EditorManager.h"
+#include "TimeManager.h"
 
 void framebuffer_size_callback(GLFWwindow* aWindow, int aWidth, int aHeight);
 void processInput(GLFWwindow* aWindow, Engine::UIManager* aUIManager);
@@ -131,13 +132,11 @@ int main()
 	{
 		// per-frame time logic
 		// -----------
-		float myCurrentFrame = glfwGetTime();
-		myDeltaTime = myCurrentFrame - myLastFrame;
-		myLastFrame = myCurrentFrame;
+		Engine::TimeManager::GetInstance()->Update();
 
 		// Checking file modification
 		// -----------
-		Engine::FileWatcher::GetInstance()->SetDeltaTime(myDeltaTime);
+		Engine::FileWatcher::GetInstance()->SetDeltaTime(Engine::TimeManager::GetInstance()->GetDeltaTime());
 		Engine::FileWatcher::GetInstance()->Update([](std::string path_to_watch, Engine::FileStatus status) -> void
 		{
 			// Process only regular files, all other file types are ignored
@@ -147,8 +146,10 @@ int main()
 			}
 		});
 
+		// update editor
+		// -----------
 		myEditorUIManager->UpdateMousePosition(glm::vec2(myLastMousePosX, myLastMousePosY));
-		myEditorUIManager->UpdateManager(myDeltaTime);
+		myEditorUIManager->UpdateManager();
 
 		// input
 		// -----------
@@ -160,12 +161,14 @@ int main()
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 #pragma region rectangle rendering
+		// render editor
+		// -----------
+		myEditorUIManager->RenderManager(myWindow);
+
 		myBox->Render(myWindow);
 
-		myModel->Update(myDeltaTime);
+		myModel->Update(Engine::TimeManager::GetInstance()->GetDeltaTime());
 		myModel->Render(myWindow);
-
-		myEditorUIManager->RenderManager(myWindow);
 #pragma endregion
 
 		// check and call events and swap the buffers

@@ -3,6 +3,7 @@
 #include <iostream>
 #include "Shader.h"
 #include <GLFW/glfw3.h>
+#include "TimeManager.h"
 
 namespace Engine
 {
@@ -19,19 +20,21 @@ namespace Engine
 		}
 	}
 
-	void UIManager::UpdateManager(float aDeltaTime)
+	void UIManager::UpdateManager()
 	{
 		if (!myIsActive)
 		{
 			return;
 		}
 
+		float deltaTime = TimeManager::GetInstance()->GetDeltaTime();
+
 		for (unsigned int i = 0; i < myElements.size(); i++)
 		{
-			myElements[i]->Update(aDeltaTime);
+			myElements[i]->Update(deltaTime);
 		}
 
-		Update(aDeltaTime);
+		Update(deltaTime);
 	}
 
 	void UIManager::RenderManager(GLFWwindow* aWindow)

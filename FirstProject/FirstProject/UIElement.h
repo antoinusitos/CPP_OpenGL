@@ -24,6 +24,7 @@ namespace Engine
 		void MouseExit();
 
 		void MouseClick();
+		void MouseHold();
 		void MouseRelease();
 
 		virtual void Update(const float aDeltaTime);
@@ -63,6 +64,7 @@ namespace Engine
 		std::function<void()> myMouseHoverFunction;
 		std::function<void()> myMouseExitFunction;
 		std::function<void()> myMouseClickFunction;
+		std::function<void()> myMouseHoldFunction;
 		std::function<void()> myMouseReleaseFunction;
 		UIManager* myUIManager;
 
