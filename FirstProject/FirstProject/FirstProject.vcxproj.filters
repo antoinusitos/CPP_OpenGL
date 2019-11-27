@@ -112,7 +112,10 @@
       <Filter>Source Files\Engine</Filter>
     </ClCompile>
     <ClCompile Include="TimeManager.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="TextManager.cpp">
+      <Filter>Source Files\Engine</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -195,7 +198,10 @@
       <Filter>Source Files\Engine</Filter>
     </ClInclude>
     <ClInclude Include="TimeManager.h">
-      <Filter>Header Files</Filter>
+      <Filter>Source Files\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="TextManager.h">
+      <Filter>Source Files\Engine</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

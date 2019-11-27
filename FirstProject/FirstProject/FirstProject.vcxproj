@@ -69,12 +69,12 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(SolutionDir)\..\glad\include;$(SolutionDir)\..\glm\include;$(SolutionDir)\..\glfw-3.3\include;$(SolutionDir)\..\assimp-5.0.0\Build\include;$(SolutionDir)\..\assimp-5.0.0\include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)\..\glfw-3.3\build\src\Debug;$(SolutionDir)\..\assimp-5.0.0\Build\code\Debug;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)\..\glad\include;$(SolutionDir)\..\glm\include;$(SolutionDir)\..\glfw-3.3\include;$(SolutionDir)\..\assimp-5.0.0\Build\include;$(SolutionDir)\..\assimp-5.0.0\include;$(SolutionDir)\..\freetype-2.9.1\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)\..\glfw-3.3\build\src\Debug;$(SolutionDir)\..\assimp-5.0.0\Build\code\Debug;$(SolutionDir)\..\freetype-2.9.1\Build\Debug;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>$(SolutionDir)\..\glad\include;$(SolutionDir)\..\glm\include;$(SolutionDir)\..\glfw-3.3\include;$(SolutionDir)\..\assimp-5.0.0\Build\include;$(SolutionDir)\..\assimp-5.0.0\include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)\..\glfw-3.3\build\src\Debug;$(SolutionDir)\..\assimp-5.0.0\Build\code\Debug;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)\..\glad\include;$(SolutionDir)\..\glm\include;$(SolutionDir)\..\glfw-3.3\include;$(SolutionDir)\..\assimp-5.0.0\Build\include;$(SolutionDir)\..\assimp-5.0.0\include;$(SolutionDir)\..\freetype-2.9.1\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)\..\glfw-3.3\build\src\Debug;$(SolutionDir)\..\assimp-5.0.0\Build\code\Debug;$(SolutionDir)\..\freetype-2.9.1\Build\Debug;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -83,7 +83,7 @@
       <SDLCheck>true</SDLCheck>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>opengl32.lib;glfw3.lib;assimp-vc141-mtd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;glfw3.lib;assimp-vc141-mtd.lib;freetyped.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -93,7 +93,7 @@
       <SDLCheck>true</SDLCheck>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>opengl32.lib;glfw3.lib;assimp-vc141-mtd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;glfw3.lib;assimp-vc141-mtd.lib;freetyped.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -139,6 +139,7 @@
     <ClCompile Include="Model.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="stb_image.cpp" />
+    <ClCompile Include="TextManager.cpp" />
     <ClCompile Include="TimeManager.cpp" />
     <ClCompile Include="UIButton.cpp" />
     <ClCompile Include="UICheckBox.cpp" />
@@ -168,6 +169,7 @@
     <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="stb_image.h" />
+    <ClInclude Include="TextManager.h" />
     <ClInclude Include="TimeManager.h" />
     <ClInclude Include="UIButton.h" />
     <ClInclude Include="UICheckBox.h" />

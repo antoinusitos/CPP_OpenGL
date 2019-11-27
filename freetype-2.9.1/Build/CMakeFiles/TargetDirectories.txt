@@ -1,0 +1,5 @@
+D:/Dev/OpenGL_C++/freetype-2.9.1/Build/CMakeFiles/PACKAGE.dir
+D:/Dev/OpenGL_C++/freetype-2.9.1/Build/CMakeFiles/freetype.dir
+D:/Dev/OpenGL_C++/freetype-2.9.1/Build/CMakeFiles/INSTALL.dir
+D:/Dev/OpenGL_C++/freetype-2.9.1/Build/CMakeFiles/ALL_BUILD.dir
+D:/Dev/OpenGL_C++/freetype-2.9.1/Build/CMakeFiles/ZERO_CHECK.dir
