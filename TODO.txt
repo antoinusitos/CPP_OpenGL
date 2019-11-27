@@ -3,7 +3,6 @@
 - GLM::vec is very bad at storing
 
 TODO :
-- editor manager with selected object
 - test to move objects, rotate them and scale them with button
 - Allow to see shaders and models in a panel as a list
 - animation
