@@ -8,16 +8,29 @@
 
 namespace Engine
 {
+	class Shader;
+
 	class TextManager
 	{
 	public:
 		TextManager();
 		~TextManager();
 
+		static TextManager* GetInstance();
+
+		void InitText();
+
+		void RenderText(Shader* aShader, std::string aText, GLfloat aX, GLfloat aY, GLfloat aScale, glm::vec3 aColor);
+
 	private:
+		static TextManager* mySingleton;
+
 		FT_Library myFontLibrary;
 		FT_Face myFontFace;
 
-		std::map<GLchar, Character> Characters;
+		std::map<GLchar, Character> myCharacters;
+
+		GLuint myVAO;
+		GLuint myVBO;
 	};
 }

@@ -193,6 +193,8 @@
     <None Include="ModelLoading.vert" />
     <None Include="simple.frag" />
     <None Include="simple.vert" />
+    <None Include="Text.frag" />
+    <None Include="Text.vert" />
     <None Include="UI.frag" />
     <None Include="UI.vert" />
     <None Include="UITexture.frag" />

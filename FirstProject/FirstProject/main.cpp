@@ -23,6 +23,7 @@
 #include "FileLinkerManager.h"
 #include "EditorManager.h"
 #include "TimeManager.h"
+#include "TextManager.h"
 
 void framebuffer_size_callback(GLFWwindow* aWindow, int aWidth, int aHeight);
 void processInput(GLFWwindow* aWindow, Engine::UIManager* aUIManager);
@@ -116,13 +117,15 @@ int main()
 
 	Engine::Box* myBox = new Engine::Box(0,0,-1);
 
-	//TEST
 	Engine::EditorManager::GetInstance()->myObject = myModel;
-	//TEST
 
 	Editor::EditorUIManager* myEditorUIManager = new Editor::EditorUIManager();
 	myEditorUIManager->SetWindow(myWindow);
 	myEditorUIManager->InitUIManager();
+
+	Engine::Shader* textShader = Engine::ResourceManager::GetInstance()->LoadShader("TextShader", "Text.vert", "Text.frag");
+
+	Engine::TextManager::GetInstance()->InitText();
 
 #pragma region Rendering
 
@@ -160,7 +163,6 @@ int main()
 		glClearColor(0.8f, 0.8f, 0.8f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-#pragma region rectangle rendering
 		// render editor
 		// -----------
 		myEditorUIManager->RenderManager(myWindow);
@@ -169,7 +171,8 @@ int main()
 
 		myModel->Update(Engine::TimeManager::GetInstance()->GetDeltaTime());
 		myModel->Render(myWindow);
-#pragma endregion
+
+		Engine::TextManager::GetInstance()->RenderText(textShader, "This is sample text", 25.0f, 25.0f, 1.0f, glm::vec3(0.5, 0.8f, 0.2f));
 
 		// check and call events and swap the buffers
 		// -----------

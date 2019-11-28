@@ -247,5 +247,11 @@
     <None Include="UITexture.vert">
       <Filter>Source Files\Engine\Shaders</Filter>
     </None>
+    <None Include="Text.vert">
+      <Filter>Source Files\Engine\Shaders</Filter>
+    </None>
+    <None Include="Text.frag">
+      <Filter>Source Files\Engine\Shaders</Filter>
+    </None>
   </ItemGroup>
 </Project>

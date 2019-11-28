@@ -2,6 +2,7 @@
 
 #include <glm/glm.hpp>
 #include <string>
+#include <glad/glad.h>
 
 namespace Engine
 {
@@ -248,9 +249,9 @@ namespace Engine
 
 	struct Character 
 	{
-		GLuint     TextureID;  // ID handle of the glyph texture
-		glm::ivec2 Size;       // Size of glyph
-		glm::ivec2 Bearing;    // Offset from baseline to left/top of glyph
-		GLuint     Advance;    // Offset to advance to next glyph
+		GLuint     myTextureID;  // ID handle of the glyph texture
+		glm::ivec2 mySize;       // Size of glyph
+		glm::ivec2 myBearing;    // Offset from baseline to left/top of glyph
+		GLuint     myAdvance;    // Offset to advance to next glyph
 	};
 }
