@@ -85,6 +85,11 @@ namespace Engine
 		myWindow = aWindow;
 	}
 
+	GLFWwindow* UIManager::GetWindow()
+	{
+		return myWindow;
+	}
+
 	void UIManager::Quit()
 	{
 		glfwSetWindowShouldClose(myWindow, true);

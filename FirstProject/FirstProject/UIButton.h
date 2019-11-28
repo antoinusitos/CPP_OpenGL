@@ -14,6 +14,10 @@ namespace Engine
 
 		void Init() override;
 
+		void Render(GLFWwindow* aWindow) override;
+
+		void SetText(const std::string aText);
+
 	protected:
 		virtual void Click();
 		virtual void Release();
@@ -24,6 +28,8 @@ namespace Engine
 		Vector3 myHoverColor;
 
 		std::vector<UIAction> myUIActions;
+
+		std::string myText = "";
 	};
 }
 

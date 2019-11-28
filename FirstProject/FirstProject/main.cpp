@@ -123,8 +123,6 @@ int main()
 	myEditorUIManager->SetWindow(myWindow);
 	myEditorUIManager->InitUIManager();
 
-	Engine::Shader* myTextShader = Engine::ResourceManager::GetInstance()->LoadShader("TextShader", "Text.vert", "Text.frag");
-
 	Engine::TextManager::GetInstance();
 
 #pragma region Rendering
@@ -171,8 +169,6 @@ int main()
 
 		myModel->Update(Engine::TimeManager::GetInstance()->GetDeltaTime());
 		myModel->Render(myWindow);
-
-		Engine::TextManager::GetInstance()->RenderText(myTextShader, myWindow, "This is sample text", 25.0f, 25.0f, 1.0f, glm::vec3(0.5, 0.8f, 0.2f));
 
 		// check and call events and swap the buffers
 		// -----------

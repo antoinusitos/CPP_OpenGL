@@ -9,6 +9,7 @@
 #include "Shader.h"
 #include "Model.h"
 #include "TimeManager.h"
+#include "TextManager.h"
 
 namespace Engine
 {
@@ -40,6 +41,18 @@ namespace Engine
 		myBaseColor = Vector3(1.0f);
 		myHoverColor = Vector3(0.5f);
 		myColor = myBaseColor;
+	}
+
+	void UIButton::Render(GLFWwindow* aWindow)
+	{
+		TextManager::GetInstance()->RenderText(myUIManager->GetWindow(), myText, myTransform.myPosition.myX, myTransform.myPosition.myY, 0.5f, glm::vec3(0.5, 0.8f, 0.2f));
+
+		UIElement::Render(aWindow);
+	}
+
+	void UIButton::SetText(const std::string aText)
+	{
+		myText = aText;
 	}
 
 	void UIButton::Click()

@@ -29,6 +29,7 @@ namespace Engine
 		virtual void InitUIManager();
 
 		void SetWindow(GLFWwindow* aWindow);
+		GLFWwindow* GetWindow();
 
 		void Quit();
 

@@ -60,12 +60,14 @@ namespace Editor
 		saveButton->AlignCollisionWithTransform();
 		quitButton->AlignCollisionWithTransform();
 
+		fileMenu->SetText("File");
 		fileMenu->CreateUI();
 		fileMenu->Init();
 		fileMenu->SetUIManager(this);
 		fileMenu->AddUIAction(Engine::UIAction(Engine::TOGGLEVISIBILITY, fileMenuPanel, true));
 
 		Engine::UIButton* editMenu = new Engine::UIButton(std::string("Edit Menu"));
+		fileMenu->SetText("Edit");
 		editMenu->CreateUI();
 		editMenu->Init();
 		editMenu->SetUIManager(this);
