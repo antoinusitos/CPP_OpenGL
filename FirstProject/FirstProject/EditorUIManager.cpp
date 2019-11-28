@@ -6,6 +6,7 @@
 #include "UIContainerHorizontal.h"
 #include "UIContainerVertical.h"
 #include "UIWindow.h"
+#include "UIWindowLog.h"
 #include "UICheckBox.h"
 #include "UIMenuPanel.h"
 #include "UIText.h"
@@ -115,7 +116,7 @@ namespace Editor
 		fileMenu->AlignCollisionWithTransform();
 		editMenu->AlignCollisionWithTransform();
 
-		Engine::UIWindow* logWindow = new Engine::UIWindow(std::string("Log Window"));
+		Engine::UIWindowLog* logWindow = new Engine::UIWindowLog(std::string("Log Window"));
 		logWindow->SetPosition(Engine::Vector2(400.0f, 400.0f));
 		logWindow->SetScale(Engine::Vector2(400.0f, 400.0f));
 		logWindow->CreateUI();

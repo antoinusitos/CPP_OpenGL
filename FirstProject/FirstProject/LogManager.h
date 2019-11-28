@@ -17,6 +17,8 @@ namespace Engine
 
 		GLenum CheckError(const char* aFile, int aLine);
 
+		const std::vector<std::string> GetLogs();
+
 	protected:
 		std::vector<std::string> myLogs;
 

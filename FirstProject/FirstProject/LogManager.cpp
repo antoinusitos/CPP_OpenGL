@@ -51,4 +51,10 @@ namespace Engine
 		}
 		return errorCode;
 	}
+
+	const std::vector<std::string> LogManager::GetLogs()
+	{
+		return myLogs;
+	}
+
 }

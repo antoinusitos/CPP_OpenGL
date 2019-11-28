@@ -152,6 +152,7 @@
     <ClCompile Include="UIPanel.cpp" />
     <ClCompile Include="UIText.cpp" />
     <ClCompile Include="UIWindow.cpp" />
+    <ClCompile Include="UIWindowLog.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Box.h" />
@@ -183,6 +184,7 @@
     <ClInclude Include="UIPanel.h" />
     <ClInclude Include="UIText.h" />
     <ClInclude Include="UIWindow.h" />
+    <ClInclude Include="UIWindowLog.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Color.frag" />
