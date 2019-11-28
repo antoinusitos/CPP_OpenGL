@@ -3,7 +3,8 @@
 - GLM::vec is very bad at storing
 
 TODO :
-- Do debug and text rendering from the tuto
+- Allow to see detail panel with infos as text
+- Show log as text
 - Allow to see shaders and models in a panel as a list
 - animation
 - animator

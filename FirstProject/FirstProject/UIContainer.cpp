@@ -33,6 +33,15 @@ namespace Engine
 		if (!myVisibility && !myForceUpdate)
 			return;
 
+		Vector2 pos = myTransform.myPosition;
+		pos.myX -= myTransform.myScale.myX * 0.25f;
+		pos.myY -= myTransform.myScale.myY * 0.25f;
+
+		if (myText != nullptr)
+		{
+			myText->SetPosition(pos);
+		}
+
 		for (unsigned int i = 0; i < myElements.size(); i++)
 		{
 			myElements[i]->Update(aDeltaTime);
@@ -59,14 +68,5 @@ namespace Engine
 	void UIContainer::AttachUIText(UIElement* anElement)
 	{
 		myText = anElement;
-
-		Vector2 pos = myTransform.myPosition;
-		pos.myX -= myTransform.myScale.myX * 0.25f;
-		pos.myY += myTransform.myScale.myY * 0.75f;
-
-		if (myText != nullptr)
-		{
-			myText->SetPosition(pos);
-		}
 	}
 }

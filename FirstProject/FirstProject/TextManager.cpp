@@ -121,12 +121,12 @@ namespace Engine
 		CameraManager::GetInstance()->GetCamera()->Render(myShader, aWindow, true);
 		myShader->SetVec3("myTextColor", aColor.myX, aColor.myY, aColor.myZ);
 
-		int width, height;
+		/*int width, height;
 		glfwGetWindowSize(aWindow, &width, &height);
 
 		glm::mat4 projection = glm::ortho(0.0f, static_cast<GLfloat>(width), static_cast<GLfloat>(height), 0.0f, -1.0f, 1.0f);
 		//glm::mat4 projection = glm::ortho(0.0f, static_cast<GLfloat>(width), 0.0f, static_cast<GLfloat>(height));
-		myShader->SetMat4("myProjection", projection);
+		myShader->SetMat4("myProjection", projection);*/
 
 		glActiveTexture(GL_TEXTURE0);
 		glBindVertexArray(myVAO);

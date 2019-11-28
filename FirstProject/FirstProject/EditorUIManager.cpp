@@ -40,27 +40,27 @@ namespace Editor
 		saveText->Init();
 		saveText->SetUIManager(this);
 
+		Engine::UIButton* saveButton = new Engine::UIButton(std::string("Save Button"));
+		saveButton->AttachUIText(saveText);
+		saveButton->CreateUI();
+		saveButton->Init();
+		saveButton->SetUIManager(this);
+		saveButton->AddUIAction(Engine::UIAction(Engine::VISIBILITY, fileMenuPanel, false));
+		saveButton->AlignCollisionWithTransform();
+
 		Engine::UIText* quitText = new Engine::UIText(std::string("Exit"));
 		quitText->SetText("Exit");
 		quitText->CreateUI();
 		quitText->Init();
 		quitText->SetUIManager(this);
 
-		Engine::UIButton* saveButton = new Engine::UIButton(std::string("Save Button"));
-		saveButton->CreateUI();
-		saveButton->Init();
-		saveButton->SetUIManager(this);
-		saveButton->AddUIAction(Engine::UIAction(Engine::VISIBILITY, fileMenuPanel, false));
-		saveButton->AlignCollisionWithTransform();
-		saveButton->AttachUIText(saveText);
-
 		Engine::UIButton* quitButton = new Engine::UIButton(std::string("Quit Button"));
+		quitButton->AttachUIText(quitText);
 		quitButton->CreateUI();
 		quitButton->Init();
 		quitButton->SetUIManager(this);
 		quitButton->AddUIAction(Engine::UIAction(Engine::QUIT, nullptr, false));
 		quitButton->AlignCollisionWithTransform();
-		quitButton->AttachUIText(quitText);
 
 		fileMenuPanel->SetScale(Engine::Vector2(quitButton->GetScale().myX, 60.0f));
 		fileMenuPanel->SetPosition(Engine::Vector2(quitButton->GetScale().myX / 2.0f, fileMenu->GetScale().myY + 60.0f / 2.0f));
@@ -82,14 +82,21 @@ namespace Editor
 		fileMenuText->CreateUI();
 		fileMenuText->Init();
 		fileMenuText->SetUIManager(this);
-
+		
+		fileMenu->AttachUIText(fileMenuText);
 		fileMenu->CreateUI();
 		fileMenu->Init();
 		fileMenu->SetUIManager(this);
 		fileMenu->AddUIAction(Engine::UIAction(Engine::TOGGLEVISIBILITY, fileMenuPanel, true));
-		fileMenu->AttachUIText(fileMenuText);
+
+		Engine::UIText* editMenuText = new Engine::UIText(std::string("Edit"));
+		editMenuText->SetText("Edit");
+		editMenuText->CreateUI();
+		editMenuText->Init();
+		editMenuText->SetUIManager(this);
 
 		Engine::UIButton* editMenu = new Engine::UIButton(std::string("Edit Menu"));
+		editMenu->AttachUIText(editMenuText);
 		editMenu->CreateUI();
 		editMenu->Init();
 		editMenu->SetUIManager(this);
@@ -196,6 +203,7 @@ namespace Editor
 		inspectorPanel->CreateUI();
 		inspectorPanel->Init();
 		inspectorPanel->SetUIManager(this);
+		inspectorPanel->SetVisibility(false);
 		inspectorPanel->AlignCollisionWithTransform();
 		//inspectorPanel->AttachUIElement(moveRightButton);
 		inspectorPanel->UpdateLayout();
