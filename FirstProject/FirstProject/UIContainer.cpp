@@ -15,6 +15,11 @@ namespace Engine
 		if (!myVisibility)
 			return;
 
+		if (myText != nullptr)
+		{
+			myText->Render(aWindow);
+		}
+
 		for (unsigned int i = 0; i < myElements.size(); i++)
 		{
 			myElements[i]->Render(aWindow);
@@ -51,4 +56,17 @@ namespace Engine
 		}
 	}
 
+	void UIContainer::AttachUIText(UIElement* anElement)
+	{
+		myText = anElement;
+
+		Vector2 pos = myTransform.myPosition;
+		pos.myX -= myTransform.myScale.myX * 0.25f;
+		pos.myY += myTransform.myScale.myY * 0.75f;
+
+		if (myText != nullptr)
+		{
+			myText->SetPosition(pos);
+		}
+	}
 }

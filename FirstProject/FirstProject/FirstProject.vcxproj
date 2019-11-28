@@ -150,6 +150,7 @@
     <ClCompile Include="UIManager.cpp" />
     <ClCompile Include="UIMenuPanel.cpp" />
     <ClCompile Include="UIPanel.cpp" />
+    <ClCompile Include="UIText.cpp" />
     <ClCompile Include="UIWindow.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -180,6 +181,7 @@
     <ClInclude Include="UIManager.h" />
     <ClInclude Include="UIMenuPanel.h" />
     <ClInclude Include="UIPanel.h" />
+    <ClInclude Include="UIText.h" />
     <ClInclude Include="UIWindow.h" />
   </ItemGroup>
   <ItemGroup>

@@ -21,8 +21,11 @@ namespace Engine
 
 		void SetVisibility(const bool aNewVisibility) override;
 
+		void AttachUIText(UIElement* anElement);
+
 	protected:
 		std::vector<UIElement*> myElements;
 
+		UIElement* myText = nullptr;
 	};
 }

@@ -13,7 +13,7 @@
 
 namespace Engine
 {
-	UIButton::UIButton(std::string aName) : UIElement(aName)
+	UIButton::UIButton(std::string aName) : UIContainer(aName)
 	{
 		myTransform.myPosition = Vector2(75.0f / 2.0f, 20.0f / 2.0f);
 		myTransform.myScale = Vector2(75.0f, 20.0f);
@@ -41,18 +41,6 @@ namespace Engine
 		myBaseColor = Vector3(1.0f);
 		myHoverColor = Vector3(0.5f);
 		myColor = myBaseColor;
-	}
-
-	void UIButton::Render(GLFWwindow* aWindow)
-	{
-		TextManager::GetInstance()->RenderText(myUIManager->GetWindow(), myText, myTransform.myPosition.myX + myTransform.myScale.myX / 2.0f, myTransform.myPosition.myY, 0.5f, glm::vec3(0.5, 0.8f, 0.2f));
-
-		UIElement::Render(aWindow);
-	}
-
-	void UIButton::SetText(const std::string aText)
-	{
-		myText = aText;
 	}
 
 	void UIButton::Click()

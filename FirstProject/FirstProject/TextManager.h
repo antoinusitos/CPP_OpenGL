@@ -22,7 +22,7 @@ namespace Engine
 
 		void InitText();
 
-		void RenderText(GLFWwindow* aWindow, std::string aText, GLfloat aX, GLfloat aY, GLfloat aScale, glm::vec3 aColor);
+		void RenderText(GLFWwindow* aWindow, const std::string aText, GLfloat aX, const GLfloat aY, GLfloat aScale, const Vector3 aColor);
 
 	private:
 		static TextManager* mySingleton;

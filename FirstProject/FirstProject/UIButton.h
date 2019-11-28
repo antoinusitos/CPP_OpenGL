@@ -1,10 +1,10 @@
 #pragma once
-#include "UIElement.h"
+#include "UIContainer.h"
 #include <vector>
 
 namespace Engine
 {
-	class UIButton : public UIElement
+	class UIButton : public UIContainer
 	{
 	public:
 		UIButton(std::string aName);
@@ -13,10 +13,6 @@ namespace Engine
 		void AddUIAction(UIAction anAction);
 
 		void Init() override;
-
-		void Render(GLFWwindow* aWindow) override;
-
-		void SetText(const std::string aText);
 
 	protected:
 		virtual void Click();
@@ -28,8 +24,6 @@ namespace Engine
 		Vector3 myHoverColor;
 
 		std::vector<UIAction> myUIActions;
-
-		std::string myText = "";
 	};
 }
 

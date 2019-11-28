@@ -115,11 +115,11 @@ namespace Engine
 		glBindVertexArray(0);
 	}
 
-	void TextManager::RenderText(GLFWwindow* aWindow, std::string aText, GLfloat aX, GLfloat aY, GLfloat aScale, glm::vec3 aColor)
+	void TextManager::RenderText(GLFWwindow* aWindow, const std::string aText, GLfloat aX, const GLfloat aY, GLfloat aScale, const Vector3 aColor)
 	{
 		// Activate corresponding render state	
 		CameraManager::GetInstance()->GetCamera()->Render(myShader, aWindow, true);
-		myShader->SetVec3("myTextColor", aColor.x, aColor.y, aColor.z);
+		myShader->SetVec3("myTextColor", aColor.myX, aColor.myY, aColor.myZ);
 
 		int width, height;
 		glfwGetWindowSize(aWindow, &width, &height);
@@ -143,45 +143,17 @@ namespace Engine
 			GLfloat w = ch.mySize.x * aScale;
 			GLfloat h = ch.mySize.y * aScale;
 			// Update VBO for each character
-			/*GLfloat vertices[6][4] = {
-				{ xpos,     ypos + h,   0.0, 0.0 },
-				{ xpos,     ypos,       0.0, 1.0 },
-				{ xpos + w, ypos,       1.0, 1.0 },
-
-				{ xpos,     ypos + h,   0.0, 0.0 },
-				{ xpos + w, ypos,       1.0, 1.0 },
-				{ xpos + w, ypos + h,   1.0, 0.0 }
-			};*/
-
-			/*GLfloat vertices[6][4] = {
-				{ xpos,     ypos + h,   1.0, 1.0 },
-				{ xpos,     ypos,       0.0, 1.0 },
-				{ xpos + w, ypos,       0.0, 0.0 },
-
-				{ xpos,     ypos + h,   1.0, 1.0 },
-				{ xpos + w, ypos,       0.0, 0.0 },
-				{ xpos + w, ypos + h,   1.0, 0.0 }
-			};*/
-
-			/*GLfloat vertices[6][4] = {
-				{ xpos,     ypos + h,   1.0, 0.0 },
-				{ xpos,     ypos,       1.0, 1.0 },
-				{ xpos + w, ypos,       0.0, 1.0 },
-
-				{ xpos,     ypos + h,   1.0, 0.0 },
-				{ xpos + w, ypos,       0.0, 1.0 },
-				{ xpos + w, ypos + h,   0.0, 0.0 }
-			};*/
-
 			GLfloat vertices[6][4] = {
 				{ xpos,     ypos + h,   0.0, 1.0 },
 				{ xpos,     ypos,       0.0, 0.0 },
-				{ xpos + w, ypos,       1.0, 1.0 },
+				{ xpos + w, ypos,       1.0, 0.0 },
 
 				{ xpos,     ypos + h,   0.0, 1.0 },
 				{ xpos + w, ypos,       1.0, 0.0 },
 				{ xpos + w, ypos + h,   1.0, 1.0 }
 			};
+
+
 			// Render glyph texture over quad
 			glBindTexture(GL_TEXTURE_2D, ch.myTextureID);
 			// Update content of VBO memory
