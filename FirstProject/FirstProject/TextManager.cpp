@@ -143,7 +143,7 @@ namespace Engine
 			GLfloat w = ch.mySize.x * aScale;
 			GLfloat h = ch.mySize.y * aScale;
 			// Update VBO for each character
-			GLfloat vertices[6][4] = {
+			/*GLfloat vertices[6][4] = {
 				{ xpos,     ypos + h,   0.0, 0.0 },
 				{ xpos,     ypos,       0.0, 1.0 },
 				{ xpos + w, ypos,       1.0, 1.0 },
@@ -151,6 +151,36 @@ namespace Engine
 				{ xpos,     ypos + h,   0.0, 0.0 },
 				{ xpos + w, ypos,       1.0, 1.0 },
 				{ xpos + w, ypos + h,   1.0, 0.0 }
+			};*/
+
+			/*GLfloat vertices[6][4] = {
+				{ xpos,     ypos + h,   1.0, 1.0 },
+				{ xpos,     ypos,       0.0, 1.0 },
+				{ xpos + w, ypos,       0.0, 0.0 },
+
+				{ xpos,     ypos + h,   1.0, 1.0 },
+				{ xpos + w, ypos,       0.0, 0.0 },
+				{ xpos + w, ypos + h,   1.0, 0.0 }
+			};*/
+
+			/*GLfloat vertices[6][4] = {
+				{ xpos,     ypos + h,   1.0, 0.0 },
+				{ xpos,     ypos,       1.0, 1.0 },
+				{ xpos + w, ypos,       0.0, 1.0 },
+
+				{ xpos,     ypos + h,   1.0, 0.0 },
+				{ xpos + w, ypos,       0.0, 1.0 },
+				{ xpos + w, ypos + h,   0.0, 0.0 }
+			};*/
+
+			GLfloat vertices[6][4] = {
+				{ xpos,     ypos + h,   0.0, 1.0 },
+				{ xpos,     ypos,       0.0, 0.0 },
+				{ xpos + w, ypos,       1.0, 1.0 },
+
+				{ xpos,     ypos + h,   0.0, 1.0 },
+				{ xpos + w, ypos,       1.0, 0.0 },
+				{ xpos + w, ypos + h,   1.0, 1.0 }
 			};
 			// Render glyph texture over quad
 			glBindTexture(GL_TEXTURE_2D, ch.myTextureID);

@@ -45,7 +45,7 @@ namespace Engine
 
 	void UIButton::Render(GLFWwindow* aWindow)
 	{
-		TextManager::GetInstance()->RenderText(myUIManager->GetWindow(), myText, myTransform.myPosition.myX, myTransform.myPosition.myY, 0.5f, glm::vec3(0.5, 0.8f, 0.2f));
+		TextManager::GetInstance()->RenderText(myUIManager->GetWindow(), myText, myTransform.myPosition.myX + myTransform.myScale.myX / 2.0f, myTransform.myPosition.myY, 0.5f, glm::vec3(0.5, 0.8f, 0.2f));
 
 		UIElement::Render(aWindow);
 	}
