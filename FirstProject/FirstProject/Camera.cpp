@@ -1,6 +1,7 @@
 #include "Camera.h"
 #include "Shader.h"
 #include <GLFW/glfw3.h>
+#include "LogManager.h"
 
 namespace Engine
 {
@@ -101,6 +102,17 @@ namespace Engine
 
 	void Camera::Render(Shader* aShader, GLFWwindow* aWindow, bool aIsOrtho)
 	{
+		if (aShader == nullptr)
+		{
+			LogManager::GetInstance()->AddLog("ERROR::CAMERA::RENDER::Shader is null");
+			return;
+		}
+		if (aWindow == nullptr)
+		{
+			LogManager::GetInstance()->AddLog("ERROR::CAMERA::RENDER::Window is null");
+			return;
+		}
+
 		aShader->Use();
 
 		int width, height;

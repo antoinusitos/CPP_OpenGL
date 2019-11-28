@@ -6,6 +6,8 @@
 #include <glad/glad.h>
 #include "Data.h"
 
+struct GLFWwindow;
+
 namespace Engine
 {
 	class Shader;
@@ -20,7 +22,7 @@ namespace Engine
 
 		void InitText();
 
-		void RenderText(Shader* aShader, std::string aText, GLfloat aX, GLfloat aY, GLfloat aScale, glm::vec3 aColor);
+		void RenderText(Shader* aShader, GLFWwindow* aWindow, std::string aText, GLfloat aX, GLfloat aY, GLfloat aScale, glm::vec3 aColor);
 
 	private:
 		static TextManager* mySingleton;

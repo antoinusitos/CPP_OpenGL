@@ -2,6 +2,10 @@
 #include "LogManager.h"
 #include "Shader.h"
 #include <glm/gtc/matrix_transform.hpp>
+#include "CameraManager.h"
+#include "Camera.h"
+#include <GLFW/glfw3.h>
+#include <glm/gtc/type_ptr.hpp>
 
 namespace Engine
 {
@@ -74,6 +78,8 @@ namespace Engine
 		// clean the resources
 		FT_Done_Face(myFontFace);
 		FT_Done_FreeType(myFontLibrary);
+
+		InitText();
 	}
 
 	TextManager::~TextManager()
@@ -95,8 +101,6 @@ namespace Engine
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-		glm::mat4 projection = glm::ortho(0.0f, 800.0f, 0.0f, 600.0f);
-
 		glGenVertexArrays(1, &myVAO);
 		glGenBuffers(1, &myVBO);
 		glBindVertexArray(myVAO);
@@ -108,11 +112,18 @@ namespace Engine
 		glBindVertexArray(0);
 	}
 
-	void TextManager::RenderText(Shader* aShader, std::string aText, GLfloat aX, GLfloat aY, GLfloat aScale, glm::vec3 aColor)
+	void TextManager::RenderText(Shader* aShader, GLFWwindow* aWindow, std::string aText, GLfloat aX, GLfloat aY, GLfloat aScale, glm::vec3 aColor)
 	{
 		// Activate corresponding render state	
-		aShader->Use();
-		glUniform3f(glGetUniformLocation(aShader->myID, "myTextColor"), aColor.x, aColor.y, aColor.z);
+		CameraManager::GetInstance()->GetCamera()->Render(aShader, aWindow, true);
+		aShader->SetVec3("myTextColor", aColor.x, aColor.y, aColor.z);
+
+		int width, height;
+		glfwGetWindowSize(aWindow, &width, &height);
+
+		glm::mat4 projection = glm::ortho(0.0f, static_cast<GLfloat>(width), 0.0f, static_cast<GLfloat>(height));
+		glUniformMatrix4fv(glGetUniformLocation(aShader->myID, "myProjection"), 1, GL_FALSE, glm::value_ptr(projection));
+
 		glActiveTexture(GL_TEXTURE0);
 		glBindVertexArray(myVAO);
 
