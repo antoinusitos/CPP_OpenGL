@@ -46,6 +46,8 @@ float myLastMousePosY = 300.0f;
 
 bool myFirstMouse = false;
 
+Engine::Shader* SHADERRR ;
+
 int main()
 {
 #pragma region Init
@@ -125,6 +127,11 @@ int main()
 
 	Engine::TextManager::GetInstance();
 
+	//Engine::Shader* myShader = Engine::ResourceManager::GetInstance()->LoadShader("TextShader22", "Text.vert", "Text.frag");
+	Engine::TextManager::GetInstance()->myWindow = myWindow;
+
+	SHADERRR = Engine::ResourceManager::GetInstance()->LoadShader("TextShader22", "Text.vert", "Text.frag");
+
 #pragma region Rendering
 
 	// render loop
@@ -169,6 +176,8 @@ int main()
 
 		myModel->Update(Engine::TimeManager::GetInstance()->GetDeltaTime());
 		myModel->Render(myWindow);
+
+		Engine::TextManager::GetInstance()->RenderText(*Engine::TextManager::GetInstance()->myShader, "This is sample text", 25.0f, 25.0f, 1.0f, glm::vec3(0.5, 0.8f, 0.2f));
 
 		// check and call events and swap the buffers
 		// -----------

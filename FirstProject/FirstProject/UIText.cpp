@@ -24,7 +24,7 @@ namespace Engine
 
 	void UIText::Render(GLFWwindow* aWindow)
 	{
-		TextManager::GetInstance()->RenderText(aWindow, myText, myTransform.myPosition.myX, myTransform.myPosition.myY, 0.4f, myColor);
+		TextManager::GetInstance()->RenderText(*TextManager::GetInstance()->myShader, aWindow, myText, myTransform.myPosition.myX, myTransform.myPosition.myY, 0.4f, myColor);
 	}
 
 }

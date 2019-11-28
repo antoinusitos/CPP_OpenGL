@@ -22,7 +22,11 @@ namespace Engine
 
 		void InitText();
 
-		void RenderText(GLFWwindow* aWindow, const std::string aText, GLfloat aX, const GLfloat aY, GLfloat aScale, const Vector3 aColor);
+		void RenderText(Shader &s, GLFWwindow* aWindow, const std::string aText, GLfloat aX, const GLfloat aY, GLfloat aScale, const Vector3 aColor);
+
+		void RenderText(Shader &s, std::string text, GLfloat x, GLfloat y, GLfloat scale, glm::vec3 color);
+		GLFWwindow* myWindow;
+		Shader* myShader;
 
 	private:
 		static TextManager* mySingleton;
@@ -35,6 +39,8 @@ namespace Engine
 		GLuint myVAO;
 		GLuint myVBO;
 
-		Shader* myShader;
+		//GLFWwindow* myWindow;
+
+		//Shader* myShader;
 	};
 }
