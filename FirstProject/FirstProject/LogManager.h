@@ -1,10 +1,11 @@
 #pragma once
 
 #include <vector>
-#include <GLFW/glfw3.h>
 
 namespace Engine
 {
+	class UIText;
+
 	class LogManager
 	{
 	public:
@@ -15,12 +16,14 @@ namespace Engine
 
 		void AddLog(std::string aLog);
 
-		GLenum CheckError(const char* aFile, int aLine);
+		unsigned int CheckError(const char* aFile, int aLine);
 
 		const std::vector<std::string> GetLogs();
+		const std::vector<UIText*> GetLogsText();
 
 	protected:
 		std::vector<std::string> myLogs;
+		std::vector<UIText*> myLogsText;
 
 	private:
 		static LogManager* mySingleton;

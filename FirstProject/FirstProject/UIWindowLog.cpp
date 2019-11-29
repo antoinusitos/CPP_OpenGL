@@ -21,22 +21,22 @@ namespace Engine
 
 		UIWindow::Render(aWindow);
 
-		std::vector<std::string> logs = LogManager::GetInstance()->GetLogs();
+		std::vector<UIText*> logs = LogManager::GetInstance()->GetLogsText();
 
-		for (int i = 0; i < logs.size(); i++)
+		int startPos = 0;
+		if (logs.size() > myMaxLogToShow)
+		{
+			startPos = logs.size() - myMaxLogToShow;
+		}
+		for (int i = startPos; i < logs.size(); i++)
 		{
 			Vector2 pos = myTransform.myPosition;
 			pos.myX -= myTransform.myScale.myX / 2.0f;
 			pos.myY -= myTransform.myScale.myY / 2.0f;
 
-			UIText aLog = UIText(std::string("ALog"));
-			aLog.SetText(logs[i]);
-			aLog.SetPosition(Vector2(pos.myX, pos.myY + i * 20.0f));
-			aLog.SetColor(Vector3(1.0f, 1.0f, 1.0f));
-			aLog.CreateUI();
-			aLog.Init();
-			aLog.SetUIManager(myUIManager);
-			aLog.Render(aWindow);
+			logs[i]->SetPosition(Vector2(pos.myX, pos.myY + (i - startPos) * 20.0f));
+			logs[i]->SetUIManager(myUIManager);
+			logs[i]->Render(aWindow);
 		}
 	}
 }
