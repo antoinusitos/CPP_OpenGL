@@ -15,6 +15,7 @@
 #include "Camera.h"
 #include "ResourceManager.h"
 #include "LightManager.h"
+#include "LogManager.h"
 
 namespace Engine
 {
@@ -87,12 +88,19 @@ namespace Engine
 
 	void Model::SetAngle(float aValue)
 	{
-		myAngle = aValue;;
+		myAngle = aValue;
 	}
 
 	void Model::Update(float aDeltaTime)
 	{
+		/*Vector3 pos = myTransform.myPosition;
+		pos.myX += aDeltaTime * 0.01f;
+		myTransform.myPosition = pos;*/
+	}
 
+	const std::string Model::GetPath()
+	{
+		return myFullPath;
 	}
 
 	void Model::LoadModel(std::string aPath)
@@ -102,7 +110,7 @@ namespace Engine
 
 		if (scene == nullptr || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || scene->mRootNode == nullptr)
 		{
-			std::cout << "ERROR::ASSIMP::" << importer.GetErrorString() << std::endl;
+			LogManager::GetInstance()->AddLog("ERROR::ASSIMP::" + std::string(importer.GetErrorString()));
 			return;
 		}
 

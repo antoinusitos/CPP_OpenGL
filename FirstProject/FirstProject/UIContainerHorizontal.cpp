@@ -31,4 +31,9 @@ namespace Engine
 		mySpacing = aValue;
 	}
 
+	void UIContainerHorizontal::SetSizeToContent(const bool aValue)
+	{
+		mySizeToContent = aValue;
+	}
+
 }

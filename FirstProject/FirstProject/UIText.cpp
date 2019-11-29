@@ -6,6 +6,7 @@ namespace Engine
 	UIText::UIText(std::string aName) : UIElement(aName)
 	{
 		myColor = Vector3(0.0f, 0.0f, 0.0f);
+		myTransform.myScale = Vector2(20, 10);
 	}
 
 	UIText::~UIText()
@@ -24,6 +25,11 @@ namespace Engine
 
 	void UIText::Render(GLFWwindow* aWindow)
 	{
+		if (myCallBackText != nullptr)
+		{
+			myCallBackText(this);
+		}
+
 		TextManager::GetInstance()->RenderText(aWindow, myText, myTransform.myPosition.myX, myTransform.myPosition.myY, 0.4f, myColor);
 	}
 

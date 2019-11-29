@@ -34,17 +34,14 @@ void Scroll_Callback(GLFWwindow* aWindow, double aXOffset, double aYOffset);
 const unsigned int SCR_WIDTH = 800;
 const unsigned int SCR_HEIGHT = 600;
 
-// timing
-// -----------
-float myDeltaTime = 0.0f; // Time between current frame and last frame
-float myLastFrame = 0.0f; // Time of last frame
-
 // mouse position
 // -----------
 float myLastMousePosX = 400.0f;
 float myLastMousePosY = 300.0f;
 
 bool myFirstMouse = false;
+
+Engine::Model* myModel = nullptr;
 
 int main()
 {
@@ -111,7 +108,7 @@ int main()
 
 	Engine::FileLinkerManager::GetInstance();
 
-	Engine::Model* myModel = Engine::ResourceManager::GetInstance()->LoadModel("nanosuit");
+	myModel = Engine::ResourceManager::GetInstance()->LoadModel("nanosuit");
 	myModel->SetPosition(Engine::Vector3(0.0f, -1.75f, 0.0f));
 	myModel->SetScale(Engine::Vector3(0.1f, 0.1f, 0.1f));
 
@@ -200,6 +197,8 @@ void framebuffer_size_callback(GLFWwindow* aWindow, int aWidth, int aHeight)
 // ---------------------------------------------------------------------------------------------------------
 void processInput(GLFWwindow* aWindow, Engine::UIManager* aUIManager)
 { 
+	float deltatime = Engine::TimeManager::GetInstance()->GetDeltaTime();
+
 	if (glfwGetKey(aWindow, GLFW_KEY_ESCAPE) == GLFW_PRESS)
 	{
 		glfwSetWindowShouldClose(aWindow, true);
@@ -207,23 +206,22 @@ void processInput(GLFWwindow* aWindow, Engine::UIManager* aUIManager)
 
 	Engine::Camera* cam = Engine::CameraManager::GetInstance()->GetCamera();
 
-	float myCameraSpeed = 2.5f * myDeltaTime;
 	if (glfwGetKey(aWindow, GLFW_KEY_W) == GLFW_PRESS)
 	{
-		cam->ProcessKeyboard(Engine::FORWARD, myDeltaTime);
+		cam->ProcessKeyboard(Engine::FORWARD, deltatime);
 	}
 	if (glfwGetKey(aWindow, GLFW_KEY_S) == GLFW_PRESS)
 	{
-		cam->ProcessKeyboard(Engine::BACKWARD, myDeltaTime);
+		cam->ProcessKeyboard(Engine::BACKWARD, deltatime);
 	}
 
 	if (glfwGetKey(aWindow, GLFW_KEY_A) == GLFW_PRESS)
 	{
-		cam->ProcessKeyboard(Engine::LEFT, myDeltaTime);
+		cam->ProcessKeyboard(Engine::LEFT, deltatime);
 	}
 	if (glfwGetKey(aWindow, GLFW_KEY_D) == GLFW_PRESS)
 	{
-		cam->ProcessKeyboard(Engine::RIGHT, myDeltaTime);
+		cam->ProcessKeyboard(Engine::RIGHT, deltatime);
 	}
 
 	if (glfwGetKey(aWindow, GLFW_KEY_Y) == GLFW_PRESS)
@@ -247,6 +245,14 @@ void processInput(GLFWwindow* aWindow, Engine::UIManager* aUIManager)
 	else
 	{
 		cam->SetIsMoving(false);
+	}
+
+	if (glfwGetKey(aWindow, GLFW_KEY_P) == GLFW_PRESS)
+	{
+		if (Engine::EditorManager::GetInstance()->myObject != nullptr)
+			Engine::EditorManager::GetInstance()->myObject = nullptr;
+		else
+			Engine::EditorManager::GetInstance()->myObject = myModel;
 	}
 }
 

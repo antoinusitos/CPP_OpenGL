@@ -11,6 +11,7 @@
 #include "UIMenuPanel.h"
 #include "UIText.h"
 #include "Data.h"
+#include "Model.h"
 #include <iostream>
 #include <GLFW/glfw3.h>
 #include "EditorManager.h"
@@ -116,28 +117,226 @@ namespace Editor
 		fileMenu->AlignCollisionWithTransform();
 		editMenu->AlignCollisionWithTransform();
 
-		Engine::UICheckBox* checkBox = new Engine::UICheckBox(std::string("Check Box"));
+		/*Engine::UICheckBox* checkBox = new Engine::UICheckBox(std::string("Check Box"));
 		checkBox->SetPosition(Engine::Vector2((float)width / 2.0f, (float)height / 2.0f));
 		checkBox->CreateUI();
 		checkBox->Init();
 		checkBox->SetUIManager(this);
 		checkBox->AlignCollisionWithTransform();
-		myElements.push_back(checkBox);
+		myElements.push_back(checkBox);*/
+
+		// --------
+		// entity name
+		// --------
+		Engine::UIText* name = new Engine::UIText(std::string("Name"));
+		name->SetText("Name :");
+		name->myCallBackText = [](Engine::UIText* aText)
+		{
+			Engine::Model* model = Engine::EditorManager::GetInstance()->myObject;
+			if (model != nullptr)
+			{
+				aText->SetText("Name : " + model->GetPath());
+			}
+		};
+		name->CreateUI();
+		name->Init();
+		name->SetUIManager(this);
+		// --------
+		// position
+		// --------
+		Engine::UIText* position = new Engine::UIText(std::string("Position"));
+		position->SetText("Position :");
+		position->CreateUI();
+		position->Init();
+		position->SetUIManager(this);
+
+		Engine::UIText* posX = new Engine::UIText(std::string("posX"));
+		posX->SetText("pos x : 0");
+		posX->myCallBackText = [](Engine::UIText* aText)
+		{ 
+			Engine::Model* model = Engine::EditorManager::GetInstance()->myObject;
+			if (model != nullptr)
+			{
+				aText->SetText("X : " + std::to_string(model->GetPosition().myX));
+			}
+		};
+		posX->CreateUI();
+		posX->Init();
+		posX->SetUIManager(this);
+
+		Engine::UIText* posY = new Engine::UIText(std::string("posY"));
+		posY->SetText("pos y : 0");
+		posY->myCallBackText = [](Engine::UIText* aText)
+		{
+			Engine::Model* model = Engine::EditorManager::GetInstance()->myObject;
+			if (model != nullptr)
+			{
+				aText->SetText("Y : " + std::to_string(model->GetPosition().myY));
+			}
+		};
+		posY->CreateUI();
+		posY->Init();
+		posY->SetUIManager(this);
+
+		Engine::UIText* posZ = new Engine::UIText(std::string("posZ"));
+		posZ->SetText("pos z : 0");
+		posZ->myCallBackText = [](Engine::UIText* aText)
+		{
+			Engine::Model* model = Engine::EditorManager::GetInstance()->myObject;
+			if (model != nullptr)
+			{
+				aText->SetText("Z : " + std::to_string(model->GetPosition().myZ));
+			}
+		};
+		posZ->CreateUI();
+		posZ->Init();
+		posZ->SetUIManager(this);
+
+		// --------
+		// rotation
+		// --------
+		Engine::UIText* rotation = new Engine::UIText(std::string("Rotation"));
+		rotation->SetText("Rotation :");
+		rotation->CreateUI();
+		rotation->Init();
+		rotation->SetUIManager(this);
+
+		Engine::UIText* rotX = new Engine::UIText(std::string("rotX"));
+		rotX->SetText("rot x : 0");
+		rotX->myCallBackText = [](Engine::UIText* aText)
+		{
+			Engine::Model* model = Engine::EditorManager::GetInstance()->myObject;
+			if (model != nullptr)
+			{
+				aText->SetText("X : " + std::to_string(model->GetRotation().myX));
+			}
+		};
+		rotX->CreateUI();
+		rotX->Init();
+		rotX->SetUIManager(this);
+
+		Engine::UIText* rotY = new Engine::UIText(std::string("rotY"));
+		rotY->SetText("rot y : 0");
+		rotY->myCallBackText = [](Engine::UIText* aText)
+		{
+			Engine::Model* model = Engine::EditorManager::GetInstance()->myObject;
+			if (model != nullptr)
+			{
+				aText->SetText("Y : " + std::to_string(model->GetRotation().myY));
+			}
+		};
+		rotY->CreateUI();
+		rotY->Init();
+		rotY->SetUIManager(this);
+
+		Engine::UIText* rotZ = new Engine::UIText(std::string("rotZ"));
+		rotZ->SetText("rot z : 0");
+		rotZ->myCallBackText = [](Engine::UIText* aText)
+		{
+			Engine::Model* model = Engine::EditorManager::GetInstance()->myObject;
+			if (model != nullptr)
+			{
+				aText->SetText("Z : " + std::to_string(model->GetRotation().myZ));
+			}
+		};
+		rotZ->CreateUI();
+		rotZ->Init();
+		rotZ->SetUIManager(this);
+
+		// --------
+		// scale
+		// --------
+		Engine::UIText* scale = new Engine::UIText(std::string("Scale"));
+		scale->SetText("Scale :");
+		scale->CreateUI();
+		scale->Init();
+		scale->SetUIManager(this);
+
+		Engine::UIText* scaleX = new Engine::UIText(std::string("scaleX"));
+		scaleX->SetText("scale x : 0");
+		scaleX->myCallBackText = [](Engine::UIText* aText)
+		{
+			Engine::Model* model = Engine::EditorManager::GetInstance()->myObject;
+			if (model != nullptr)
+			{
+				aText->SetText("X : " + std::to_string(model->GetScale().myX));
+			}
+		};
+		scaleX->CreateUI();
+		scaleX->Init();
+		scaleX->SetUIManager(this);
+
+		Engine::UIText* scaleY = new Engine::UIText(std::string("scaleY"));
+		scaleY->SetText("scale y : 0");
+		scaleY->myCallBackText = [](Engine::UIText* aText)
+		{
+			Engine::Model* model = Engine::EditorManager::GetInstance()->myObject;
+			if (model != nullptr)
+			{
+				aText->SetText("Y : " + std::to_string(model->GetScale().myY));
+			}
+		};
+		scaleY->CreateUI();
+		scaleY->Init();
+		scaleY->SetUIManager(this);
+
+		Engine::UIText* scaleZ = new Engine::UIText(std::string("scaleZ"));
+		scaleZ->SetText("scale z : 0");
+		scaleZ->myCallBackText = [](Engine::UIText* aText)
+		{
+			Engine::Model* model = Engine::EditorManager::GetInstance()->myObject;
+			if (model != nullptr)
+			{
+				aText->SetText("Z : " + std::to_string(model->GetScale().myZ));
+			}
+		};
+		scaleZ->CreateUI();
+		scaleZ->Init();
+		scaleZ->SetUIManager(this);
 
 		Engine::UIContainerVertical* inspectorPanel = new Engine::UIContainerVertical(std::string("Inspector container"));
-		inspectorPanel->SetScale(Engine::Vector2(200.0f, 200.0f));
-		inspectorPanel->SetPosition(Engine::Vector2((float)width / 2.0f, (float)height / 2.0f));
+		inspectorPanel->SetScale(Engine::Vector2(200.0f, height - 20.0f));
+		inspectorPanel->SetPosition(Engine::Vector2((float)width - 200.0f / 2.0f, (float)height / 2.0f + 10.0f));
 		inspectorPanel->CreateUI();
 		inspectorPanel->Init();
 		inspectorPanel->SetUIManager(this);
+		inspectorPanel->SetMySpacing(10);
+		inspectorPanel->SetColor(Engine::Vector3(0.0f, 0.5f, 0.0f));
 		inspectorPanel->SetVisibility(false);
+		inspectorPanel->myVisibilityCallback = [](Engine::UIElement* anElement)
+		{
+			Engine::Model* model = Engine::EditorManager::GetInstance()->myObject;
+			if (model != nullptr)
+			{
+				anElement->SetVisibility(true);
+			}
+			else
+			{
+				anElement->SetVisibility(false);
+			}
+		};
 		inspectorPanel->AlignCollisionWithTransform();
-		//inspectorPanel->AttachUIElement(moveRightButton);
+		inspectorPanel->AttachUIElement(name);
+		inspectorPanel->AttachUIElement(position);
+		inspectorPanel->AttachUIElement(posX);
+		inspectorPanel->AttachUIElement(posY);
+		inspectorPanel->AttachUIElement(posZ);
+		inspectorPanel->AttachUIElement(rotation);
+		inspectorPanel->AttachUIElement(rotX);
+		inspectorPanel->AttachUIElement(rotY);
+		inspectorPanel->AttachUIElement(rotZ);
+		inspectorPanel->AttachUIElement(scale);
+		inspectorPanel->AttachUIElement(scaleX);
+		inspectorPanel->AttachUIElement(scaleY);
+		inspectorPanel->AttachUIElement(scaleZ);
 		inspectorPanel->UpdateLayout();
 		myElements.push_back(inspectorPanel);
 
 
+
+		// -------------------
 		// keep log at the end
+		// -------------------
 		Engine::UIWindowLog* logWindow = new Engine::UIWindowLog(std::string("Log Window"));
 		logWindow->SetPosition(Engine::Vector2(400.0f, 400.0f));
 		logWindow->SetScale(Engine::Vector2(400.0f, 400.0f));

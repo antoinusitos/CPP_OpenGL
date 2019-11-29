@@ -12,8 +12,10 @@ namespace Engine
 		void UpdateLayout();
 
 		void SetMySpacing(const float aValue);
+		void SetSizeToContent(const bool aValue);
 	
 	protected:
-			float mySpacing = 0.0f;
+		float mySpacing = 0.0f;
+		bool mySizeToContent = false;
 	};
 }

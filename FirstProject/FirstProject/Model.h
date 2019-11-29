@@ -41,6 +41,8 @@ namespace Engine
 
 		void Update(float aDeltaTime);
 
+		const std::string GetPath();
+
 	private:
 		std::vector<Texture> myTexturesLoaded;
 		std::vector<Mesh> myMeshes;

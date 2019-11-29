@@ -30,6 +30,11 @@ namespace Engine
 
 	void UIContainer::Update(const float aDeltaTime)
 	{
+		if (myVisibilityCallback != nullptr)
+		{
+			myVisibilityCallback(this);
+		}
+
 		if (!myVisibility && !myForceUpdate)
 			return;
 

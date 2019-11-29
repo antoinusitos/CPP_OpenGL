@@ -17,7 +17,7 @@ namespace Engine
 	private:
 		static TimeManager* mySingleton;
 		
-		float myDeltaTime;
-		float myLastFrame;
+		float myDeltaTime = 0;
+		float myLastFrame = 0;
 	};
 }

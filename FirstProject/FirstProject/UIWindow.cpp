@@ -17,6 +17,14 @@ namespace Engine
 
 	void UIWindow::Update(const float aDeltaTime)
 	{
+		if (myVisibilityCallback != nullptr)
+		{
+			myVisibilityCallback(this);
+		}
+
+		if (!myVisibility && !myForceUpdate)
+			return;
+
 		if (myFollowMouse)
 		{
 			Vector2 mousePos = myUIManager->GetMousePosition();

@@ -1,5 +1,6 @@
 #pragma once
 #include "UIElement.h"
+#include <functional>
 
 namespace Engine
 {
@@ -13,6 +14,8 @@ namespace Engine
 		void SetColor(const Vector3 aColor);
 
 		void Render(GLFWwindow* aWindow) override;
+
+		std::function<void(UIText* aText)> myCallBackText;
 
 	private:
 		std::string myText = "";

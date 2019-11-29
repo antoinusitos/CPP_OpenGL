@@ -5,8 +5,12 @@
 
 namespace Engine
 {
-	Camera::Camera(glm::vec3 aPosition, glm::vec3 anUp, float aYaw, float aPitch) : myFront(glm::vec3(0.0f, 0.0f, -1.0f)), myMovementSpeed(SPEED), mySensitivity(SENSITIVITY), myFov(ZOOM)
+	Camera::Camera(glm::vec3 aPosition, glm::vec3 anUp, float aYaw, float aPitch)
 	{
+		myFront = glm::vec3(0.0f, 0.0f, -1.0f);
+		myMovementSpeed = SPEED;
+		mySensitivity = SENSITIVITY;
+		myFov = ZOOM;
 		myPosition = aPosition;
 		myWorldUp = anUp;
 		myYaw = aYaw;
@@ -16,8 +20,12 @@ namespace Engine
 	}
 
 	// Constructor with scalar values
-	Camera::Camera(float aPosX, float aPosY, float aPosZ, float anUpX, float anUpY, float anUpZ, float aYaw, float aPitch) : myFront(glm::vec3(0.0f, 0.0f, -1.0f)), myMovementSpeed(SPEED), mySensitivity(SENSITIVITY), myFov(ZOOM)
+	Camera::Camera(float aPosX, float aPosY, float aPosZ, float anUpX, float anUpY, float anUpZ, float aYaw, float aPitch)
 	{
+		myFront = glm::vec3(0.0f, 0.0f, -1.0f);
+		myMovementSpeed = SPEED;
+		mySensitivity = SENSITIVITY;
+		myFov = ZOOM;
 		myPosition = glm::vec3(aPosX, aPosY, aPosZ);
 		myWorldUp = glm::vec3(anUpX, anUpY, anUpZ);
 		myYaw = aYaw;

@@ -80,6 +80,11 @@ namespace Engine
 
 	void UIElement::Update(const float aDeltaTime)
 	{
+		if (myVisibilityCallback != nullptr)
+		{
+			myVisibilityCallback(this);
+		}
+
 		if (!myVisibility && !myForceUpdate)
 			return;
 
@@ -258,4 +263,8 @@ namespace Engine
 		return myVisibility;
 	}
 
+	void UIElement::SetColor(const Vector3 aColor)
+	{
+		myColor = aColor;
+	}
 }

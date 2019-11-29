@@ -22,15 +22,24 @@ namespace Engine
 				positionY += scale.myY / 2.0f;
 			else
 				positionY += scale.myY;
-			myElements[i]->SetPosition(Vector2(myTransform.myPosition.myX - myTransform.myScale.myX / 2.0f + myElements[i]->GetScale().myX / 2.0f, myTransform.myPosition.myY - myTransform.myScale.myY / 2.0f + positionY));
+			myElements[i]->SetPosition(Vector2(myTransform.myPosition.myX - myTransform.myScale.myX / 2.0f, myTransform.myPosition.myY - myTransform.myScale.myY / 2.0f + positionY));
 			positionY += mySpacing;
 		}
 
-		myTransform.myScale = Vector2(myTransform.myScale.myX, myElements.size() * elementSize);
+		if (mySizeToContent)
+		{
+			myTransform.myScale = Vector2(myTransform.myScale.myX, myElements.size() * elementSize);
+		}
 	}
 
 	void UIContainerVertical::SetMySpacing(const float aValue)
 	{
 		mySpacing = aValue;
 	}
+
+	void UIContainerVertical::SetSizeToContent(const bool aValue)
+	{
+		mySizeToContent = aValue;
+	}
+
 }

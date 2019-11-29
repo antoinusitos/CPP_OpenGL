@@ -50,10 +50,14 @@ namespace Engine
 
 		const bool GetVisibility();
 
+		void SetColor(const Vector3 aColor);
+
 	public:
 		bool myDebug = false;
 
 		bool myForceUpdate = false;
+
+		std::function<void(UIElement* anElement)> myVisibilityCallback;
 
 	protected:
 		std::string myName = "";
@@ -66,6 +70,7 @@ namespace Engine
 		std::function<void()> myMouseClickFunction;
 		std::function<void()> myMouseHoldFunction;
 		std::function<void()> myMouseReleaseFunction;
+		
 		UIManager* myUIManager;
 
 		UITransform myTransform;

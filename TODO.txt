@@ -3,13 +3,14 @@
 - GLM::vec is very bad at storing
 
 TODO :
-- Allow to see detail panel with infos as text
+- input manager
 - Allow to see shaders and models in a panel as a list
+- Allow to pick an object in the scene
+- Scene
 - animation
 - animator
 - sprite animation
 - light manager
-- input manager
 - console input panel
 - debug
 - particle system
