@@ -2,6 +2,7 @@
 
 #include <string>
 #include <vector>
+#include "Data.h"
 
 namespace Engine
 {
@@ -10,6 +11,7 @@ namespace Engine
 	struct ImageInfos;
 	struct ShaderInfos;
 	struct ModelInfos;
+	class UIText;
 
 	class ResourceManager
 	{
@@ -23,8 +25,23 @@ namespace Engine
 		Shader* LoadShader(const std::string aName, const char* aVertexPath, const char* aFragmentPath);
 		unsigned int LoadTexture(const std::string aName, bool useCustomPath = false);
 
+		void SetPath(const std::string aPath);
+
+		void AddPath(const std::string aPath);
+
+		const std::vector<FileInfo*> GetFilesInfo();
+
+		void PreviousPath();
+
 	private:
 		static ResourceManager* mySingleton;
+
+		std::string myCurrentFolder = "";
+		std::string myLastFolder = "";
+		std::vector<std::string> myAllFiles;
+		std::vector<FileInfo*> myFiles;
+
+		void UpdateFiles();
 
 		std::vector<ModelInfos*> myModels;
 		std::vector<ShaderInfos*> myShaders;

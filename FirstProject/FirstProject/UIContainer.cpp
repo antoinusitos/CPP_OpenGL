@@ -74,4 +74,10 @@ namespace Engine
 	{
 		myText = anElement;
 	}
+
+	UIElement* UIContainer::GetText()
+	{
+		return myText;
+	}
+
 }

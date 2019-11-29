@@ -151,6 +151,7 @@
     <ClCompile Include="UIManager.cpp" />
     <ClCompile Include="UIMenuPanel.cpp" />
     <ClCompile Include="UIPanel.cpp" />
+    <ClCompile Include="UIPanelResources.cpp" />
     <ClCompile Include="UIText.cpp" />
     <ClCompile Include="UIWindow.cpp" />
     <ClCompile Include="UIWindowLog.cpp" />
@@ -184,6 +185,7 @@
     <ClInclude Include="UIManager.h" />
     <ClInclude Include="UIMenuPanel.h" />
     <ClInclude Include="UIPanel.h" />
+    <ClInclude Include="UIPanelResources.h" />
     <ClInclude Include="UIText.h" />
     <ClInclude Include="UIWindow.h" />
     <ClInclude Include="UIWindowLog.h" />

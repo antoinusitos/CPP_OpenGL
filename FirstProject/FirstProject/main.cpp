@@ -116,6 +116,8 @@ int main()
 
 	Engine::TextManager::GetInstance();
 
+	Engine::ResourceManager::GetInstance()->SetPath(std::experimental::filesystem::current_path().string() + "\\Assets\\");
+
 #pragma region Rendering
 
 	// render loop

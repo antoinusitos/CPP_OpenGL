@@ -106,7 +106,7 @@ namespace Engine
 	void Model::LoadModel(std::string aPath)
 	{
 		Assimp::Importer importer;
-		const aiScene* scene = importer.ReadFile("Models/" + aPath, aiProcess_Triangulate | aiProcess_FlipUVs);
+		const aiScene* scene = importer.ReadFile("Assets/Models/" + aPath, aiProcess_Triangulate | aiProcess_FlipUVs);
 
 		if (scene == nullptr || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || scene->mRootNode == nullptr)
 		{

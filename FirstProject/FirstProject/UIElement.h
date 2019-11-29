@@ -59,17 +59,18 @@ namespace Engine
 
 		std::function<void(UIElement* anElement)> myVisibilityCallback;
 
-	protected:
-		std::string myName = "";
-
-		bool myEntered = false;
-		bool myClicked = false;
 		std::function<void()> myMouseEnterFunction;
 		std::function<void()> myMouseHoverFunction;
 		std::function<void()> myMouseExitFunction;
 		std::function<void()> myMouseClickFunction;
 		std::function<void()> myMouseHoldFunction;
 		std::function<void()> myMouseReleaseFunction;
+
+	protected:
+		std::string myName = "";
+
+		bool myEntered = false;
+		bool myClicked = false;
 		
 		UIManager* myUIManager;
 

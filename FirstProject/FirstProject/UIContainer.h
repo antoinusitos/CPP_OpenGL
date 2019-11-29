@@ -23,6 +23,8 @@ namespace Engine
 
 		void AttachUIText(UIElement* anElement);
 
+		UIElement* GetText();
+
 	protected:
 		std::vector<UIElement*> myElements;
 

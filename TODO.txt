@@ -3,7 +3,8 @@
 - GLM::vec is very bad at storing
 
 TODO :
-- Allow to see shaders and models in a panel as a list
+- Allow to see shaders and models in a panel as a list (to polish)
+- Scale UI
 - Allow to pick an object in the scene
 - Scene
 - animation

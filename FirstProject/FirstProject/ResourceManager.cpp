@@ -6,6 +6,8 @@
 #include "Data.h"
 #include "FileWatcher.h"
 #include "FileLinkerManager.h"
+#include "UIText.h"
+#include "UIButton.h"
 
 namespace Engine
 {
@@ -13,6 +15,7 @@ namespace Engine
 
 	ResourceManager::ResourceManager()
 	{
+		
 	}
 
 	ResourceManager::~ResourceManager()
@@ -98,7 +101,7 @@ namespace Engine
 		if (link != nullptr)
 		{
 			theFile = std::string(link->myFile);
-			thePath = std::string("Images/" + theFile);
+			thePath = std::string("Assets\\Images\\" + theFile);
 			if (useCustomPath)
 			{
 				thePath = std::string(link->myFile);
@@ -109,7 +112,7 @@ namespace Engine
 			LogManager::GetInstance()->AddLog(std::string("Texture " + aName + " cannot be loaded from file linker"));
 			link = FileLinkerManager::GetInstance()->GetLinkedFile("DefaultTexture");
 			theFile = std::string(link->myFile);
-			thePath = std::string("Images/" + theFile);
+			thePath = std::string("Assets\\Images\\" + theFile);
 		}
 
 		int width, height, nrComponents;
@@ -145,5 +148,104 @@ namespace Engine
 
 		return textureID;
 
+	}
+
+	void ResourceManager::SetPath(const std::string aPath)
+	{
+		myCurrentFolder = aPath;
+		myAllFiles.empty();
+		UpdateFiles();
+	}
+
+	void ResourceManager::AddPath(const std::string aPath)
+	{
+		myLastFolder = myCurrentFolder;
+		myCurrentFolder += aPath + "\\";
+		SetPath(myCurrentFolder);
+	}
+
+	const std::vector<FileInfo*> ResourceManager::GetFilesInfo()
+	{
+		return myFiles;
+	}
+
+	void ResourceManager::PreviousPath()
+	{
+		std::string s = myCurrentFolder;
+		std::string delimiter = "\\";
+
+		size_t pos = 0;
+		std::string token;
+		while ((pos = s.find(delimiter)) != std::string::npos) {
+			token = s.substr(0, pos);
+			s.erase(0, pos + delimiter.length());
+		}
+		std::string newS = myCurrentFolder;
+		newS = newS.substr(0, newS.length() - token.length() - 1);
+		SetPath(newS);
+	}
+
+	void ResourceManager::UpdateFiles()
+	{
+		/*for (int i = 0; i < myFiles.size(); i++)
+		{
+			delete myFiles[i];
+		}*/
+
+		myFiles.clear();
+
+		Engine::UIText* parentfileText = new Engine::UIText(std::string("parentfileText"));
+		parentfileText->SetText("..");
+		parentfileText->CreateUI();
+		parentfileText->Init();
+
+		UIButton* parentFile = new UIButton(std::string("parentFile"));
+		parentFile->AttachUIText(parentfileText);
+		parentFile->SetColor(Vector3(1.0f, 1.0f, 1.0f));
+		parentFile->CreateUI();
+		parentFile->Init();
+		parentFile->AlignCollisionWithTransform();
+		myFiles.push_back(new FileInfo("..", FileType::DIRECTORY, parentFile));
+
+		for (const auto & entry : std::experimental::filesystem::directory_iterator(myCurrentFolder))
+		{
+			std::string s = entry.path().string();
+			std::string delimiter = "\\";
+
+			size_t pos = 0;
+			std::string token;
+			while ((pos = s.find(delimiter)) != std::string::npos) {
+				token = s.substr(0, pos);
+				s.erase(0, pos + delimiter.length());
+			}
+
+			Engine::UIText* fileText = new Engine::UIText(std::string("File"));
+			fileText->SetText(s);
+			fileText->CreateUI();
+			fileText->Init();
+
+			UIButton* aFile = new UIButton(std::string("aFile"));
+			aFile->AttachUIText(fileText);
+			aFile->SetColor(Vector3(1.0f, 1.0f, 1.0f));
+			aFile->CreateUI();
+			aFile->Init();
+			aFile->AlignCollisionWithTransform();
+
+			FileType fileType = FileType::FILE;
+
+			std::size_t found = s.find(".");
+			if (found == std::string::npos)
+			{
+				fileType = FileType::DIRECTORY;
+			}
+			else
+			{
+				pos = s.find(".");
+				token = s.substr(0, pos);
+				s.erase(0, pos + delimiter.length());
+			}
+
+			myFiles.push_back(new FileInfo(s, fileType, aFile));
+		}
 	}
 }

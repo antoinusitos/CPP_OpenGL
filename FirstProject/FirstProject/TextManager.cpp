@@ -21,7 +21,7 @@ namespace Engine
 		}
 
 		// init the font
-		if (FT_New_Face(myFontLibrary, "Fonts/arial.ttf", 0, &myFontFace))
+		if (FT_New_Face(myFontLibrary, "Assets/Fonts/arial.ttf", 0, &myFontFace))
 		{
 			LogManager::GetInstance()->AddLog("ERROR::FREETYPE: Failed to load font");
 		}

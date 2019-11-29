@@ -9,6 +9,7 @@ namespace Engine
 	class UIElement;
 	class Shader;
 	class Model;
+	class UIButton;
 
 	struct Vector2
 	{
@@ -253,5 +254,25 @@ namespace Engine
 		glm::ivec2 mySize;       // Size of glyph
 		glm::ivec2 myBearing;    // Offset from baseline to left/top of glyph
 		GLuint     myAdvance;    // Offset to advance to next glyph
+	};
+
+	enum FileType
+	{
+		DIRECTORY,
+		FILE
+	};
+
+	struct FileInfo
+	{
+		std::string myFile;
+		FileType myType;
+		UIButton* myText;
+
+		FileInfo(std::string aFile, FileType aType, UIButton* aText)
+		{
+			myFile = aFile;
+			myType = aType;
+			myText = aText;
+		}
 	};
 }

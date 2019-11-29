@@ -15,6 +15,7 @@
 #include <iostream>
 #include <GLFW/glfw3.h>
 #include "EditorManager.h"
+#include "UIPanelResources.h"
 
 namespace Editor
 {
@@ -333,6 +334,15 @@ namespace Editor
 		myElements.push_back(inspectorPanel);
 
 
+		Engine::UIPanelResources* panelResource = new Engine::UIPanelResources(std::string("Panel Resources"));
+		panelResource->SetScale(Engine::Vector2(200.0f, 200.0f));
+		panelResource->SetPosition(Engine::Vector2(width / 2.0f, height / 2.0f));
+		panelResource->CreateUI();
+		panelResource->Init();
+		panelResource->SetUIManager(this);
+		panelResource->SetColor(Engine::Vector3(0.0f, 0.0f, 0.8f));
+		panelResource->AlignCollisionWithTransform();
+		myElements.push_back(panelResource);
 
 		// -------------------
 		// keep log at the end
