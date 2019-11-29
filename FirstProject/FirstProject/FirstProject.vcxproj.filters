@@ -123,6 +123,9 @@
     <ClCompile Include="UIWindowLog.cpp">
       <Filter>Source Files\Engine\UI</Filter>
     </ClCompile>
+    <ClCompile Include="InputManager.cpp">
+      <Filter>Source Files\Engine</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stb_image.h">
@@ -214,6 +217,9 @@
     </ClInclude>
     <ClInclude Include="UIText.h">
       <Filter>Source Files\Engine\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="InputManager.h">
+      <Filter>Source Files\Engine</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

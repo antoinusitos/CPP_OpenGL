@@ -24,6 +24,7 @@
 #include "EditorManager.h"
 #include "TimeManager.h"
 #include "TextManager.h"
+#include "InputManager.h"
 
 void framebuffer_size_callback(GLFWwindow* aWindow, int aWidth, int aHeight);
 void processInput(GLFWwindow* aWindow, Engine::UIManager* aUIManager);
@@ -33,13 +34,6 @@ void Scroll_Callback(GLFWwindow* aWindow, double aXOffset, double aYOffset);
 // settings
 const unsigned int SCR_WIDTH = 800;
 const unsigned int SCR_HEIGHT = 600;
-
-// mouse position
-// -----------
-float myLastMousePosX = 400.0f;
-float myLastMousePosY = 300.0f;
-
-bool myFirstMouse = false;
 
 Engine::Model* myModel = nullptr;
 
@@ -144,9 +138,12 @@ int main()
 			}
 		});
 
+		Engine::InputManager* inputManager = Engine::InputManager::GetInstance();
+		inputManager->UpdateInput(myWindow);
+
 		// update editor
 		// -----------
-		myEditorUIManager->UpdateMousePosition(glm::vec2(myLastMousePosX, myLastMousePosY));
+		myEditorUIManager->UpdateMousePosition(glm::vec2(inputManager->GetMousePosition().myX, inputManager->GetMousePosition().myY));
 		myEditorUIManager->UpdateManager();
 
 		// input
@@ -197,57 +194,59 @@ void framebuffer_size_callback(GLFWwindow* aWindow, int aWidth, int aHeight)
 // ---------------------------------------------------------------------------------------------------------
 void processInput(GLFWwindow* aWindow, Engine::UIManager* aUIManager)
 { 
+	Engine::InputManager* inputManager = Engine::InputManager::GetInstance();
+
 	float deltatime = Engine::TimeManager::GetInstance()->GetDeltaTime();
 
-	if (glfwGetKey(aWindow, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+	if (inputManager->GetKeyPressed(GLFW_KEY_ESCAPE))
 	{
 		glfwSetWindowShouldClose(aWindow, true);
 	}
 
 	Engine::Camera* cam = Engine::CameraManager::GetInstance()->GetCamera();
 
-	if (glfwGetKey(aWindow, GLFW_KEY_W) == GLFW_PRESS)
+	if (inputManager->GetKey(GLFW_KEY_W))
 	{
 		cam->ProcessKeyboard(Engine::FORWARD, deltatime);
 	}
-	if (glfwGetKey(aWindow, GLFW_KEY_S) == GLFW_PRESS)
+	if (inputManager->GetKey(GLFW_KEY_S))
 	{
 		cam->ProcessKeyboard(Engine::BACKWARD, deltatime);
 	}
 
-	if (glfwGetKey(aWindow, GLFW_KEY_A) == GLFW_PRESS)
+	if (inputManager->GetKey(GLFW_KEY_A))
 	{
 		cam->ProcessKeyboard(Engine::LEFT, deltatime);
 	}
-	if (glfwGetKey(aWindow, GLFW_KEY_D) == GLFW_PRESS)
+	if (inputManager->GetKey(GLFW_KEY_D))
 	{
 		cam->ProcessKeyboard(Engine::RIGHT, deltatime);
 	}
 
-	if (glfwGetKey(aWindow, GLFW_KEY_Y) == GLFW_PRESS)
+	if (inputManager->GetKeyPressed(GLFW_KEY_Y))
 	{
 		cam->InvertY();
 	}
 
-	if (glfwGetMouseButton(aWindow, GLFW_MOUSE_BUTTON_1) == GLFW_PRESS)
+	if (inputManager->GetKeyPressed(GLFW_MOUSE_BUTTON_1))
 	{
 		aUIManager->UpdateMouseStatus(true);
 	}
-	else
+	else 
 	{
 		aUIManager->UpdateMouseStatus(false);
 	}
 
-	if (glfwGetMouseButton(aWindow, GLFW_MOUSE_BUTTON_2) == GLFW_PRESS)
+	if (inputManager->GetKeyPressed(GLFW_MOUSE_BUTTON_2))
 	{
 		cam->SetIsMoving(true);
 	}
-	else
+	else if (inputManager->GetKeyReleased(GLFW_MOUSE_BUTTON_2))
 	{
 		cam->SetIsMoving(false);
 	}
 
-	if (glfwGetKey(aWindow, GLFW_KEY_P) == GLFW_PRESS)
+	if (inputManager->GetKeyPressed(GLFW_KEY_P))
 	{
 		if (Engine::EditorManager::GetInstance()->myObject != nullptr)
 			Engine::EditorManager::GetInstance()->myObject = nullptr;
@@ -258,20 +257,7 @@ void processInput(GLFWwindow* aWindow, Engine::UIManager* aUIManager)
 
 void Mouse_Callback(GLFWwindow* aWindow, double aXPos, double aYPos)
 {
-	if (myFirstMouse)
-	{
-		myFirstMouse = false;
-		myLastMousePosX = aXPos;
-		myLastMousePosY = aYPos;
-	}
-
-	float xOffset = aXPos - myLastMousePosX;
-	float yOffset = aYPos - myLastMousePosY;
-
-	myLastMousePosX = aXPos;
-	myLastMousePosY = aYPos;
-
-	Engine::CameraManager::GetInstance()->GetCamera()->ProcessMouseMovement(xOffset, yOffset);
+	Engine::InputManager::GetInstance()->MouseUpdate(aWindow, aXPos, aYPos);
 }
 
 void Scroll_Callback(GLFWwindow* aWindow, double aXOffset, double aYOffset)

@@ -3,7 +3,6 @@
 - GLM::vec is very bad at storing
 
 TODO :
-- input manager
 - Allow to see shaders and models in a panel as a list
 - Allow to pick an object in the scene
 - Scene
