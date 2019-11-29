@@ -3,7 +3,6 @@
 - GLM::vec is very bad at storing
 
 TODO :
-- Show text with transparency
 - Show log as text (need to polish it)
 - Allow to see detail panel with infos as text
 - Allow to see shaders and models in a panel as a list

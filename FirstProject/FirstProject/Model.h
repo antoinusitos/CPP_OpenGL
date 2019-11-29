@@ -24,6 +24,8 @@ namespace Engine
 	public:
 		Model(const char* aPath, bool aGamma = false);
 
+		~Model();
+
 		void Render(GLFWwindow* aWindow);
 
 		void SetPosition(Vector3 aPosition);

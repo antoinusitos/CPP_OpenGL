@@ -116,6 +116,28 @@ namespace Editor
 		fileMenu->AlignCollisionWithTransform();
 		editMenu->AlignCollisionWithTransform();
 
+		Engine::UICheckBox* checkBox = new Engine::UICheckBox(std::string("Check Box"));
+		checkBox->SetPosition(Engine::Vector2((float)width / 2.0f, (float)height / 2.0f));
+		checkBox->CreateUI();
+		checkBox->Init();
+		checkBox->SetUIManager(this);
+		checkBox->AlignCollisionWithTransform();
+		myElements.push_back(checkBox);
+
+		Engine::UIContainerVertical* inspectorPanel = new Engine::UIContainerVertical(std::string("Inspector container"));
+		inspectorPanel->SetScale(Engine::Vector2(200.0f, 200.0f));
+		inspectorPanel->SetPosition(Engine::Vector2((float)width / 2.0f, (float)height / 2.0f));
+		inspectorPanel->CreateUI();
+		inspectorPanel->Init();
+		inspectorPanel->SetUIManager(this);
+		inspectorPanel->SetVisibility(false);
+		inspectorPanel->AlignCollisionWithTransform();
+		//inspectorPanel->AttachUIElement(moveRightButton);
+		inspectorPanel->UpdateLayout();
+		myElements.push_back(inspectorPanel);
+
+
+		// keep log at the end
 		Engine::UIWindowLog* logWindow = new Engine::UIWindowLog(std::string("Log Window"));
 		logWindow->SetPosition(Engine::Vector2(400.0f, 400.0f));
 		logWindow->SetScale(Engine::Vector2(400.0f, 400.0f));
@@ -135,79 +157,5 @@ namespace Editor
 		logPanel->AddUIAction(Engine::UIAction(Engine::TOGGLEVISIBILITY, logWindow, true));
 		logPanel->AddUIAction(Engine::UIAction(Engine::POSITION, logWindow, Engine::Vector2(400.0f, 400.0f)));
 		myElements.push_back(logPanel);
-
-		/*Engine::UICheckBox* checkBox = new Engine::UICheckBox(std::string("Check Box"));
-		checkBox->SetPosition(Engine::Vector2((float)width / 2.0f, (float)height / 2.0f));
-		checkBox->CreateUI();
-		checkBox->Init();
-		checkBox->SetUIManager(this);
-		checkBox->AlignCollisionWithTransform();
-		myElements.push_back(checkBox);*/
-
-		Engine::UIButton* moveRightButton = new Engine::UIButton(std::string("Move Right Button"));
-		moveRightButton->SetPosition(Engine::Vector2((float)width / 2.0f, (float)height / 2.0f));
-		moveRightButton->CreateUI();
-		moveRightButton->Init();
-		moveRightButton->AlignCollisionWithTransform();
-		moveRightButton->SetUIManager(this);
-		moveRightButton->AddUIAction(Engine::UIAction(Engine::POSITIONOBJECT, Engine::EditorManager::GetInstance()->myObject, 1.0f));
-		myElements.push_back(moveRightButton);
-
-		Engine::UIButton* moveLeftButton = new Engine::UIButton(std::string("Move Left Button"));
-		moveLeftButton->SetPosition(Engine::Vector2((float)width / 2.0f - 60, (float)height / 2.0f));
-		moveLeftButton->CreateUI();
-		moveLeftButton->Init();
-		moveLeftButton->AlignCollisionWithTransform();
-		moveLeftButton->SetUIManager(this);
-		moveLeftButton->AddUIAction(Engine::UIAction(Engine::POSITIONOBJECT, Engine::EditorManager::GetInstance()->myObject, -1.0f));
-		myElements.push_back(moveLeftButton);
-
-		Engine::UIButton* turnRightButton = new Engine::UIButton(std::string("Turn Right Button"));
-		turnRightButton->SetPosition(Engine::Vector2((float)width / 2.0f, (float)height / 2.0f + 40.0f));
-		turnRightButton->CreateUI();
-		turnRightButton->Init();
-		turnRightButton->AlignCollisionWithTransform();
-		turnRightButton->SetUIManager(this);
-		turnRightButton->AddUIAction(Engine::UIAction(Engine::ROTATIONOBJECT, Engine::EditorManager::GetInstance()->myObject, 1.0f));
-		myElements.push_back(turnRightButton);
-
-		Engine::UIButton* turnLeftButton = new Engine::UIButton(std::string("Turn Left Button"));
-		turnLeftButton->SetPosition(Engine::Vector2((float)width / 2.0f - 60.0f, (float)height / 2.0f + 40.0f));
-		turnLeftButton->CreateUI();
-		turnLeftButton->Init();
-		turnLeftButton->AlignCollisionWithTransform();
-		turnLeftButton->SetUIManager(this);
-		turnLeftButton->AddUIAction(Engine::UIAction(Engine::ROTATIONOBJECT, Engine::EditorManager::GetInstance()->myObject, -1.0f));
-		myElements.push_back(turnLeftButton);
-
-		Engine::UIButton* ScaleUpButton = new Engine::UIButton(std::string("Scale Up Button"));
-		ScaleUpButton->SetPosition(Engine::Vector2((float)width / 2.0f, (float)height / 2.0f + 80.0f));
-		ScaleUpButton->CreateUI();
-		ScaleUpButton->Init();
-		ScaleUpButton->AlignCollisionWithTransform();
-		ScaleUpButton->SetUIManager(this);
-		ScaleUpButton->AddUIAction(Engine::UIAction(Engine::SCALEOBJECT, Engine::EditorManager::GetInstance()->myObject, 1.0f));
-		myElements.push_back(ScaleUpButton);
-
-		Engine::UIButton* ScaleDownButton = new Engine::UIButton(std::string("Scale Down Button"));
-		ScaleDownButton->SetPosition(Engine::Vector2((float)width / 2.0f - 60.0f, (float)height / 2.0f + 80.0f));
-		ScaleDownButton->CreateUI();
-		ScaleDownButton->Init();
-		ScaleDownButton->AlignCollisionWithTransform();
-		ScaleDownButton->SetUIManager(this);
-		ScaleDownButton->AddUIAction(Engine::UIAction(Engine::SCALEOBJECT, Engine::EditorManager::GetInstance()->myObject, -1.0f));
-		myElements.push_back(ScaleDownButton);
-
-		Engine::UIContainerVertical* inspectorPanel = new Engine::UIContainerVertical(std::string("Inspector container"));
-		inspectorPanel->SetScale(Engine::Vector2(200.0f, 200.0f));
-		inspectorPanel->SetPosition(Engine::Vector2((float)width / 2.0f, (float)height / 2.0f));
-		inspectorPanel->CreateUI();
-		inspectorPanel->Init();
-		inspectorPanel->SetUIManager(this);
-		inspectorPanel->SetVisibility(false);
-		inspectorPanel->AlignCollisionWithTransform();
-		//inspectorPanel->AttachUIElement(moveRightButton);
-		inspectorPanel->UpdateLayout();
-		myElements.push_back(inspectorPanel);
 	}
 }

@@ -115,25 +115,15 @@ namespace Engine
 		glBindVertexArray(0);
 	}
 
-	void TextManager::RenderText(Shader &s, GLFWwindow* aWindow, const std::string aText, GLfloat aX, const GLfloat aY, GLfloat aScale, const Vector3 aColor)
+	void TextManager::RenderText(GLFWwindow* aWindow, const std::string aText, GLfloat aX, const GLfloat aY, GLfloat aScale, const Vector3 aColor)
 	{
-		/*// Activate corresponding render state	
-		myShader->SetVec3("myTextColor", aColor.myX, aColor.myY, aColor.myZ);
-
 		int width, height;
 		glfwGetWindowSize(aWindow, &width, &height);
-
-		glm::mat4 projection = glm::ortho(0.0f, static_cast<GLfloat>(width), static_cast<GLfloat>(height), 0.0f, -1.0f, 1.0f);
-		//glm::mat4 projection = glm::ortho(0.0f, static_cast<GLfloat>(width), 0.0f, static_cast<GLfloat>(height));
-		myShader->SetMat4("myProjection", projection);*/
-
-		int width, height;
-		glfwGetWindowSize(myWindow, &width, &height);
 		// Activate corresponding render state	
-		glm::mat4 projection = glm::ortho(0.0f, static_cast<GLfloat>(width), 0.0f, static_cast<GLfloat>(height));
-		s.Use();
-		glUniformMatrix4fv(glGetUniformLocation(s.myID, "myProjection"), 1, GL_FALSE, glm::value_ptr(projection));
-		glUniform3f(glGetUniformLocation(s.myID, "myTextColor"), aColor.myX, aColor.myY, aColor.myZ);
+		glm::mat4 projection = glm::ortho(0.0f, static_cast<GLfloat>(width), static_cast<GLfloat>(height), 0.0f, -1.0f, 1.0f);
+		myShader->Use();
+		myShader->SetMat4("myProjection", projection);
+		myShader->SetVec3("myTextColor", aColor.myX, aColor.myY, aColor.myZ);
 
 		glActiveTexture(GL_TEXTURE0);
 		glBindVertexArray(myVAO);
@@ -144,11 +134,12 @@ namespace Engine
 		{
 			Character ch = myCharacters[*c];
 
-			GLfloat xpos = aX + ch.myBearing.x * aScale;
-			GLfloat ypos = aY - (ch.mySize.y - ch.myBearing.y) * aScale;
-
 			GLfloat w = ch.mySize.x * aScale;
 			GLfloat h = ch.mySize.y * aScale;
+
+			GLfloat xpos = aX + ch.myBearing.x * aScale;
+			GLfloat ypos = aY + (this->myCharacters['H'].myBearing.y - ch.myBearing.y) * aScale;
+
 			// Update VBO for each character
 			GLfloat vertices[6][4] = {
 				{ xpos,     ypos + h,   0.0, 1.0 },
@@ -159,15 +150,6 @@ namespace Engine
 				{ xpos + w, ypos,       1.0, 0.0 },
 				{ xpos + w, ypos + h,   1.0, 1.0 }
 			};
-			/*GLfloat vertices[6][4] = {
-				{ xpos,     ypos + h,   0.0, 0.0 },
-				{ xpos,     ypos,       0.0, 1.0 },
-				{ xpos + w, ypos,       1.0, 1.0 },
-
-				{ xpos,     ypos + h,   0.0, 0.0 },
-				{ xpos + w, ypos,       1.0, 1.0 },
-				{ xpos + w, ypos + h,   1.0, 0.0 }
-			};*/
 
 			// Render glyph texture over quad
 			glBindTexture(GL_TEXTURE_2D, ch.myTextureID);
@@ -183,53 +165,4 @@ namespace Engine
 		glBindVertexArray(0);
 		glBindTexture(GL_TEXTURE_2D, 0);
 	}
-
-	void TextManager::RenderText(Shader &s, std::string text, GLfloat x, GLfloat y, GLfloat scale, glm::vec3 color)
-	{
-		int width, height;
-		glfwGetWindowSize(myWindow, &width, &height);
-		// Activate corresponding render state	
-		glm::mat4 projection = glm::ortho(0.0f, static_cast<GLfloat>(width), 0.0f, static_cast<GLfloat>(height));
-		s.Use();
-		glUniformMatrix4fv(glGetUniformLocation(s.myID, "myProjection"), 1, GL_FALSE, glm::value_ptr(projection));
-		glUniform3f(glGetUniformLocation(s.myID, "myTextColor"), color.x, color.y, color.z);
-		glActiveTexture(GL_TEXTURE0);
-		glBindVertexArray(myVAO);
-
-		// Iterate through all characters
-		std::string::const_iterator c;
-		for (c = text.begin(); c != text.end(); c++)
-		{
-			Character ch = myCharacters[*c];
-
-			GLfloat xpos = x + ch.myBearing.x * scale;
-			GLfloat ypos = y - (ch.mySize.y - ch.myBearing.y) * scale;
-
-			GLfloat w = ch.mySize.x * scale;
-			GLfloat h = ch.mySize.y * scale;
-			// Update VBO for each character
-			GLfloat vertices[6][4] = {
-				{ xpos,     ypos + h,   0.0, 0.0 },
-				{ xpos,     ypos,       0.0, 1.0 },
-				{ xpos + w, ypos,       1.0, 1.0 },
-
-				{ xpos,     ypos + h,   0.0, 0.0 },
-				{ xpos + w, ypos,       1.0, 1.0 },
-				{ xpos + w, ypos + h,   1.0, 0.0 }
-			};
-			// Render glyph texture over quad
-			glBindTexture(GL_TEXTURE_2D, ch.myTextureID);
-			// Update content of VBO memory
-			glBindBuffer(GL_ARRAY_BUFFER, myVBO);
-			glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(vertices), vertices);
-			glBindBuffer(GL_ARRAY_BUFFER, 0);
-			// Render quad
-			glDrawArrays(GL_TRIANGLES, 0, 6);
-			// Now advance cursors for next glyph (note that advance is number of 1/64 pixels)
-			x += (ch.myAdvance >> 6) * scale; // Bitshift by 6 to get value in pixels (2^6 = 64)
-		}
-		glBindVertexArray(0);
-		glBindTexture(GL_TEXTURE_2D, 0);
-	}
-
 }

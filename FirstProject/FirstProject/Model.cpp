@@ -27,6 +27,11 @@ namespace Engine
 		myShader = ResourceManager::GetInstance()->LoadShader("Lights", "Lights.vert", "Lights.frag");
 	}
 
+	Model::~Model()
+	{
+
+	}
+
 	void Model::Render(/*Shader* aShader, */GLFWwindow* aWindow)
 	{
 		CameraManager::GetInstance()->GetCamera()->Render(myShader, aWindow, false);

@@ -21,6 +21,10 @@ namespace Engine
 
 		}
 
+		~Shader() {
+
+		}
+
 		// constructor reads and build shaders
 		Shader(const GLchar* aVertexPath, const GLchar* aFragmentPath)
 		{

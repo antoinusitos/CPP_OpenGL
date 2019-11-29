@@ -15,6 +15,8 @@ namespace Engine
 		if (!myVisibility)
 			return;
 
+		UIPanel::Render(aWindow);
+
 		if (myText != nullptr)
 		{
 			myText->Render(aWindow);
@@ -24,8 +26,6 @@ namespace Engine
 		{
 			myElements[i]->Render(aWindow);
 		}
-
-		UIPanel::Render(aWindow);
 	}
 
 	void UIContainer::Update(const float aDeltaTime)

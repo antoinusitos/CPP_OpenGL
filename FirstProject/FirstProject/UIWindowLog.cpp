@@ -19,6 +19,8 @@ namespace Engine
 			return;
 		}
 
+		UIWindow::Render(aWindow);
+
 		std::vector<std::string> logs = LogManager::GetInstance()->GetLogs();
 
 		for (int i = 0; i < logs.size(); i++)
@@ -36,7 +38,5 @@ namespace Engine
 			aLog.SetUIManager(myUIManager);
 			aLog.Render(aWindow);
 		}
-
-		UIWindow::Render(aWindow);
 	}
 }
